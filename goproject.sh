@@ -44,6 +44,6 @@ echo "images:"
 grep --exclude-dir=vendor --include="Dockerfile*" -r "FROM " | awk '{print $2,$1}' | sort -u
 echo ""
 
-echo "README:"
-find . -type f -name "README.md" -not -path "./vendor/*"
+echo "Markdown:"
+find . -type f -name "*.md" -not -path "./vendor/*"
 cd -

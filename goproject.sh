@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 useage(){
     echo "useage:"
@@ -26,7 +25,7 @@ grep --exclude-dir=vendor --include="*.go" -rE "^package " | awk '{print $2,$1}'
 echo ""
 
 echo "构建目标:"
-grep --exclude-dir=vendor --include="Makefile" -r -oE "^[a-z]\S*:"
+grep --exclude-dir=vendor --include="Makefile*" -r -oE "^[a-z]\S*:"
 echo ""
 
 echo "入口文件："
@@ -38,13 +37,13 @@ find . -type f -name "*.sh" -not -path "./vendor/*"
 echo ""
 
 echo "Dockerfile:"
-find . -type f -name "*Dockerfile*" -not -path "./vendor/*"
+find . -type f -name "Dockerfile*" -not -path "./vendor/*"
 echo ""
 
 echo "images:"
-grep --exclude-dir=vendor --include="*Dockerfile*" -r "FROM " | awk '{print $2,$1}' | sort -u
+grep --exclude-dir=vendor --include="Dockerfile*" -r "FROM " | awk '{print $2,$1}' | sort -u
 echo ""
 
 echo "README:"
-cat README.md
+find . -type f -name "README.md" -not -path "./vendor/*"
 cd -

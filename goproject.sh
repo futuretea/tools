@@ -22,7 +22,7 @@ tree -d -I vendor
 echo ""
 
 echo "packages:"
-grep --exclude-dir=vendor --include="*.go" -r "package " | awk '{print $2,$1}' | sort -u
+grep --exclude-dir=vendor --include="*.go" -rE "^package " | awk '{print $2,$1}' | sort -u
 echo ""
 
 echo "构建目标:"

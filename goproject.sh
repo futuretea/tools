@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
+useage(){
+    echo "useage:"
+    echo "  goproject.sh srcpath"
+}
+
+if [ $# -ne 1 ];then
+    useage
+    exit
+fi
+
 SRCPATH=$1
 cd ${SRCPATH}
 

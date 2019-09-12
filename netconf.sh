@@ -12,7 +12,7 @@ if [ $# -lt 1 ];then
 fi
 
 IFACE=$1
-for conf in /proc/sys/net/ipv4/conf/${IFACE}/*
+for conf in "/proc/sys/net/ipv4/conf/${IFACE}"/*
 do
-echo "$(basename ${conf}) $(cat ${conf})" 
+echo "$(basename "${conf}") $(cat "${conf}")"
 done

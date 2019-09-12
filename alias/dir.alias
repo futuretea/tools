@@ -1,0 +1,5 @@
+alias ls='lsd'
+alias i='pushd'
+alias o='popd'
+alias mkcd='mkcd(){mkdir -p "$1";cd "$1"};mkcd $@'
+alias rmpwd='rmpwd(){dir="${PWD}";cd ..; echo "${dir}"; rm -r "${dir}"};rmpwd $@'

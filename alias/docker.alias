@@ -1,0 +1,2 @@
+alias cpid='cpid(){docker inspect --format "{{.State.Pid}}" "$1"};cpid $@'
+alias cps='docker ps'

@@ -39,3 +39,4 @@ ${ARG}=\$$i
 EOF
 let i++
 done
+chmod +x "${SCRIPTNAME}"

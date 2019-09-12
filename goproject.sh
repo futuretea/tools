@@ -21,11 +21,15 @@ tree -d -I vendor
 echo ""
 
 echo "packages:"
-grep --exclude-dir=vendor --include="*.go" -rE "^package " | awk '{print $2,$1}' | sort -u
+grep --exclude-dir=vendor --include="*.go" -Por "(?<=^package\s).*$"
+echo ""
+
+echo "import:"
+grep --exclude-dir=vendor --include="*.go" -Porz "import\s*\(([^()]|(?R))*\)"
 echo ""
 
 echo "构建目标:"
-grep --exclude-dir=vendor --include="Makefile*" -r -oE "^[a-z]\S*:"
+grep --exclude-dir=vendor --include="Makefile*" -Por "^\S*(?=:)"
 echo ""
 
 echo "入口文件："
@@ -41,7 +45,7 @@ find . -type f -name "Dockerfile*" -not -path "./vendor/*"
 echo ""
 
 echo "images:"
-grep --exclude-dir=vendor --include="Dockerfile*" -r "FROM " | awk '{print $2,$1}' | sort -u
+grep --exclude-dir=vendor --include="Dockerfile*" -Por "(?<=FROM\s).*$"
 echo ""
 
 echo "Markdown:"

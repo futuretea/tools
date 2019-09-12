@@ -25,7 +25,7 @@ grep --exclude-dir=vendor --include="*.go" -Por "(?<=^package\s).*$"
 echo ""
 
 echo "import:"
-grep --exclude-dir=vendor --include="*.go" -Porz "import\s*\(([^()]|(?R))*\)"
+grep --exclude-dir=vendor --include="*.go" -Porz "(?<=import\s)\(([^()]|(?R))*(?=\))"
 echo ""
 
 echo "构建目标:"

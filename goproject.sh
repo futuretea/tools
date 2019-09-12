@@ -28,6 +28,14 @@ echo "import:"
 grep --exclude-dir=vendor --include="*.go" -Porz "(?<=import\s)\(([^()]|(?R))*(?=\))"
 echo ""
 
+echo "var:"
+grep --exclude-dir=vendor --include="*.go" -Por "^var\s.*"
+echo ""
+
+echo "type:"
+grep --exclude-dir=vendor --include="*.go" -Por "^type\s.*"
+echo ""
+
 echo "构建目标:"
 grep --exclude-dir=vendor --include="Makefile*" -Por "^\S*(?=:)"
 echo ""

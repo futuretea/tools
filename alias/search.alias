@@ -1,0 +1,1 @@
+alias baidu='baidu(){open "https://www.baidu.com/s?wd=$1";};baidu $@'

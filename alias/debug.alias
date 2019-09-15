@@ -1,0 +1,1 @@
+alias strace='sudo strace -tt -T -f -s 200'

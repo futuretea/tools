@@ -1,2 +1,3 @@
-alias cpid='cpid(){docker inspect --format "{{.State.Pid}}" "$1"};cpid $@'
 alias cps='docker ps'
+alias cpid='cpid(){docker inspect --format "{{.State.Pid}}" "$1"};cpid $@'
+alias cstrace='cstrace(){PID=$(cpid "$1");shift;sudo strace -tt -T -f -s 200 -p "${PID}" $@};cstrace $@'

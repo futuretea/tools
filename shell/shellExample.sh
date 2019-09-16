@@ -34,9 +34,9 @@ EOF
 
 i=1
 for ARG in ${SCRIPTARGS};do
-cat >> "${SCRIPTNAME}" <<EOF
+cat >> "${SCRIPTPATH}" <<EOF
 ${ARG}=\$$i
 EOF
 let i++
 done
-chmod +x "${SCRIPTNAME}"
+chmod +x "${SCRIPTPATH}"

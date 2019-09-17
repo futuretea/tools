@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  shellExample.sh scriptpath scriptargs..."
+    echo "  new.sh scriptpath scriptargs..."
 }
 
 if [ $# -lt 1 ];then

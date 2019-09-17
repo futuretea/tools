@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  installScript.sh SCRIPTPATH"
+    echo "  load.sh SCRIPTPATH"
 }
 
 if [ $# -ne 1 ];then

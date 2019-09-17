@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  installAlias.sh ALIASPATH"
+    echo "  src.sh ALIASPATH"
 }
 
 if [ $# -ne 1 ];then

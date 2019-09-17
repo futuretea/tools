@@ -1,0 +1,3 @@
+alias pac='pacman'
+alias pacl='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed)'
+alias pacs='pacman -S'

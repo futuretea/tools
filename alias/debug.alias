@@ -1,1 +1,2 @@
 alias strace='sudo strace -tt -T -f -s 200'
+alias netshoot="docker run --rm -it --name netshoot  -v /var/run/docker.sock:/var/run/docker.sock --net host nicolaka/netshoot bash"

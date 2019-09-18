@@ -18,41 +18,53 @@ fi
 
 cd "${SRCPATH}" || return
 
-echo "git统计："
+red='\033[0;31m'
+plain='\033[0m'
+
+info(){
+    echo -ne "\n${red}$1：${plain}\n"
+}
+
+filenovendor(){
+    find . -type f -name \"$1\" -not -path "./vendor/*"
+}
+
+grepnovendor(){
+    grep --exclude-dir=vendor --include=$1 -Por $2
+}
+
+grepnovendorz(){
+    grep --exclude-dir=vendor --include=$1 -Porz $2
+}
+
+info "仓库统计"
 git shortlog --numbered --summary .
 
-echo "目录结构："
+info "目录结构"
 tree -d -I vendor
-echo ""
 
-echo "import:"
-grep --exclude-dir=vendor --include="*.go" -Porz "(?<=import\s)\(([^()]|(?R))*(?=\))"
-echo ""
+info "导入的包"
+grepnovendorz "*.go" "(?<=import\s)\(([^()]|(?R))*(?=\))"
 
-echo "packages:"
-grep --exclude-dir=vendor --include="*.go" -Por "(?<=^package\s).*$"
-echo ""
+info "定义的包"
+grepnovendor "*.go" "(?<=^package\s).*$"
 
-echo "构建目标:"
-grep --exclude-dir=vendor --include="Makefile*" -Por "^\S*(?=:)"
-echo ""
+info "构建目标"
+grepnovendor "Makefile*" "^\S*(?=:)"
 
-echo "入口文件："
-find . -type f -name "main.go" -not -path "./vendor/*"
-echo ""
+info "入口文件"
+filenovendor "main.go"
 
-echo "SHELL脚本:"
-find . -type f -name "*.sh" -not -path "./vendor/*"
-echo ""
+info "命令脚本"
+filenovendor "*.sh"
 
-echo "Dockerfile:"
-find . -type f -name "Dockerfile*" -not -path "./vendor/*"
-echo ""
+info "容器脚本"
+filenovendor "Dockerfile*"
 
-echo "images:"
-grep --exclude-dir=vendor --include="Dockerfile*" -Por "(?<=FROM\s).*$"
-echo ""
+info "容器镜像"
+grepnovendor "Dockerfile*"  "(?<=FROM\s).*$"
 
-echo "Markdown:"
-find . -type f -name "*.md" -not -path "./vendor/*"
+info "相关文档"
+filenovendor "*.md"
+
 cd - || return

@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  changeGitUser.sh user_name user_email --local"
+    echo "  gcu.sh user_name user_email --local"
 }
 
 show_user(){

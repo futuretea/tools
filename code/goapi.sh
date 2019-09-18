@@ -49,6 +49,7 @@ gos cron
 gos path
 gos filepath
 gos runtime
+gos debug
 gos reflect
 gos sort
 gos errors
@@ -73,6 +74,11 @@ gos context
 gos consul
 gos etcd
 gos db
+gos mgo
+gos bson
+gos redis
+gos zip
+gos jwt
 gos "[a-z]*v[0-9]"
 cd -
 

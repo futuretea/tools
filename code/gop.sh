@@ -2,7 +2,7 @@
 
 useage(){
     echo "useage:"
-    echo "  goproject.sh srcpath"
+    echo "  gop.sh srcpath"
 }
 
 if [ $# -ne 1 ];then

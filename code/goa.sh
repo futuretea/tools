@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  goapi.sh SRCPATH"
+    echo "  goa.sh SRCPATH"
 }
 
 if [ $# -lt 1 ];then

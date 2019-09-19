@@ -56,7 +56,7 @@ info "注释信息"
 grepnovendor "*.go" "^//\s*[^\@]*$"
 
 info "路由信息"
-grepnovendor "*.go" '\"/[^(A-Z|\|\/")]+/*[^(A-Z|\")]*\"'
+grepnovendor "*.go" '\"/[^(\|\/")]+/*[^(\")]*\"'
 
 info "构建目标"
 grepnovendor "Makefile*" "^\S*(?=:)"

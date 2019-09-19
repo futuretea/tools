@@ -44,6 +44,7 @@ x509
 uuid
 jwt
 oauth2
+rbac
 spec
 validator
 io
@@ -66,6 +67,8 @@ sort
 errors
 log
 logs
+zap
+logrus
 gorm
 xorm
 orm
@@ -77,7 +80,15 @@ viper
 beego
 gin
 grpc
+rpc
 net
+health
+socket
+ip
+tcp
+ipv4
+ipv6
+proxy
 http
 httplib
 httptest
@@ -88,11 +99,15 @@ simplelru
 nats
 consul
 etcd
+raft
+rand
 db
 database
 mgo
 redis
+cache
 "[a-z]*v[0-9][a-z]*[0-9]*"
+cluster
 kubernetes
 k8s
 kube
@@ -102,6 +117,7 @@ helm2
 helm3
 docker
 rest
+api
 cert
 auth
 constants
@@ -115,6 +131,7 @@ routers
 controllers
 utils
 tools
+client
 )
 
 gos(){

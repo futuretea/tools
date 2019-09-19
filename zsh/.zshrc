@@ -100,7 +100,5 @@ export GOROOT=/usr/lib/go
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export EDITOR='nvim'
 source $ZSH/oh-my-zsh.sh
-source /usr/share/nvm/nvm.sh
 setopt no_nomatch
-source $HOME/.config/giteejira/alias
 source /usr/local/bin/alias/all

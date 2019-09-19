@@ -49,6 +49,12 @@ grepnovendorz "*.go" "(?<=import\s)\(([^()]|(?R))*(?=\))"
 info "定义的包"
 grepnovendor "*.go" "(?<=^package\s).*$"
 
+info "注解信息"
+grepnovendor "*.go" "^//\s*\@.*$"
+
+info "注释信息"
+grepnovendor "*.go" "^//\s*[^\@]*$"
+
 info "构建目标"
 grepnovendor "Makefile*" "^\S*(?=:)"
 

@@ -79,6 +79,8 @@ cmd
 viper
 beego
 gin
+echo
+e
 grpc
 rpc
 net

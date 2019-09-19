@@ -97,6 +97,7 @@ sync
 context
 simplelru
 nats
+kafka
 consul
 etcd
 raft

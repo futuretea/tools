@@ -130,6 +130,8 @@ websocket
 models
 routers
 controllers
+resources
+services
 utils
 tools
 client
@@ -138,7 +140,7 @@ client
 gos(){
     local package=$1
     local result
-    result=$(grep --exclude-dir=vendor --include="*.go" -nPr "\s${package}\.[A-Z].*" || echo -n "")
+    result=$(grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)${package}\.[A-Z].*" || echo -n "")
     if [ x"${result}" != "x" ];then
         echo -ne "${red}${package}${plain}:\n${result}\n"
     fi

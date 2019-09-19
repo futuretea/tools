@@ -1,2 +1,2 @@
-alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "\s($@)\.[A-Z].*" || echo "nothing"
+alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing"
 ;echo "";};gos $@'

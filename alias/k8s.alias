@@ -1,3 +1,4 @@
+alias kc='kubectl'
 alias kcapi="kubectl api-resources -o wide"
 alias kcgaa="kubectl get all --all-namespaces"
 alias kcgpa="kubectl get pod --all-namespaces"

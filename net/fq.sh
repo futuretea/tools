@@ -31,8 +31,8 @@ git config --global https.proxy "${URL}"
 }
 
 git_unset(){
-git config --global http.proxy --unset
-git config --global https.proxy --unset
+git config --global --unset http.proxy
+git config --global --unset https.proxy
 }
 
 if [ "x${APP}" == "xgit" ];then

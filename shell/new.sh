@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
-set -e
 
 useage(){
   cat <<"EOF"
@@ -26,8 +25,9 @@ shift 1
 SCRIPTARGS=$@
 SCRIPTARGNUM=$#
 cat > "${SCRIPTPATH}" <<EOFFF
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+[[ -n \$DEBUG ]] && set -x
+set -eou pipefail
 
 useage(){
   cat <<"EOF"

@@ -1,4 +1,5 @@
 alias ls='lsd'
+alias lt='ls -lt'
 alias i='pushd'
 alias o='popd'
 alias j='cd $(dirname `fzf`)'

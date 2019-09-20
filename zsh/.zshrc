@@ -99,6 +99,6 @@ export GOBIN=$GOPATH/bin
 export GOROOT=/usr/lib/go
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export EDITOR='nvim'
-source $ZSH/oh-my-zsh.sh
 setopt no_nomatch
+source $ZSH/oh-my-zsh.sh
 source /usr/local/bin/alias/all

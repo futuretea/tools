@@ -1,6 +1,7 @@
 alias ls='lsd'
 alias i='pushd'
 alias o='popd'
+alias j='cd $(dirname `fzf`)'
 alias dirus='du -ahcd'
 alias mkcd='mkcd(){mkdir -p "$1";cd "$1"};mkcd $@'
 alias rmpwd='rmpwd(){dir="${PWD}";cd ..; echo "${dir}"; rm -r "${dir}"};rmpwd $@'

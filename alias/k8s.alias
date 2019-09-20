@@ -1,5 +1,12 @@
 alias kc='kubectl'
-
+alias kcn="kubens"
+alias kck="kc krew"
+alias kcki="kck install"
+alias kckr="kck remove"
+alias kckl="kck list"
+alias kcks="kck search"
+alias kce="kc iexec"
+alias kct="kc tail"
 alias kcg="kc get"
 alias kcga="kcg all"
 alias kcgn="kcg node -o wide"

@@ -21,8 +21,8 @@ echo export https_proxy="${URL}"
 }
 
 shell_unset(){
-echo export http_proxy=""
-echo export https_proxy=""
+echo unset http_proxy
+echo unset https_proxy
 }
 
 git_set(){

@@ -6,7 +6,7 @@ else
   NSENTER=nsenter
 fi
 if [ -z "$1" ]; then
-  echo "Usage: `basename "$0"` CONTAINER [COMMAND [ARG]...]"
+  echo "Usage: docker-enter.sh CONTAINER [COMMAND [ARG]...]"
   echo ""
   echo "Enters the Docker CONTAINER and executes the specified COMMAND."
   echo "If COMMAND is not specified, runs an interactive shell in CONTAINER."
@@ -22,9 +22,9 @@ else
     # Use su to clear all host environment variables except for TERM,
     # initialize the environment variables HOME, SHELL, USER, LOGNAME, PATH,
     # and start a login shell.
-    "$NSENTER" $OPTS su - root
+    "$NSENTER" "$OPTS" su - root
   else
     # Use env to clear all host environment variables.
-    "$NSENTER" $OPTS env --ignore-environment -- "$@"
+    "$NSENTER" "$OPTS" env --ignore-environment -- "$@"
   fi
 fi

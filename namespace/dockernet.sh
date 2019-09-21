@@ -17,4 +17,4 @@ PID=$(docker inspect --format "{{.State.Pid}}" "${CONTAINER}")
 mkdir -p /var/run/netns
 rm /var/run/netns/"${CONTAINER}"
 ln -s /proc/"${PID}"/ns/net /var/run/netns/"${CONTAINER}"
-ip netns exec ${CONTAINER} $@
+ip netns exec "${CONTAINER}" $@

@@ -1,9 +1,17 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+[[ -n $DEBUG ]] && set -x
+set -eou pipefail
 
 useage(){
-    echo "useage:"
-    echo "  pci2dev.sh PCIADDRESS"
+    cat <<"EOF"
+USAGE:
+    pci2dev.sh PCIADDRESS
+EOF
+}
+
+exit_err() {
+    echo >&2 "${1}"
+    exit 1
 }
 
 if [ $# -lt 1 ];then

@@ -1,9 +1,17 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+[[ -n $DEBUG ]] && set -x
+set -eou pipefail
 
 useage(){
-    echo "useage:"
-    echo "  qsearch.sh SOMETHING"
+    cat <<"EOF"
+USAGE:
+    qsearch.sh SOMETHING
+EOF
+}
+
+exit_err() {
+    echo >&2 "${1}"
+    exit 1
 }
 
 if [ $# -ne 1 ];then

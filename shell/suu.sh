@@ -1,7 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
+[[ -n $DEBUG ]] && set -x
+# set -eou pipefail
+
 useage(){
-    echo "useage:"
-    echo "  suu.sh NAME"
+  cat <<"EOF"
+USAGE:
+    suu.sh NAME
+EOF
+}
+
+exit_err() {
+   echo >&2 "${1}"
+   exit 1
 }
 
 if [ $# -lt 1 ];then

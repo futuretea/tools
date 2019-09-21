@@ -13,6 +13,7 @@ exit_err() {
    echo >&2 "$1"
    exit 1
 }
+
 if [ $# -lt 0 ];then
     useage
     exit 1

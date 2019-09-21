@@ -1,9 +1,17 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+[[ -n $DEBUG ]] && set -x
+set -eou pipefail
 
 useage(){
-    echo "useage:"
-    echo "  load.sh SCRIPTPATH"
+  cat <<"EOF"
+USAGE:
+    load.sh SCRIPTPATH
+EOF
+}
+
+exit_err() {
+   echo >&2 "${1}"
+   exit 1
 }
 
 if [ $# -ne 1 ];then
@@ -17,8 +25,9 @@ INSTALLPATH="/usr/local/bin/tools"
 install(){
     local SCRIPTFILE=$1
     local BINNAME
-    BINNAME=$(basename "${SCRIPTFILE}")
-    local INSTALLBIN="${INSTALLPATH}/${BINNAME}"
+    local INSTALLBIN
+    BINNAME="$(basename "${SCRIPTFILE}")"
+    INSTALLBIN="${INSTALLPATH}/${BINNAME%.*}"
     sudo cp "${SCRIPTFILE}" "${INSTALLBIN}"
     sudo chmod +x "${INSTALLBIN}"
     echo "${INSTALLBIN}"
@@ -34,3 +43,5 @@ else
         install "${SCRIPTPATH}"
     fi
 fi
+
+ls "${INSTALLPATH}"

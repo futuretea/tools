@@ -100,6 +100,7 @@ export GOBIN=$GOPATH/bin
 export GOROOT=/usr/lib/go
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
+export PATH=$PATH:/usr/local/bin/tools
 export EDITOR='nvim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh

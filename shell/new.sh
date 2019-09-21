@@ -10,7 +10,7 @@ EOF
 }
 
 exit_err() {
-   echo >&2 ${1}
+   echo >&2 "${1}"
    exit 1
 }
 
@@ -22,7 +22,7 @@ fi
 SCRIPTPATH=$1
 SCRIPTNAME=$(basename "${SCRIPTPATH}")
 shift 1
-SCRIPTARGS=$@
+SCRIPTARGS=$*
 SCRIPTARGNUM=$#
 cat > "${SCRIPTPATH}" <<EOFFF
 #!/usr/bin/env bash
@@ -53,6 +53,6 @@ for ARG in ${SCRIPTARGS};do
 cat >> "${SCRIPTPATH}" <<EOFF
 ${ARG}=\$$i
 EOFF
-let i++
+(( i++ ))
 done
 chmod +x "${SCRIPTPATH}"

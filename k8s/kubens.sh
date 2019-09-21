@@ -66,7 +66,8 @@ escape_context_name() {
 }
 
 namespace_file() {
-  local ctx="$(escape_context_name "${1}")"
+  local ctx
+  ctx="$(escape_context_name "${1}")"
   echo "${KUBENS_DIR}/${ctx}"
 }
 

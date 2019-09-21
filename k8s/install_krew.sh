@@ -5,12 +5,12 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    install_krew.sh 
+    install_krew.sh
 EOF
 }
 
 exit_err() {
-   echo >&2 $1
+   echo >&2 "$1"
    exit 1
 }
 if [ $# -lt 0 ];then
@@ -18,7 +18,7 @@ if [ $# -lt 0 ];then
     exit 1
 fi
 
-cd $(mktemp -d)
+cd "$(mktemp -d)"
 proxychains curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v0.3.0/krew.{tar.gz,yaml}"
 tar zxvf krew.tar.gz
 ./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" install --manifest=krew.yaml --archive=krew.tar.gz

@@ -30,4 +30,5 @@ mv linux-amd64/helm /usr/local/bin/h3
 cd -
 rm -r "${TEMPDIR}"
 
-
+h3 repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+h3 repo update

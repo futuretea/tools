@@ -1,3 +1,4 @@
+上一个命令:  r
 切换:
     alt num
     win num

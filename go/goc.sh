@@ -17,4 +17,5 @@ fi
 VERSION=$1
 sudo rm -f "${GOROOT}"
 sudo ln -s "${GOROOT}${VERSION}" "${GOROOT}"
+go version
 

@@ -1,2 +1,0 @@
-alias tf='terraform'
-alias tfali='echo "provider alicloud{}">.terraformrc'

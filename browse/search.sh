@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
     cat <<"EOF"
 USAGE:
-    qsearch.sh SOMETHING
+    search.sh SOMETHING
 EOF
 }
 

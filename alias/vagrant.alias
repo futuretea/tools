@@ -1,3 +1,0 @@
-alias vup='vagrant up'
-alias vrm='vagrant destroy'
-alias vhalt='vagrant halt'

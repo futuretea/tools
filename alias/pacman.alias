@@ -1,6 +1,2 @@
-alias pac='pacman'
-alias pacl='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed)'
-alias pacs='pacman -S'
-alias pacf='pacman -F'
-alias pacu='pacman -U'
-alias pacq='pacman -Q'
+alias pacmanlog='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed)'
+

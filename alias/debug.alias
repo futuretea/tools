@@ -1,9 +1,9 @@
-alias icve='trivy --skip-update -f json $(docker images --format "{{.Repository}}:{{.Tag}}" | fzf)'
-alias ito='sudo iotop -o'
-alias n='netstat -pen'
+alias imcve='trivy --skip-update -f json $(docker images --format "{{.Repository}}:{{.Tag}}" | fzf)'
+alias iotop='sudo iotop -o'
+alias netstat='netstat -pen'
 alias netshoot="docker run --rm -it --name netshoot  -v /var/run/docker.sock:/var/run/docker.sock --net host nicolaka/netshoot bash"
+alias strace='sudo strace -tt -T -f -s 200'
 alias pfs='perf stat'
 alias pfr='perf record -g'
 alias pfrp='perf record -g -p'
 alias pfri='perf report -i perf.data'
-alias strace='sudo strace -tt -T -f -s 200'

@@ -1,1 +1,2 @@
-alias dl='proxychains curl -fsSLO'
+alias dl='proxychains wget
+alias sscheck='proxychains wget google.com'

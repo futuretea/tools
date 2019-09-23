@@ -1,2 +1,2 @@
-alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing"
-;echo "";};gos $@'
+alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
+alias gom='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'

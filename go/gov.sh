@@ -5,7 +5,7 @@ set -ou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    goc.sh VERSION
+    gov.sh VERSION
 EOF
 }
 

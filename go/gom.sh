@@ -3,7 +3,7 @@ set -e
 
 useage(){
     echo "useage:"
-    echo "  goc.sh CODEPATH"
+    echo "  gom.sh CODEPATH"
 }
 
 if [ $# -lt 1 ];then

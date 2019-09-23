@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    ck.sh 
+    gck.sh 
 EOF
 }
 

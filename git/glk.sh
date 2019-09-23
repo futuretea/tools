@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    lk.sh URL [LOCALPATH]
+    glk.sh URL [LOCALPATH]
 EOF
 }
 

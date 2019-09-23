@@ -97,7 +97,7 @@ fi
 export GOPROXY=https://goproxy.io
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export GOROOT=/usr/lib/go
+export GOROOT=/usr/local/bin/go
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools

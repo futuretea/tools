@@ -1,2 +1,2 @@
-alias dl='proxychains wget
+alias dl='proxychains wget'
 alias sscheck='proxychains wget google.com'

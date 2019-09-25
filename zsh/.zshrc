@@ -94,13 +94,14 @@ ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
-export GOPROXY=https://goproxy.io
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOROOT=/usr/local/bin/go
+
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools
+
 export EDITOR='nvim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh

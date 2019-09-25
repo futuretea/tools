@@ -3,3 +3,48 @@ alias gom='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'
 alias gol='go list -m all'
 alias gog='go mod graph'
 alias got='tree $GOPATH/pkg/mod -dDv -L 3'
+
+usegomod(){
+    echo "use go mod"
+    export GO111MODULE=on
+    export GOPRIVATE=*.gitlab.com,*.gitee.com
+    export GOSUMDB=sum.golang.google.cn
+    export GOPROXY=https://goproxy.io
+    #export GOPROXY=https://goproxy.io,direct
+}
+usegopath(){
+    echo "use go path"
+    export GO111MODULE=off
+    unset GOPRIVATE
+    unset GOSUMDB
+    unset GOPROXY
+}
+
+gogo(){
+    if [ ! -f ".goconfig" ];then
+        echo "no .goconfig in this dir"
+        return
+    else
+        source .goconfig
+    fi
+    if ${USEGOMOD};then
+        usegomod
+    else
+        usegopath
+        WORKDIR=${GOPATH}/src/${PACKAGE}
+        if [ x"${WORKDIR}" != x"${PWD}" ];then
+            if [ ! -d ${WORKDIR} ];then
+                ln -s "${PWD}" "${WORKDIR}"
+            fi
+            cd "${WORKDIR}"
+        fi
+    fi
+    if ${USEPROXY};then
+        fq go +
+    else
+        fq go -
+    fi
+    gov ${GOVERSION}
+}
+
+

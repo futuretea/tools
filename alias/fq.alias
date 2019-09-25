@@ -12,26 +12,31 @@ exit_err() {
 }
 
 sh_set(){
+    echo "set shell proxy"
     export http_proxy="${URL}"
     export https_proxy="${URL}"
 }
 
 sh_unset(){
+    echo "unset shell proxy"
     unset http_proxy
     unset https_proxy
 }
 
 git_set(){
+    echo "set git proxy"
     git config --global http.proxy "${URL}"
     git config --global https.proxy "${URL}"
 }
 
 git_unset(){
+    echo "unset git proxy"
     git config --global --unset http.proxy
     git config --global --unset https.proxy
 }
 
 docker_set(){
+    echo "set docker proxy"
     mkdir -p /etc/systemd/system/docker.service.d
     cat <<EOF >/etc/systemd/system/docker.service.d/http-proxy.conf
 [Service]
@@ -47,6 +52,7 @@ systemctl show --property=Environment docker
 }
 
 docker_unset(){
+    echo "unset docker proxy"
     rm -rf /etc/systemd/system/docker.service.d
     systemctl daemon-reload
     systemctl restart docker

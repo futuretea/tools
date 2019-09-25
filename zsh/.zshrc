@@ -105,3 +105,6 @@ export EDITOR='nvim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
 source /usr/local/bin/alias/all
+eval "$(kubectl completion zsh)"
+eval "$(doctl completion zsh)"
+eval "$(starship init zsh)"

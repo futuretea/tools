@@ -1,7 +1,4 @@
-#!/usr/bin/env bash
-[[ -n $DEBUG ]] && set -x
-set -eou pipefail
-
+fq(){
 useage(){
     cat <<"EOF"
 USAGE:
@@ -14,23 +11,14 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 2 ];then
-    useage
-    exit
-fi
-
-APP=$1
-ACTION=$2
-URL=${3:-"http://127.0.0.1:12333"}
-
 sh_set(){
-    echo export http_proxy="${URL}"
-    echo export https_proxy="${URL}"
+    export http_proxy="${URL}"
+    export https_proxy="${URL}"
 }
 
 sh_unset(){
-    echo unset http_proxy
-    echo unset https_proxy
+    unset http_proxy
+    unset https_proxy
 }
 
 git_set(){
@@ -64,6 +52,15 @@ docker_unset(){
     systemctl restart docker
     systemctl show --property=Environment docker
 }
+
+if [ $# -lt 2 ];then
+    useage
+    exit
+fi
+
+APP=$1
+ACTION=$2
+URL=${3:-"http://127.0.0.1:12333"}
 if [ "x${APP}" == "xgo" ];then
     if [ "x${ACTION}" == "x+"  ];then
         git_set
@@ -101,3 +98,4 @@ elif [ "x${APP}" == "xdocker" ];then
 else
     exit_err "unknown app ${APP}"
 fi
+}

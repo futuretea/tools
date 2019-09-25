@@ -1,7 +1,6 @@
 alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
 alias gom='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'
 alias gol='go list -m all'
-alias gog='go mod graph'
 alias got='tree $GOPATH/pkg/mod -dDv -L 3'
 
 usegomod(){
@@ -20,7 +19,7 @@ usegopath(){
     unset GOPROXY
 }
 
-gogo(){
+gog(){
     if [ ! -f ".goconfig" ];then
         echo "no .goconfig in this dir"
         return

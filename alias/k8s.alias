@@ -12,6 +12,7 @@ alias kcks="kck search"
 # kubectl plugins
 alias kce="kc iexec"
 alias kct="kc tail"
+alias kcs="kc sniff"
 
 # kubectl log
 alias kcl="kc logs"

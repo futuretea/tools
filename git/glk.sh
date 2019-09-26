@@ -23,7 +23,7 @@ URL=$1
 LOCALPATH=${2:-$(echo "${URL}" | awk -F "/" '{print $NF}')}
 proxychains git clone "${URL}".git "${LOCALPATH}"
 cd "${LOCALPATH}"
-ck
+gck
 code .
 gop .
 

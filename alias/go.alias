@@ -21,7 +21,7 @@ usegopath(){
 
 gog(){
     if [ ! -f ".goconfig" ];then
-        echo "no .goconfig in this dir"
+        # echo "no .goconfig in this dir"
         return
     else
         source .goconfig
@@ -45,5 +45,3 @@ gog(){
     fi
     gov ${GOVERSION}
 }
-
-

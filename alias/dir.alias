@@ -4,3 +4,8 @@ alias j='cd $(dirname `fzf`)'
 alias du='du -ahcd'
 alias mkcd='mkcd(){mkdir -p "$1";cd "$1"};mkcd $@'
 alias rmpwd='rmpwd(){dir="${PWD}";cd ..; echo "${dir}"; rm -r "${dir}"};rmpwd $@'
+chpwd(){
+    if [ -f ".goconfig" ];then
+        gog
+    fi
+}

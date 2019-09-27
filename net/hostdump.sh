@@ -27,4 +27,4 @@ shift 2
 if sshpass -e "${TARGET}" [[ ! -f "${REMOTE_TCPDUMP}" ]];then
   sshpass -e scp "${LOCAL_TCPDUMP}"  "${TARGET}":"${REMOTE_TCPDUMP}"
 fi 
-sshpass -e ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"
+sshpass -e ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"

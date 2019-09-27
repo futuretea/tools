@@ -51,3 +51,6 @@ alias kctpc="kc top pod --containers"
 alias kcwpr="kc wait --for condition=ready pod --all"
 alias kcapi="kc api-resources"
 alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLICY ClusterFirstWithHostNet | xsv select NAME,NAMESPACE,HOSTNETWORK,DNSPOLICY | xsv table"
+alias kcgcs="kubectl config view --minify --output 'jsonpath={..server}'"
+alias kcgcn="kubectl config view --minify --output 'jsonpath={..namespace}'"
+alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'

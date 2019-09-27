@@ -1,4 +1,5 @@
-alias vi='nvim'
-alias vidf='vimdiff'
 alias v='bat'
 alias vf='bat $(fzf)'
+alias vi='emacs -fs'
+#alias vi='nvim'
+alias vidf='vimdiff'

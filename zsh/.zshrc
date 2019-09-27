@@ -16,7 +16,7 @@ export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools
 
-export EDITOR='nvim'
+export EDITOR='vim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
 source /usr/local/bin/alias/all

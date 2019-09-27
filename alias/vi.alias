@@ -1,4 +1,4 @@
-lias v='bat'
+alias v='bat'
 alias vf='bat $(fzf)'
 alias ve='emacs -fs'
 alias vi='nvim'

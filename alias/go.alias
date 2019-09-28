@@ -1,7 +1,8 @@
 alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
 alias gom='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'
-alias gol='go list -m all'
-alias got='tree $GOPATH/pkg/mod -dDv -L 3'
+alias goml='go list -m all'
+alias gomt='tree $GOPATH/pkg/mod -dDv -L 3'
+alias gorun="reflex -r '(\.go$|go\.mod$|\.yaml$)' -s go run"
 
 usegomod(){
     echo "use go mod"

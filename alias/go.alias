@@ -13,15 +13,12 @@ alias gomr='go mod edit -replace='
 
 gomod_proxy(){
     echo "set gomod proxy"
-    if [ -z "${GOPROXYURL}" ];then
-        GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
-        if [ $(echo "${GOVERSIONNOW}" | awk  -F "." '{print $2}') -lt 13 ];then
-            GOPROXYURL=https://goproxy.cn
-        else
-            GOPROXYURL=https://goproxy.cn,direct
-        fi
+    GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
+    if [ $(echo "${GOVERSIONNOW}" | awk  -F "." '{print $2}') -lt 13 ];then
+        export GOPROXY="${GOPROXYURL}"
+    else
+        export GOPROXY="${GOPROXYURL},direct"
     fi
-    export GOPROXY="${GOPROXYURL}"
 }
 
 gomod_noproxy(){
@@ -46,13 +43,13 @@ goenv(){
         source go.env
     fi
     echo "module ${GOMODULE}"
-    echo "go ${GOVERSION}"
+    gov ${GOVERSION}
     if ${USEGOMOD};then
         gomodon
     else
         gomodoff
         echo "module ${GOMODULE}"
-        gov ${GOVERSION}
+        
         WORKDIR=${GOPATH}/src/${GOMODULE}
         if [ x"${WORKDIR}" != x"${PWD}" ];then
             if [ ! -d ${WORKDIR} ];then
@@ -83,6 +80,10 @@ if [ $# -lt 3 ];then
     echo "  goenvinit GOMODULE PMMODE(mod,other) PROXYMODE(mod,other)"
     return
 fi
+local GOMODULE
+local PMMODE
+local PROXYMODE
+local USEGOMOD
 GOMODULE=$1
 PMMODE=${2-"mod"}
 PROXYMODE=${3-"mod"}

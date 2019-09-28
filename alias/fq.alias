@@ -17,10 +17,6 @@ kxsw(){
         return
     fi
 
-    if [ -z "${HTTPRPOXYURL}" ];then
-        HTTPRPOXYURL="http://127.0.0.1:12333"
-    fi
-
     ACTION=$1
     shift 1
     for APP in "$@"; do

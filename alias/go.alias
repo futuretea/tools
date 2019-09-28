@@ -12,7 +12,7 @@ usegomod(){
     echo "use go mod"
     export GO111MODULE=on
     export GOPRIVATE=*.gitlab.com,*.gitee.com
-    export GOSUMDB=sum.golang.google.cn
+    # export GOSUMDB=sum.golang.google.cn
     local versions=($(goversion))
     if [ $((versions[2])) -lt 13 ];then
         export GOPROXY=https://goproxy.cn

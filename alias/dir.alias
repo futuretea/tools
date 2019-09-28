@@ -1,4 +1,4 @@
-alias ls='lsd'
+alias ls='lsd --group-dirs=first'
 alias lt='ls -lt'
 alias j='cd $(dirname `fzf`)'
 alias du='du -ahcd'

@@ -1,3 +1,28 @@
 alias cps='docker ps'
 alias cpid='cpid(){docker inspect --format "{{.State.Pid}}" "$1"};cpid $@'
 alias cstrace='cstrace(){PID=$(cpid "$1");shift;sudo strace -tt -T -f -s 200 -p "${PID}" $@};cstrace $@'
+
+
+docker_proxy(){
+    echo "set docker proxy"
+    mkdir -p /etc/systemd/system/docker.service.d
+    cat <<EOF >/etc/systemd/system/docker.service.d/http-proxy.conf
+[Service]
+Environment="HTTP_PROXY=${HTTPRPOXYURL}"
+EOF
+    cat <<EOF >/etc/systemd/system/docker.service.d/https-proxy.conf
+[Service]
+Environment="HTTPS_PROXY=${HTTPRPOXYURL}"
+EOF
+    systemctl daemon-reload
+    systemctl restart docker
+    systemctl show --property=Environment docker
+}
+
+docker_noproxy(){
+    echo "unset docker proxy"
+    rm -rf /etc/systemd/system/docker.service.d
+    systemctl daemon-reload
+    systemctl restart docker
+    systemctl show --property=Environment docker
+}

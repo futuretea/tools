@@ -17,5 +17,5 @@ fi
 VERSION=$1
 sudo rm -f "${GOROOT}"
 sudo ln -s "${GOROOT}${VERSION}" "${GOROOT}"
-go version
-
+GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
+echo "=> ${GOVERSIONNOW}"

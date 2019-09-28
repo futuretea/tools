@@ -1,46 +1,59 @@
-alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
-alias gom='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'
-alias goml='go list -m all'
-alias gomt='tree $GOPATH/pkg/mod -dDv -L 3'
 alias gorun="reflex -r '(\.go$|go\.mod$|\.yaml$)' -s go run"
 
-goversion(){
-    go version | awk '{print $3}' | sed 's/go//g' | sed 's/\./ /g'
+alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
+
+alias gomm='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'
+alias goml='go list -m all'
+alias gomt='tree -dDv -L 3 $GOPATH/pkg/mod'
+alias goms='ls -l --total-size $GOPATH/pkg/mod'
+alias gomc='go clean -modcache'
+alias gomd='go mod download'
+alias gomv='go mod vendor'
+alias gomr='go mod edit -replace='
+
+gomod_proxy(){
+    echo "set gomod proxy"
+    if [ -z "${GOPROXYURL}" ];then
+        GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
+        if [ $(echo "${GOVERSIONNOW}" | awk  -F "." '{print $2}') -lt 13 ];then
+            GOPROXYURL=https://goproxy.cn
+        else
+            GOPROXYURL=https://goproxy.cn,direct
+        fi
+    fi
+    export GOPROXY="${GOPROXYURL}"
 }
 
-usegomod(){
-    echo "use go mod"
-    export GO111MODULE=on
-    export GOPRIVATE=*.gitlab.com,*.gitee.com
-    # export GOSUMDB=sum.golang.google.cn
-    local versions=($(goversion))
-    if [ $((versions[2])) -lt 13 ];then
-        export GOPROXY=https://goproxy.cn
-    else
-        export GOPROXY=https://goproxy.cn,direct
-    fi
-}
-usegopath(){
-    echo "use go path"
-    export GO111MODULE=off
-    unset GOPRIVATE
-    unset GOSUMDB
+gomod_noproxy(){
+    echo "unset gomod proxy"
     unset GOPROXY
 }
 
-gog(){
-    if [ ! -f ".goconfig" ];then
-        # echo "no .goconfig in this dir"
+gomodon(){
+    echo "set gomod on"
+    export GO111MODULE=on
+}
+
+gomodoff(){
+    echo "set gomod off"
+    export GO111MODULE=off
+}
+
+goenv(){
+    if [ ! -f "go.env" ];then
         return
     else
-        source .goconfig
+        source go.env
     fi
-    gov ${GOVERSION}
+    echo "module ${GOMODULE}"
+    echo "go ${GOVERSION}"
     if ${USEGOMOD};then
-        usegomod
+        gomodon
     else
-        usegopath
-        WORKDIR=${GOPATH}/src/${PACKAGE}
+        gomodoff
+        echo "module ${GOMODULE}"
+        gov ${GOVERSION}
+        WORKDIR=${GOPATH}/src/${GOMODULE}
         if [ x"${WORKDIR}" != x"${PWD}" ];then
             if [ ! -d ${WORKDIR} ];then
                 ln -s "${PWD}" "${WORKDIR}"
@@ -48,9 +61,49 @@ gog(){
             cd "${WORKDIR}"
         fi
     fi
-    if ${USEPROXY};then
-        fq go +
-    else
-        fq go -
+    if [ -n "${USEPROXY}" ];then
+        echo "${USEPROXY}" | sed 's/,/\n/g' | while read -r APP;do
+            fq "${APP}"
+        done
     fi
+    if [ -n "${NOPROXY}" ];then
+        echo "${NOPROXY}" | sed 's/,/\n/g' | while read -r APP;do
+            hx "${APP}"
+        done
+    fi
+}
+
+chpwd(){
+    goenv
+}
+
+goenvinit(){
+if [ $# -lt 3 ];then
+    echo "USAGE:"
+    echo "  goenvinit GOMODULE PMMODE(mod,other) PROXYMODE(mod,other)"
+    return
+fi
+GOMODULE=$1
+PMMODE=${2-"mod"}
+PROXYMODE=${3-"mod"}
+if [ x"${PMMODE}" == "xmod" ];then
+    USEGOMOD=true
+else
+    USEGOMOD=false
+fi
+if [ x"${PROXYMODE}" == "xmod" ];then
+    USEPROXY=gomod
+    NOPROXY=git,sh
+else
+    USEPROXY=git,sh
+    NOPROXY=gomod
+fi
+GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
+cat >go.env<<EOF
+GOMODULE=${GOMODULE}
+GOVERSION=${GOVERSIONNOW}
+USEGOMOD=${USEGOMOD}
+USEPROXY=${USEPROXY}
+NOPROXY=${NOPROXY}
+EOF
 }

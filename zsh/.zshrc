@@ -8,9 +8,11 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 ZSH_THEME="ys"
+
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOROOT=/usr/local/bin/go
+export GOPRIVATE=*.gitlab.com,*.gitee.com
 
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin

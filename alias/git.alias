@@ -8,3 +8,15 @@ alias nomore='git clean -fd'
 alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
 alias glf='mygitshow $(git log --no-merges --oneline | fzf --preview '"'"'mygitshow {}'"'"')'
 alias glfm='mygitshow $(git log --merges --oneline | fzf --preview '"'"'mygitshow {}'"'"')'
+
+git_proxy(){
+    echo "set git proxy"
+    git config --global http.proxy "${HTTPRPOXYURL}"
+    git config --global https.proxy "${HTTPRPOXYURL}"
+}
+
+git_noproxy(){
+    echo "unset git proxy"
+    git config --global --unset http.proxy
+    git config --global --unset https.proxy
+}

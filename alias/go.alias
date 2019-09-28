@@ -4,13 +4,21 @@ alias goml='go list -m all'
 alias gomt='tree $GOPATH/pkg/mod -dDv -L 3'
 alias gorun="reflex -r '(\.go$|go\.mod$|\.yaml$)' -s go run"
 
+goversion(){
+    go version | awk '{print $3}' | sed 's/go//g' | sed 's/\./ /g'
+}
+
 usegomod(){
     echo "use go mod"
     export GO111MODULE=on
     export GOPRIVATE=*.gitlab.com,*.gitee.com
     export GOSUMDB=sum.golang.google.cn
-    export GOPROXY=https://goproxy.cn
-    #export GOPROXY=https://goproxy.cn,direct
+    local versions=($(goversion))
+    if [ $((versions[2])) -lt 13 ];then
+        export GOPROXY=https://goproxy.cn
+    else
+        export GOPROXY=https://goproxy.cn,direct
+    fi
 }
 usegopath(){
     echo "use go path"
@@ -27,6 +35,7 @@ gog(){
     else
         source .goconfig
     fi
+    gov ${GOVERSION}
     if ${USEGOMOD};then
         usegomod
     else
@@ -44,5 +53,4 @@ gog(){
     else
         fq go -
     fi
-    gov ${GOVERSION}
 }

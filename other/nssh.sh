@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    nssh.sh 
+    nssh.sh
 EOF
 }
 
@@ -80,7 +80,7 @@ fi
 info "Create new droplet use snapshot ${SSID} in ${REGION}"
 doctl compute droplet create --image "${SSID}" --region "${REGION}" --size "s-1vcpu-1gb" "do-${SSID}" --wait
 info "Get ip from new droplet"
-NEWIP=$(doctl compute droplet list --no-header --format PublicIPv4 | awk 'END {print}') 
+NEWIP=$(doctl compute droplet list --no-header --format PublicIPv4 | awk 'END {print}')
 echo "  new droplet ip is ${NEWIP}"
 
 echo "Wait for IP is up"

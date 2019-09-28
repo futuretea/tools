@@ -10,7 +10,7 @@ EOF
 }
 
 exit_err() {
-   echo >&2 $1
+   echo >&2 "${1}"
    exit 1
 }
 

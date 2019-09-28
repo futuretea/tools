@@ -73,38 +73,3 @@ goenv(){
 chpwd(){
     goenv
 }
-
-goenvinit(){
-if [ $# -lt 3 ];then
-    echo "USAGE:"
-    echo "  goenvinit GOMODULE PMMODE(mod,other) PROXYMODE(mod,other)"
-    return
-fi
-local GOMODULE
-local PMMODE
-local PROXYMODE
-local USEGOMOD
-GOMODULE=$1
-PMMODE=${2-"mod"}
-PROXYMODE=${3-"mod"}
-if [ x"${PMMODE}" == "xmod" ];then
-    USEGOMOD=true
-else
-    USEGOMOD=false
-fi
-if [ x"${PROXYMODE}" == "xmod" ];then
-    USEPROXY=gomod
-    NOPROXY=git,sh
-else
-    USEPROXY=git,sh
-    NOPROXY=gomod
-fi
-GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
-cat >go.env<<EOF
-GOMODULE=${GOMODULE}
-GOVERSION=${GOVERSIONNOW}
-USEGOMOD=${USEGOMOD}
-USEPROXY=${USEPROXY}
-NOPROXY=${NOPROXY}
-EOF
-}

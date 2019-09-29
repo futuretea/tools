@@ -35,7 +35,7 @@ install(){
 
 mkdir -p "${INSTALLPATH}"
 if [ -d "${SCRIPTPATH}" ];then
-    find "${SCRIPTPATH}" -name "*.sh" | while read -r SCRIPTFILE;do
+    find "${SCRIPTPATH}" -regex ".*\.\(py\|sh\)" | while read -r SCRIPTFILE;do
         install "${SCRIPTFILE}"
     done
 else

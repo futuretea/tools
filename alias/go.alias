@@ -47,9 +47,7 @@ goenv(){
     if ${USEGOMOD};then
         gomodon
     else
-        gomodoff
-        echo "module ${GOMODULE}"
-        
+        gomodoff        
         WORKDIR=${GOPATH}/src/${GOMODULE}
         if [ x"${WORKDIR}" != x"${PWD}" ];then
             if [ ! -d ${WORKDIR} ];then

@@ -24,7 +24,6 @@ export EDITOR='vim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
 source /usr/local/bin/alias/all
-source $HOME/.cargo/env
 eval "$(kubectl completion zsh)"
 eval "$(doctl completion zsh)"
 eval "$(starship init zsh)"

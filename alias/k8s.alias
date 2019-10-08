@@ -54,3 +54,6 @@ alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLI
 alias kcgcs="kubectl config view --minify --output 'jsonpath={..server}'"
 alias kcgcn="kubectl config view --minify --output 'jsonpath={..namespace}'"
 alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
+
+# context
+alias ccc="cf ~/.kube/config"

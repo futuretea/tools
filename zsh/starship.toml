@@ -10,3 +10,7 @@ symbol = "python-"
 symbol = "rust-"
 [java]
 symbol = "jdk-"
+[kubernetes]
+symbol = "⛵ "
+style = "dim green"
+disabled = true

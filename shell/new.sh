@@ -3,10 +3,10 @@
 set -eou pipefail
 
 useage(){
-  cat <<"EOF"
+  cat <<HELP
 USAGE:
-    new.sh scriptpath scriptargs...
-EOF
+    $(basename $0) scriptpath scriptargs...
+HELP
 }
 
 exit_err() {
@@ -30,10 +30,10 @@ cat > "${SCRIPTPATH}" <<EOFFF
 set -eou pipefail
 
 useage(){
-  cat <<"EOF"
+  cat <<HELP
 USAGE:
-    ${SCRIPTNAME} ${SCRIPTARGS}
-EOF
+    $(basename $0) ${SCRIPTARGS}
+HELP
 }
 
 exit_err() {

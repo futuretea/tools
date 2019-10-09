@@ -1,2 +1,1 @@
 alias newkey="ssh-keygen -t rsa -N '' -f ${HOME}/.ssh/id_rsa -q"
-alias cch="sudo cf /etc/hosts"

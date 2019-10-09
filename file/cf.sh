@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    cf.sh FILE EXT
+    cf.sh FILE BASE [EXTS..]
 EOF
 }
 
@@ -20,8 +20,11 @@ if [ $# -lt 2 ];then
 fi
 
 FILE=$1
-EXT=$2
-rm -rf "${FILE}"
-ln -s "${FILE}"."${EXT}" "${FILE}"
+BASE=$2
+shift 2
+cat "${FILE}.${BASE}" > "${FILE}"
+for EXT in $@;do
+cat "${FILE}.${EXT}" >> "${FILE}"
+done
 
 

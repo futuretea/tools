@@ -1,1 +1,19 @@
-alias share='share(){kdeconnect-cli -d $(kdeconnect-cli -a --id-only) --share $(readlink -f $1)};share $@'
+alias phone="kdeconnect-cli -a --id-name-only | fzf | awk '{print \$1}'"
+
+conn(){
+    local phone_id=$(phone)
+    kdeconnect-cli -d "${phone_id}" $@
+}
+
+files(){
+    local phone_id=$(phone)
+    echo "${phone_id}"
+    dolphin kdeconnect://"${phone_id}"/
+}
+
+share(){
+    conn --share $(readlink -f $1)
+}
+
+alias pair='conn --pair'
+alias unpair='conn --unpair'

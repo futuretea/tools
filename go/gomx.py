@@ -105,19 +105,20 @@ def get_path_revision(origin, path, revision, repo_path):
 # [global] vendor_repos_dict
 # [global] direct_requires
 # [global] direct_repos_dict
-def parse_package(package):
+def parse_package(package, path_key, revision_key, origin_key):
     # 如果是vendor依赖时有这个字段
-    origin = package.get("origin")
+    origin = package.get(origin_key)
     # commit版本
-    revision = package.get("revision")
+    revision = package.get(revision_key)
     # 如果没有指定版本则跳过
     if revision == "":
         return
     # 包路径
-    path = package["path"]
+    path = package[path_key]
     # 对应仓库路径
     repo_path = get_repo_path(path)
     # 完整路径
+    # print(origin, path, revision, repo_path)
     path_revision = get_path_revision(origin, path, revision, repo_path)
     if path_revision == "":
         return
@@ -179,24 +180,32 @@ def get_kubernetes_version(direct_requires_dict):
             kubernetes_version = mod_version.lstrip("v")
             return kubernetes_version
 
+def get_json_keys(mode):
+    if mode == "govendor":
+        return "rootPath", "package", "path", "revision", "origin"
+    elif mode == "godeps":
+        return "ImportPath", "Deps", "ImportPath", "Rev", None
+    print("unsupport mode")
+    exit(1)
 
 if __name__ == '__main__':
 
     argv = sys.argv
     argc = len(argv)
-    if argc != 2:
+    if argc != 3:
         print("usage:")
-        print(" gomx.py vendor.json")
+        print(" gomx.py vendor_json_path mode")
         exit(1)
 
     vendor_json_path = str(argv[1])
+    mode = str(argv[2])
+    name_key, package_key, path_key, revision_key, origin_key = get_json_keys(mode)
     with open(vendor_json_path) as f:
         vendor = json.load(f)
-
-    packages = vendor["package"]
-    module_name = vendor["rootPath"]
+    module_name = vendor[name_key]
+    packages = vendor[package_key]
     for package in packages:
-        parse_package(package)
+        parse_package(package, path_key, revision_key, origin_key)
 
     print("module %s" % module_name)
     print("go %s" % get_go_version())

@@ -24,10 +24,7 @@ export EDITOR='vim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
 source /usr/local/bin/alias/all
+source /usr/share/nvm/nvm.sh
+source $HOME/private.alias
 eval "$(kubectl completion zsh)"
-eval "$(doctl completion zsh)"
 eval "$(starship init zsh)"
-#PROMPT='$(kube_ps1)'$PROMPT
-#source $HOME/.cargo/env
-#source /usr/share/nvm/nvm.sh
-#source $HOME/private.alias

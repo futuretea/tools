@@ -12,7 +12,7 @@ ZSH_THEME="ys"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOROOT=/usr/local/bin/go
-export GOPRIVATE=*.gitlab.com,*.gitee.com
+export GOPRIVATE=gitlab.com,gitee.com,bosun.org
 export GOPROXYURL="https://goproxy.cn"
 export HTTPRPOXYURL="http://127.0.0.1:12333"
 

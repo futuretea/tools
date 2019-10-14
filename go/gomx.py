@@ -71,7 +71,7 @@ def get_mod_path_version(path_revision):
 
 # 获取对应的git仓库
 def get_repo_path(path):
-    format2list = ["google.golang.org", "k8s.io"]
+    format2list = ["google.golang.org", "k8s.io", "bosun.org"]
     paths = path.split('/')
     repo_path = "/".join(paths[:3])
     for url in format2list:
@@ -97,6 +97,7 @@ def get_path_revision(origin, path, revision, repo_path):
         return ""
     # 和已有仓库版本不一致则保留自身的路径
     if exist_revision and (exist_revision != revision):
+        print("%s %s %s %s != %s" % (origin, path, repo_path, revision, exist_revision))
         return "%s@%s" % (path, revision)
 
 

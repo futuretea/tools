@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import json
+
 import subprocess
 import sys
 import os
+
+import json
+import toml
 
 debug = os.environ.get("DEBUG")
 trans = True
@@ -97,7 +100,8 @@ def get_path_revision(origin, path, revision, repo_path):
         return ""
     # 和已有仓库版本不一致则保留自身的路径
     if exist_revision and (exist_revision != revision):
-        print("%s %s %s %s != %s" % (origin, path, repo_path, revision, exist_revision))
+        print("%s %s %s %s != %s" %
+              (origin, path, repo_path, revision, exist_revision))
         return "%s@%s" % (path, revision)
 
 
@@ -181,13 +185,31 @@ def get_kubernetes_version(direct_requires_dict):
             kubernetes_version = mod_version.lstrip("v")
             return kubernetes_version
 
+
 def get_json_keys(mode):
     if mode == "govendor":
         return "rootPath", "package", "path", "revision", "origin"
     elif mode == "godeps":
         return "ImportPath", "Deps", "ImportPath", "Rev", None
-    print("unsupport mode")
-    exit(1)
+    elif mode == "dep":
+        return None, "projects", "name", "revision", None
+    else:
+        print("unsupport mode")
+        exit(1)
+
+
+def get_vendor(vendor_path, mode):
+    if mode in ['govendor', 'godeps']:
+        with open(vendor_path) as f:
+            vendor = json.load(f)
+        return vendor
+    elif mode == "dep":
+        vendor = toml.load(vendor_path)
+        return vendor
+    else:
+        print("unsupport mode")
+        exit(1)
+
 
 if __name__ == '__main__':
 
@@ -198,17 +220,18 @@ if __name__ == '__main__':
         print(" gomx.py vendor_json_path mode")
         exit(1)
 
-    vendor_json_path = str(argv[1])
+    vendor_path = str(argv[1])
     mode = str(argv[2])
-    name_key, package_key, path_key, revision_key, origin_key = get_json_keys(mode)
-    with open(vendor_json_path) as f:
-        vendor = json.load(f)
-    module_name = vendor[name_key]
+    vendor = get_vendor(vendor_path, mode)
+    name_key, package_key, path_key, revision_key, origin_key = get_json_keys(
+        mode)
     packages = vendor[package_key]
     for package in packages:
         parse_package(package, path_key, revision_key, origin_key)
 
-    print("module %s" % module_name)
+    if name_key:
+        module_name = vendor[name_key]
+        print("module %s" % module_name)
     print("go %s" % get_go_version())
     print("require (")
     print_direct_requires(direct_requires)
@@ -216,6 +239,7 @@ if __name__ == '__main__':
     print(")")
     print("replace (")
     kubernetes_version = get_kubernetes_version(direct_requires_dict)
+    # kubernetes_version = "1.15.4"
     kubernetes_staging_requires = get_kubernetes_staging_requires(
         kubernetes_version)
     print_kubernetes_staging_requires(

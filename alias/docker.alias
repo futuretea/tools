@@ -1,4 +1,5 @@
 alias cps='docker ps'
+alias crun='docker run -it --rm'
 alias cpid='cpid(){docker inspect --format "{{.State.Pid}}" "$1"};cpid $@'
 alias cstrace='cstrace(){PID=$(cpid "$1");shift;sudo strace -tt -T -f -s 200 -p "${PID}" $@};cstrace $@'
 

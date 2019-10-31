@@ -9,6 +9,6 @@ alias ckiss='ckiss(){browse "${JIRA_URL}/issues/?filter=$1";};ckiss $@'
 # 查看issue
 alias ckis='ckis(){browse "${JIRA_URL}/browse/${JIRA_PROJ}-$1";};ckis $@'
 # 新建PR
-alias xjpr='xjpr(){browse "https://gitee.com/${GITEE_ORG}/$1/pull/new/${GITEE_ORG}:${JIRA_PROJ}-$2...${GITEE_ORG}:master"};xjpr $@'
+alias xjpr='xjpr(){browse "https://gitee.com/${GITEE_ORG}/$1/pull/new/${GITEE_ORG}:${JIRA_PROJ}-$2...${GITEE_ORG}:${3:-master}"};xjpr $@'
 # 查看PR
 alias ckpr='ckpr(){browse "https://gitee.com/${GITEE_ORG}/$1/pulls?status=all&search=${JIRA_PROJ}-$2";};ckpr $@'

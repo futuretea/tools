@@ -57,4 +57,4 @@ alias kcgcn="kubectl config view --minify --output 'jsonpath={..namespace}'"
 alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 
 # context
-alias ccc="cf ~/.kube/config"
+alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'

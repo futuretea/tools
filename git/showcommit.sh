@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    what.sh FZFINFO
+    showcommit.sh FZFINFO
 EOF
 }
 

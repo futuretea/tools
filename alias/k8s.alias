@@ -8,6 +8,7 @@ alias kcki="kck install"
 alias kckr="kck remove"
 alias kckl="kck list"
 alias kcks="kck search"
+alias kcku="kck update"
 
 # kubectl plugins
 alias kce="kc iexec"

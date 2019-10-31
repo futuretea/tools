@@ -6,8 +6,14 @@ alias nochange='git checkout --'
 alias noadd='git reset HEAD'
 alias nomore='git clean -fd'
 alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
-alias glf='mygitshow $(git log --no-merges --oneline | fzf --preview '"'"'mygitshow {}'"'"')'
-alias glfm='mygitshow $(git log --merges --oneline | fzf --preview '"'"'mygitshow {}'"'"')'
+alias nobranch='nobranch(){branch=$(git branch --show-current);git checkout master && git branch -d "${branch}";};nobranch $@'
+
+# gco,gcb
+alias gcr='gcr(){git checkout -b $1 $2$1;};gcr $@'
+
+alias cmt='cmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};cmt $@'
+alias use='git cherry-pick'
+alias get='get(){git checkout $1 -- $2;};get $@'
 
 git_proxy(){
     echo "set git proxy"

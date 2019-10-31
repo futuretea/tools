@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    mygitshow.sh FZFINFO
+    what.sh FZFINFO
 EOF
 }
 

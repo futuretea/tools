@@ -1,19 +1,18 @@
 alias ref='grep -IPorh  "(?<=\")((github.com|gitee.com|k8s.io)/[^/]*/[^/]*)(?=/)" * | sort -u'
 alias refb='refb(){grep -aPoh  "(?<=\")((github.com|gitee.com|k8s.io)/[^/]*/[^/]*)(?=/)" $1 | sort -u;};refb $@'
 
-alias nocommit='git reset --soft HEAD^'
-alias nochange='git checkout --'
+alias nocmt='git reset --soft HEAD^'
 alias noadd='git reset HEAD'
+alias nochg='git checkout --'
 alias nomore='git clean -fd'
-alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
 alias nobranch='nobranch(){branch=$(git branch --show-current);git checkout master && git branch -d "${branch}";};nobranch $@'
 
-# gco,gcb
-alias gcr='gcr(){git checkout -b $1 $2$1;};gcr $@'
+alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
 
-alias cmt='cmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};cmt $@'
-alias use='git cherry-pick'
-alias get='get(){git checkout $1 -- $2;};get $@'
+alias showcmt='showcmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};showcmt $@'
+alias usecmt='git cherry-pick'
+alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
+alias autosquash='git rebase -i --autosquash'
 
 git_proxy(){
     echo "set git proxy"
@@ -25,4 +24,13 @@ git_noproxy(){
     echo "unset git proxy"
     git config --global --unset http.proxy
     git config --global --unset https.proxy
+}
+
+cmt(){
+    commit_option=$1
+    msg=$2
+    shift 2
+    git add $@
+    git commit ${commit_option} ${msg}
+    git log --oneline 
 }

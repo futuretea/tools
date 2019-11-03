@@ -12,7 +12,7 @@ alias gomv='go mod vendor'
 alias gomr='go mod edit -replace='
 
 alias goplay='xdg-open https://play.golang.org/'
-alias gopkg='gopkg(){xdg-open https://golang.org/pkg/$1;};gopkg $@'
+alias gopkg='gopkg(){xdg-open "https://golang.org/pkg/$1/#${2}";};gopkg $@'
 
 gomod_proxy(){
     echo "set gomod proxy"

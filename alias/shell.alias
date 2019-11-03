@@ -1,1 +1,6 @@
-alias c1='awk '"'"'{print $1}'"'"' | xargs -r'
+awk_print(){
+    awk -v n=${1:-1} '{print $n}'
+}
+awk_group(){
+    awk -v n=${1:-1} '{++A[$n]} END {for(k in A) print k, A[k]}'
+}

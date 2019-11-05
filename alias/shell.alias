@@ -4,3 +4,6 @@ awk_print(){
 awk_group(){
     awk -v n=${1:-1} '{++A[$n]} END {for(k in A) print k, A[k]}'
 }
+awk_after(){
+    awk -v n=${1:-1} '{for(i=1;i<=$n;i++){$i=""};print $0}' 
+}

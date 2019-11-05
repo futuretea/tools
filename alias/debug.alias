@@ -7,3 +7,5 @@ alias pfs='perf stat'
 alias pfr='perf record -g'
 alias pfrp='perf record -g -p'
 alias pfri='perf report -i perf.data'
+
+alias pss='ps auxef'

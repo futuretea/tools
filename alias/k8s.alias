@@ -58,3 +58,7 @@ alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 
 # context
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'
+
+# cheatsheet
+alias kubecheat='xdg-open https://kubernetes.io/docs/reference/kubectl/cheatsheet/'
+alias kubeapi='kubeapi(){xdg-open https://kubernetes.io/docs/reference/generated/kubernetes-api/v$1/#$2;};kubeapi $@'

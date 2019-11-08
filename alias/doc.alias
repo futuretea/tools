@@ -1,0 +1,4 @@
+alias gopkg='gopkg(){xdg-open "https://golang.org/pkg/$1/#${2}";};gopkg $@'
+alias kubecheat='xdg-open https://kubernetes.io/docs/reference/kubectl/cheatsheet/'
+alias kubeapi='kubeapi(){xdg-open https://kubernetes.io/docs/reference/generated/kubernetes-api/v$1/#$2;};kubeapi $@'
+alias rfc='rfc(){xdg-open https://tools.ietf.org/html/rfc$1;};rfc $@'

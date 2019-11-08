@@ -1,1 +1,11 @@
-alias baidu='baidu(){open "https://www.baidu.com/s?wd=$1";};baidu $@'
+alias browse=xdg-open
+alias github='browse https://github.com'
+alias baidu='baidu(){browse "https://www.baidu.com/s?wd=$1";};baidu $@'
+alias google='google(){browse https://www.google.com/search?q=$1;};google $@'
+alias stkof='stkof(){browse https://stackoverflow.com/search?q=$1;};stkof $@'
+alias goplay='browse https://play.golang.org/'
+alias kubectl-help='browse https://kubernetes.io/docs/reference/kubectl/cheatsheet/'
+alias gopkg='gopkg(){browse "https://golang.org/pkg/$1/#${2}";};gopkg $@'
+alias kubeapi='kubeapi(){browse https://kubernetes.io/docs/reference/generated/kubernetes-api/v$1/#$2;};kubeapi $@'
+alias rfc='rfc(){browse https://tools.ietf.org/html/rfc$1;};rfc $@'
+

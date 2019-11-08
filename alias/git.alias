@@ -32,6 +32,5 @@ cmt(){
     shift 2
     git add $@
     git commit ${commit_option} ${msg}
-    git log --oneline 
+    git log --oneline
 }
-alias github='xdg-open https://github.com'

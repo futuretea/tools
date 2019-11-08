@@ -1,2 +1,1 @@
 alias cch="sudo cf /etc/hosts base"
-alias rfc='rfc(){xdg-open https://tools.ietf.org/html/rfc$1;};rfc $@'

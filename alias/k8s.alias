@@ -55,6 +55,7 @@ alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLI
 alias kcgcs="kubectl config view --minify --output 'jsonpath={..server}'"
 alias kcgcn="kubectl config view --minify --output 'jsonpath={..namespace}'"
 alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
+alias kubecurl='kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent'
 
 # context
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'

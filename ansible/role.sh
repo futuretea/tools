@@ -21,10 +21,11 @@ fi
 
 HOSTS=$1
 ROLE=$2
-shift 2
+PLAYBOOK=${3:-"/dev/stdin"}
+shift 3
 export ANSIBLE_ROLES_PATH="$(pwd)/roles"
 export ANSIBLE_RETRY_FILES_ENABLED="false"
-ansible-playbook "$@" /dev/stdin<<END
+ansible-playbook "$@" "${PLAYBOOK}"<<END
 - hosts: ${HOSTS}
   roles:
     - ${ROLE}

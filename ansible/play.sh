@@ -21,11 +21,12 @@ fi
 
 HOSTS=$1
 ROLE=$2
-shift 2
-export ANSIBLE_ROLES_PATH="${pwd}/roles"
-export ANSIBLE_RETRY_FILES_ENABLED="false"
-ansible-playbook "$@" /dev/stdin<<END
+cat >playbooks/tmp.yaml <<EOF
 - hosts: ${HOSTS}
+  gather_facts: false
   roles:
-    - ${ROLE}
-END
+    - role: ${ROLE}
+EOF
+shift 2
+ansible-playbook -i hosts.ini playbooks/tmp.yaml "$@"
+

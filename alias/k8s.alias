@@ -37,8 +37,8 @@ alias kcgdn="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,A
 # kubectl get pod
 alias kcgp='kcgp(){if [ -z $RUN ];then;kcg pod $@;else;if [ $RUN -eq 0 ];then;kcg pod --field-selector=status.phase!=Running $@;else;kcg pod --field-selector=status.phase==Running $@;fi;fi;};kcgp $@'
 alias kcgpn="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,HOSTPORT:spec.containers[*].ports[*].hostPort'"
-alias kcgpc="kcgp -o custom-columns='NAME:metadata.name,CONTAINER:spec.containers[*].name'"
-alias kcgpci="kcgp -o custom-columns='NAME:metadata.name,INITCONTAINER:spec.initContainers[*].name'"
+alias kcgpc="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,CONTAINER:spec.containers[*].name'"
+alias kcgpci="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,INITCONTAINER:spec.initContainers[*].name'"
 alias kcgps="kcgp -o custom-columns='NAME:metadata.name,SERVICEACCOUNT:spec.serviceAccountName'"
 alias kcgpv="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,VOLUMES:spec.volumes[*].name'"
 alias kcgpi="kcgp -o custom-columns='NAME:metadata.name,IMAGES:spec.containers[*].image'"

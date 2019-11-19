@@ -60,10 +60,18 @@ alias kubecurl='kc run -i --rm --restart=Never dummy --image=dockerqa/curl:ubunt
 # context
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'
 
-# other
+# set
+alias kcs='kubectl set'
+alias kcse='kubectl set env'
 alias kcsi='kubectl set image'
+alias kcsr='kubectl set resources'
+alias kcss='kubectl set selector'
+# rollout
+alias kcr='kubectl rollout'
 alias kcru='kubectl rollout undo'
 alias kcrs='kubectl rollout status'
 alias kcrr='kubectl rollout restart'
 alias kcrh='kubectl rollout history'
 alias kcrp='kubectl rollout pause'
+# run
+alias kuberun='kuberun(){kubectl run $1 --image=$1;kubectl expose deploy $1 --port=$2 --target-port=$2;};kuberun $@'

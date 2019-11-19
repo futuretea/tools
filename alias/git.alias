@@ -9,6 +9,12 @@ alias nobranch='nobranch(){branch=$(git branch --show-current);git checkout mast
 
 alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
 
+alias ncmt='ncmt(){git log  --reverse --oneline | sed -n "${1}p";};ncmt $@'
+ncmtb(){
+    local nb=$(ncmt $1 | awk '{print $1}')
+    git checkout -b commit-$1 "${nb}" 
+}
+
 alias showcmt='showcmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};showcmt $@'
 alias usecmt='git cherry-pick'
 alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
@@ -27,8 +33,8 @@ git_noproxy(){
 }
 
 cmt(){
-    commit_option=$1
-    msg=$2
+    local commit_option=$1
+    local msg=$2
     shift 2
     git add $@
     git commit ${commit_option} ${msg}

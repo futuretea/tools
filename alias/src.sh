@@ -27,7 +27,7 @@ echo "${INSTALLALIAS}"
 mkdir -p /usr/local/bin/alias
 
 if [ -d "${ALIASPATH}" ];then
-    find "${ALIASPATH}" -name "*.alias" | while read -r ALIASFILE;do
+    find "${ALIASPATH}" -name "*.alias" | sort -u | while read -r ALIASFILE;do
         install "${ALIASFILE}"
     done
 else
@@ -39,7 +39,7 @@ fi
 cat >"${INSTALLPATH}/all"<<EOF
 #all alias there
 EOF
-find "${INSTALLPATH}" -name "*.alias" | while read -r INSTALLALIAS;do
+find "${INSTALLPATH}" -name "*.alias" | sort -u | while read -r INSTALLALIAS;do
 cat >>"${INSTALLPATH}/all" <<EOF
 source "${INSTALLALIAS}"
 EOF

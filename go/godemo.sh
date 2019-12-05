@@ -24,8 +24,8 @@ echo "${DEMODIR}"
 cd "${DEMODIR}"
 go mod init demo
 cat > "${DEMODIR}"/Makefile <<EOF
-all: run
-.PHONY: run lint test
+all: lint test run
+.PHONY: lint test run
 run:
 	go run main.go
 build:
@@ -33,15 +33,43 @@ build:
 lint:
 	golangci-lint run -v
 test:
-	go test
+	go test demo -run Testdemo
+bench:
+	go test -bench=. demo -run Testdemo
 EOF
 cat > "${DEMODIR}"/main.go <<EOF
 package main
 import (
 	"fmt"
 )
+
+func demo() string {
+	return "hello world"
+}
+
 func main(){
-	fmt.Println("hello world")
+  fmt.Println(demo())
+}
+EOF
+cat > "${DEMODIR}"/main_test.go <<EOF
+package main
+
+import (
+	"testing"
+)
+
+func Test_demo(t *testing.T){
+  result := demo()
+  if result == "hello world" {
+    t.Log(result)
+  }
+}
+
+func Benchmark_demo(b *testing.B){
+  result := demo()
+  if result == "hello world" {
+    b.Log(result)
+  }
 }
 EOF
 make

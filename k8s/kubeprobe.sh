@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<HELP
 USAGE:
-    new TYPE WORKLOAD CONTAINER path port initialDelaySeconds [periodSeconds timeoutSeconds successThreshold failureThreshold]
+    kubeprobe.sh TYPE WORKLOAD CONTAINER probe path port initialDelaySeconds [periodSeconds timeoutSeconds successThreshold failureThreshold]
     eg: kubeprobe deploy ui nginx / 80 3 2 1 1 3
 HELP
 }

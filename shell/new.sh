@@ -32,7 +32,7 @@ set -eou pipefail
 useage(){
   cat <<HELP
 USAGE:
-    $(basename $0) ${SCRIPTARGS}
+    ${SCRIPTNAME} ${SCRIPTARGS}
 HELP
 }
 

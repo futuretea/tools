@@ -35,7 +35,7 @@ lint:
 test:
 	go test demo -run Testdemo
 bench:
-	go test -bench=. demo -run Testdemo
+  go test -benchmem -bench Benchmark_demo 
 EOF
 cat > "${DEMODIR}"/main.go <<EOF
 package main

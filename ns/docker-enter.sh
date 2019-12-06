@@ -16,15 +16,15 @@ else
     exit 1
   fi
   shift
-  OPTS="--target $PID --mount --uts --ipc --net --pid --"
+  OPTS="--target $PID --mount --uts --ipc --net --pid"
   if [ -z "$1" ]; then
     # No command given.
     # Use su to clear all host environment variables except for TERM,
     # initialize the environment variables HOME, SHELL, USER, LOGNAME, PATH,
     # and start a login shell.
-    "$NSENTER" "$OPTS" su - root
+    "$NSENTER" $OPTS su - root
   else
     # Use env to clear all host environment variables.
-    "$NSENTER" "$OPTS" env --ignore-environment -- "$@"
+    "$NSENTER" $OPTS env --ignore-environment -- "$@"
   fi
 fi

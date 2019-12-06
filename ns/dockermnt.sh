@@ -36,6 +36,6 @@ docker-enter "$CONTAINER" sh -c \
 docker-enter "$CONTAINER" mkdir /tmpmnt
 docker-enter "$CONTAINER" mount "$DEV" /tmpmnt
 docker-enter "$CONTAINER" mkdir -p "$CONTPATH"
-docker-enter "$CONTAINER" mount -o bind "/tmpmnt/$SUBROOT/$SUBPATH $CONTPATH"
+docker-enter "$CONTAINER" mount -o bind "/tmpmnt/$SUBROOT/$SUBPATH" "$CONTPATH"
 docker-enter "$CONTAINER" umount /tmpmnt
 docker-enter "$CONTAINER" rmdir /tmpmnt

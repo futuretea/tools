@@ -27,3 +27,5 @@ docker_noproxy(){
     systemctl restart docker
     systemctl show --property=Environment docker
 }
+
+alias cpull='cpull(){docker pull $1:$(reg tags $1| fzf);};cpull $@'

@@ -17,11 +17,11 @@ CONTAINER=$3
 REMOTE=$4
 LOCAL=$(basename "${REMOTE}")
 
-kubectl -n "${NAMESPACE}" -controller cp "${POD}":"${REMOTE}" "${LOCAL}" -c "${CONTAINER}"
+kubectl -n "${NAMESPACE}" cp "${POD}":"${REMOTE}" "${LOCAL}" -c "${CONTAINER}"
 LOCALMD51=$(md5sum "${LOCAL}" | awk '{print $1}')
 vi "${LOCAL}"
 LOCALMD52=$(md5sum "${LOCAL}" | awk '{print $1}')
 if [ x"${LOCALMD51}" != x"${LOCALMD52}" ];then
-kubectl -n "${NAMESPACE}" -controller cp "${LOCAL}" "${POD}":"${REMOTE}" -c "${CONTAINER}"
+kubectl -n "${NAMESPACE}" cp "${LOCAL}" "${POD}":"${REMOTE}" -c "${CONTAINER}"
 fi
 rm "${LOCAL}"

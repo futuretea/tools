@@ -60,15 +60,15 @@ import (
 
 func Test_demo(t *testing.T){
   result := demo()
-  if result == "hello world" {
-    t.Log(result)
+  if result != "hello world" {
+    t.Errorf("want %v, get %v", "hello world", result)
   }
 }
 
 func Benchmark_demo(b *testing.B){
   result := demo()
-  if result == "hello world" {
-    b.Log(result)
+  if result != "hello world" {
+    b.Errorf("want %v, get %v", "hello world", result)
   }
 }
 EOF

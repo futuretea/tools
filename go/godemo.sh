@@ -31,11 +31,11 @@ run:
 build:
 	go build
 lint:
-	golangci-lint run -v
+	golangci-lint run
 test:
 	go test demo -run Testdemo
 bench:
-  go test -benchmem -bench Benchmark_demo 
+	go test -benchmem -bench Benchmark_demo
 EOF
 cat > "${DEMODIR}"/main.go <<EOF
 package main

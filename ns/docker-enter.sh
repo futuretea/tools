@@ -16,7 +16,7 @@ else
     exit 1
   fi
   shift
-  OPTS="--target $PID --mount --uts --ipc --net --pid"
+  OPTS="--target $PID --mount --uts --ipc --net --pid --"
   if [ -z "$1" ]; then
     # No command given.
     # Use su to clear all host environment variables except for TERM,

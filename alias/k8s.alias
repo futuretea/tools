@@ -45,6 +45,7 @@ alias kcgpi="kcgp -o custom-columns='NAME:metadata.name,IMAGES:spec.containers[*
 alias kcgpip="kcgp -o custom-columns='NAME:metadata.name,PULLPOLICY:spec.containers[*].imagePullPolicy'"
 alias kcgpil="kcgp -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
 alias kcgpila="kcgp --all-namespaces -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
+alias kcgpp="kcgp -o custom-columns='NAME:metadata.name,LIVENESS:spec.containers[*].livenessProbe,READINESS:spec.containers[*].readinessProbe'"
 
 # others
 alias kcdpe="kc delete pod --field-selector=status.phase!=Running"

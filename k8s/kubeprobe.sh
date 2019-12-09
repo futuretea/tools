@@ -5,11 +5,13 @@ set -eou pipefail
 useage(){
   cat <<HELP
 USAGE:
-    kubeprobe.sh TYPE WORKLOAD CONTAINER [LIVENESSPROBE READINESSPROBE]
+    kubeprobe.sh TYPE WORKLOAD CONTAINER [PROBE READINESSPROBE]
     eg: 
       kubeprobe deploy ui nginx
-      kubeprobe deploy ui nginx "" "/ 80 3 2 1 1 3"
-      kubeprobe deploy ui nginx "/ 80 10 2 1 1 3" "/ 80 3 2 1 1 3"
+      kubeprobe deploy ui nginx "" "3 2 1 1 3 http / 80"
+      kubeprobe deploy ui nginx "10 2 1 1 3 http / 80" "3 2 1 1 3 http / 80"
+      kubeprobe deploy ui nginx "10 2 1 1 3 tcp 80"
+      kubeprobe deploy ui nginx "10 2 1 1 3 exec ls /"
 HELP
 }
 
@@ -26,25 +28,53 @@ fi
 TYPE=$1
 WORKLOAD=$2
 CONTAINER=$3
-LIVENESSPROBE_CONFIG=${4:-""}
-READINESSPROBE_CONFIG=${5:-""}
+READINESSPROBE_CONFIG=${4:-""}
+LIVENESSPROBE_CONFIG=${5:-""}
 
-SPEC='{"spec": {"template": {"spec": {"containers": [{"name": "'${CONTAINER}'"'
+joinCommand(){
+  local str=''
+  local i=1
+  for v in "$@";do
+    str=$str 
+    if [ $i -ne 1 ];then
+      str=$str','
+    fi
+    str=$str'"'$v'"'
+    i=$((i+1))
+  done
+  echo "$str"
+}
 
-if [ -n "${LIVENESSPROBE_CONFIG}" ];then
-  LIVENESSPROBE=(${LIVENESSPROBE_CONFIG})
-  LIVENESSPROBE_SPEC='{"httpGet": {"path": "'${LIVENESSPROBE[0]}'","port": '${LIVENESSPROBE[1]}',"scheme": "HTTP"},"initialDelaySeconds": '${LIVENESSPROBE[2]}',"periodSeconds": '${LIVENESSPROBE[3]}',"successThreshold": '${LIVENESSPROBE[4]}',"timeoutSeconds": '${LIVENESSPROBE[5]}',"failureThreshold": '${LIVENESSPROBE[6]}'}'
-  SPEC=${SPEC}',"livenessProbe":'${LIVENESSPROBE_SPEC}
+getProbeSpec(){
+local PROBE_CONFIG=$1
+local PROBE
+local PROBE_ARGS
+local PROBE_METHOD
+local COMMAND
+if [ -n "${PROBE_CONFIG}" ];then
+  PROBE=(${PROBE_CONFIG})
+  PROBE_ARGS='"initialDelaySeconds": '${PROBE[0]}',"periodSeconds": '${PROBE[1]}',"successThreshold": '${PROBE[2]}',"timeoutSeconds": '${PROBE[3]}',"failureThreshold": '${PROBE[4]}
+  case ${PROBE[5]} in
+    "http")
+      PROBE_METHOD='"httpGet": {"path": "'${PROBE[6]}'","port": '${PROBE[7]}',"scheme": "HTTP"}'
+      ;;
+    "tcp")
+      PROBE_METHOD='"tcpSocket": {"port": '${PROBE[6]}'}'
+      ;;
+    "exec")
+      COMMAND=$(joinCommand "${PROBE[@]:6}")
+      PROBE_METHOD='"exec":{"command": ['${COMMAND}']}'
+      ;;
+    *)
+      echo "unknow method ${PROBE[5]}"
+      exit 1
+  esac
+  echo '{'${PROBE_ARGS},${PROBE_METHOD}'}'
 else
-  SPEC=${SPEC}',"livenessProbe":null'
+  echo "null"
 fi
-if [ -n "${READINESSPROBE_CONFIG}" ];then
-  READINESSPROBE=(${READINESSPROBE_CONFIG})
-  READINESSPROBE_SPEC='{"httpGet": {"path": "'${READINESSPROBE[0]}'","port": '${READINESSPROBE[1]}',"scheme": "HTTP"},"initialDelaySeconds": '${READINESSPROBE[2]}',"periodSeconds": '${READINESSPROBE[3]}',"successThreshold": '${READINESSPROBE[4]}',"timeoutSeconds": '${READINESSPROBE[5]}',"failureThreshold": '${READINESSPROBE[6]}'}'
-  SPEC=${SPEC}',"readinessProbe":'${READINESSPROBE_SPEC}
-else
-  SPEC=${SPEC}',"readinessProbe":null'
-fi
-SPEC=${SPEC}'}]}}}}'
+}
+
+SPEC='{"spec": {"template": {"spec": {"containers": [{"name": "'${CONTAINER}'","livenessProbe":'$(getProbeSpec "${LIVENESSPROBE_CONFIG}")',"readinessProbe":'$(getProbeSpec "${READINESSPROBE_CONFIG}")'}]}}}}'
 echo "${SPEC}"
 kubectl patch "${TYPE}" "${WORKLOAD}" --patch "${SPEC}"

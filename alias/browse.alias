@@ -11,4 +11,4 @@ alias kubectl-help='browse https://kubernetes.io/docs/reference/kubectl/cheatshe
 alias gopkg='gopkg(){browse "https://golang.org/pkg/$1/#${2}";};gopkg $@'
 alias kubeapi='kubeapi(){browse https://kubernetes.io/docs/reference/generated/kubernetes-api/v$1/#$2;};kubeapi $@'
 alias rfc='rfc(){browse https://tools.ietf.org/html/rfc$1;};rfc $@'
-
+alias leetcode='browse https://leetcode-cn.com/problems/array-nesting/'

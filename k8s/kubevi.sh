@@ -16,7 +16,9 @@ POD=$2
 CONTAINER=$3
 REMOTE=$4
 LOCAL=$(basename "${REMOTE}")
-
+TEMPDIR=$(mktemp -d)
+echo "${TEMPDIR}"
+cd "${TEMPDIR}"
 kubectl -n "${NAMESPACE}" cp "${POD}":"${REMOTE}" "${LOCAL}" -c "${CONTAINER}"
 LOCALMD51=$(md5sum "${LOCAL}" | awk '{print $1}')
 vi "${LOCAL}"

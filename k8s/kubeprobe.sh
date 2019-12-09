@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<HELP
 USAGE:
-    kubeprobe.sh TYPE WORKLOAD CONTAINER [PROBE READINESSPROBE]
+    kubeprobe.sh TYPE WORKLOAD CONTAINER [READINESSPROBE LIVENESSPROBE ]
     eg: 
       kubeprobe deploy ui nginx
       kubeprobe deploy ui nginx "" "3 2 1 1 3 http / 80"

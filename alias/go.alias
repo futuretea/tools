@@ -71,11 +71,3 @@ goenv(){
 chpwd(){
     goenv
 }
-
-grepnovendor(){
-    grep --exclude-dir=vendor --include="$1" -Por "$2"
-}
-
-grepnovendorz(){
-    grep --exclude-dir=vendor --include="$1" -Porz "$2"
-}

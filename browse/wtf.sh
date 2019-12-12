@@ -14,12 +14,12 @@ exit_err() {
     exit 1
 }
 
-if [ $# -ne 1 ];then
+if [ $# -lt 1 ];then
     useage
     exit
 fi
 
-SOMETHING=$(echo "${1}" |tr -d '\n' |od -An -tx1|tr ' ' %)
+SOMETHING=$(echo "$@"|tr -d '\n'|od -An -tx1|tr ' ' %)
 open "https://www.google.com/search?q=${SOMETHING}"
 open "https://www.baidu.com/s?wd=${SOMETHING}"
 open "https://github.com/search?q=${SOMETHING}"

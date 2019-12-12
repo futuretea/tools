@@ -1,5 +1,5 @@
-alias browse=xdg-open
-alias github='browse https://github.com'
+alias browse=open
+alias github='github(){browse "https://github.com/search?q=$1";};github $@'
 alias baidu='baidu(){browse "https://www.baidu.com/s?wd=$1";};baidu $@'
 alias bilibili='bilibili(){browse "https://search.bilibili.com/all?keyword=$1";};bilibili $@'
 alias apache='apache(){browse "https://$1.apache.org";};apache $@'

@@ -20,9 +20,10 @@ if [ $# -lt 1 ];then
 fi
 
 OPENPATH=$1
+
 if [ -f "${OPENPATH}" ];then
     while read -r LINE;do
-        xdg-open "${LINE}" >/dev/null 2>&1
+        xdg-open "$LINE">/dev/null 2>&1
     done < "${OPENPATH}"
 else
     xdg-open "${OPENPATH}" >/dev/null 2>&1

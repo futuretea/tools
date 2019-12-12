@@ -72,10 +72,6 @@ chpwd(){
     goenv
 }
 
-filenovendor(){
-    find . -type f -name "$1" -not -path "./vendor/*"
-}
-
 grepnovendor(){
     grep --exclude-dir=vendor --include="$1" -Por "$2"
 }

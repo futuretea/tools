@@ -1,2 +1,2 @@
-alias pacmanlog='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed)'
+alias pacmanlog='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed|downgraded|upgraded)'
 

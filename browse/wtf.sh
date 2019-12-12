@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
     cat <<"EOF"
 USAGE:
-    search.sh SOMETHING
+    wtf.sh SOMETHING
 EOF
 }
 
@@ -23,7 +23,5 @@ SOMETHING=$(echo "${1}" |tr -d '\n' |od -An -tx1|tr ' ' %)
 open "https://www.google.com/search?q=${SOMETHING}"
 open "https://www.baidu.com/s?wd=${SOMETHING}"
 open "https://github.com/search?q=${SOMETHING}"
-open "http://s.weibo.com/weibo/${SOMETHING}"
-open "https://weixin.sogou.com/weixin?type=2&query=${SOMETHING}"
-open "https://www.youtube.com/results?search_query=${SOMETHING}"
-open "https://search.bilibili.com/all?keyword=${SOMETHING}"
+open "https://stackoverflow.com/search?q=${SOMETHING}"
+open "https://medium.com/search?q=${SOMETHING}"

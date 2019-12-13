@@ -6,6 +6,8 @@ useage(){
   cat <<"EOF"
 USAGE:
     vminit NAME BOX START END MEM CPU IPBASE [DISKS...]
+    eg:
+      vminit demohost centos-7-1905.1-libvirt 101 103 2048 2 192.168.50 20G 10G
 EOF
 }
 

@@ -6,7 +6,7 @@ useage(){
   cat <<HELP
 USAGE:
     vmbox.sh PROJECT BOX VERSION PROVIDER
-    eg vmbox.sh ubuntu trusty64 20190514.0.0 virtualbox
+    eg vmbox centos 7 1905.1 libvirt
 HELP
 }
 

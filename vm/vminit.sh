@@ -46,7 +46,7 @@ EOF
 
 ip2mac(){
   local IP=$1
-  local MAC='55:55'
+  local MAC='50:50'
   for index in {1..4}; do
       ipi=$(echo "${IP}" | cut -d "." -f "${index}")
       maci=$(echo "obase=16;${ipi}" | bc)
@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
         domain.nested = true
         domain.management_network_name = "${NAME}"
         domain.management_network_address = "${IPBASE}.0/24"
-        domain.management_network_mac = ip2mac("55:55","${IPBASE}.#{100+i}")
+        domain.management_network_mac = ip2mac("50:50","${IPBASE}.#{100+i}")
 EOF
 
 for DISK in ${DISKS};do

@@ -100,8 +100,8 @@ end
 Vagrant.configure("2") do |config|
   (${START}..${END}).each do |i|
     config.vm.define "$NAME#{i}" do |node|
-      node.ssh.username = 'root'
-      node.ssh.password = 'vagrant'
+      # node.ssh.username = 'root'
+      # node.ssh.password = 'vagrant'
       node.ssh.insert_key = false
       node.vm.box = '${BOX}'
       node.vm.synced_folder '.', '/vagrant', disabled: true

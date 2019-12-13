@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<HELP
 USAGE:
-    new
+    godemo.sh
 HELP
 }
 
@@ -23,7 +23,7 @@ DEMODIR=$(mktemp -d)
 echo "${DEMODIR}"
 cd "${DEMODIR}"
 go mod init demo
-cat > "${DEMODIR}"/Makefile <<EOF
+cat > Makefile <<EOF
 all: lint test run
 .PHONY: lint test run
 run:
@@ -37,7 +37,7 @@ test:
 bench:
 	go test -benchmem -bench Benchmark_demo
 EOF
-cat > "${DEMODIR}"/main.go <<EOF
+cat > main.go <<EOF
 package main
 import (
 	"fmt"
@@ -51,7 +51,7 @@ func main(){
   fmt.Println(demo())
 }
 EOF
-cat > "${DEMODIR}"/main_test.go <<EOF
+cat > main_test.go <<EOF
 package main
 
 import (

@@ -102,7 +102,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "$NAME#{i}" do |node|
       # node.ssh.username = 'root'
       # node.ssh.password = 'vagrant'
-      node.ssh.insert_key = false
+      node.ssh.insert_key = true
       node.vm.box = '${BOX}'
       node.vm.synced_folder '.', '/vagrant', disabled: true
       node.vm.provider :libvirt do |domain|

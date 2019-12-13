@@ -5,7 +5,7 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    vminit NAME BOX NUM MEM CPU IPBASE [DISKS...]
+    vminit NAME BOX START END MEM CPU IPBASE [DISKS...]
 EOF
 }
 
@@ -14,22 +14,43 @@ exit_err() {
    exit 1
 }
 
-if [ $# -lt 6 ];then
+if [ $# -lt 7 ];then
     useage
     exit 1
 fi
 
 NAME=$1
 BOX=$2
-NUM=$3
-MEM=$4
-CPU=$5
-IPBASE=$6
-shift 6
+START=$3
+END=$4
+MEM=$5
+CPU=$6
+IPBASE=$7
+shift 7
 DISKS=$@
 
 mkdir -p "${NAME}"
 cd "${NAME}"
+
+net_exists=0
+for net in $(virsh net-list --all --name | xargs -r ); do
+  if [[ x"$NAME" == x"$net" ]];then
+    net_exists=1
+  fi
+done
+
+ip2mac(){
+  local MAC=$1
+  local IP=$2
+  for index in {1..4}; do
+      ipi=$(echo "${IP}" | cut -d "." -f "${index}")
+      maci=$(echo "obase=16;${ipi}" | bc)
+      MAC="${MAC}"':'"${maci}"
+  done
+  echo "${MAC}"
+}
+
+if [[ $net_exists -eq 0 ]];then
 cat >network.xml <<EOF
 <network ipv6="yes">
   <name>${NAME}</name>
@@ -44,20 +65,9 @@ cat >network.xml <<EOF
       <range start="${IPBASE}.2" end="${IPBASE}.254"/>
 EOF
 
-ip2mac(){
-  local IP=$1
-  local MAC='50:50'
-  for index in {1..4}; do
-      ipi=$(echo "${IP}" | cut -d "." -f "${index}")
-      maci=$(echo "obase=16;${ipi}" | bc)
-      MAC="${MAC}"':'"${maci}"
-  done
-  echo "${MAC}"
-}
-
-for ((i=1;i<=$NUM;i++)); do
-IP="${IPBASE}.$((100+$i))"
-MAC=$(ip2mac "${IP}")
+for ((i=2;i<=254;i++)); do
+IP="${IPBASE}.$i"
+MAC=$(ip2mac "50:50" "${IP}")
 cat >>network.xml <<EOF
       <host mac="${MAC}" ip="${IP}"/>
 EOF
@@ -68,6 +78,9 @@ cat >>network.xml <<EOF
   </ip>
 </network>
 EOF
+
+virsh net-define --file ./network.xml
+fi
 
 cat >Vagrantfile <<EOF
 # -*- mode: ruby -*-
@@ -83,7 +96,7 @@ def ip2mac(prefix, str_ip)
 end
 
 Vagrant.configure("2") do |config|
-  (1..${NUM}).each do |i|
+  (${START}..${END}).each do |i|
     config.vm.define "$NAME#{i}" do |node|
       node.ssh.username = 'root'
       node.ssh.password = 'vagrant'
@@ -97,7 +110,7 @@ Vagrant.configure("2") do |config|
         domain.nested = true
         domain.management_network_name = "${NAME}"
         domain.management_network_address = "${IPBASE}.0/24"
-        domain.management_network_mac = ip2mac("50:50","${IPBASE}.#{100+i}")
+        domain.management_network_mac = ip2mac("50:50","${IPBASE}.#{i}")
 EOF
 
 for DISK in ${DISKS};do
@@ -123,3 +136,5 @@ UseDNS no
 systemctl restart sshd
 EOF
 EOFF
+
+vagrant up

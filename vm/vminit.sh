@@ -5,9 +5,9 @@ set -eou pipefail
 useage(){
   cat <<"EOF"
 USAGE:
-    vminit NAME BOX START END MEM CPU IPBASE [DISKS...]
+    vminit BOX NAME START END MEM CPU IPBASE [DISKS...]
     eg:
-      vminit demohost centos-7-1905.1-libvirt 192.168.50 2 10 2 2048 20G 10G
+      vminit centos-7-1905.1-libvirt demohost 192.168.50 2 10 2 2048 20G 10G
 EOF
 }
 
@@ -21,8 +21,8 @@ if [ $# -lt 7 ];then
     exit 1
 fi
 
-NAME=$1
-BOX=$2
+BOX=$1
+NAME=$2
 IPBASE=$3
 START=$4
 END=$5

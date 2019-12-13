@@ -7,7 +7,7 @@ useage(){
 USAGE:
     vminit BOX NAME START END MEM CPU IPBASE [DISKS...]
     eg:
-      vminit centos-7-1905.1-libvirt demohost 192.168.50 2 10 2 2048 20G 10G
+      vminit centos-7-1905.1-libvirt demohost 192.168.50 10 19 2 2048 20G 10G
 EOF
 }
 

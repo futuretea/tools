@@ -29,8 +29,8 @@ shift 6
 DISKS=$@
 
 mkdir -p "${NAME}"
-
-cat >"${NAME}"/network.xml <<EOF
+cd "${NAME}"
+cat >network.xml <<EOF
 <network ipv6="yes">
   <name>${NAME}</name>
   <forward mode="nat">
@@ -58,18 +58,18 @@ ip2mac(){
 for ((i=1;i<=$NUM;i++)); do
 IP="${IPBASE}.$((100+$i))"
 MAC=$(ip2mac "${IP}")
-cat >>"${NAME}"/network.xml <<EOF
+cat >>network.xml <<EOF
       <host mac="${MAC}" ip="${IP}"/>
 EOF
 done
 
-cat >>"${NAME}"/network.xml <<EOF
+cat >>network.xml <<EOF
     </dhcp>
   </ip>
 </network>
 EOF
 
-cat >"${NAME}"/Vagrantfile <<EOF
+cat >Vagrantfile <<EOF
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -101,12 +101,12 @@ Vagrant.configure("2") do |config|
 EOF
 
 for DISK in ${DISKS};do
-cat >>"${NAME}"/Vagrantfile <<EOF
+cat >>Vagrantfile <<EOF
         domain.storage :file, :size => '${DISK}', :bus => 'virtio'
 EOF
 done
 
-cat >>"${NAME}"/Vagrantfile <<EOF
+cat >>Vagrantfile <<EOF
       end
       node.vm.provision :shell, :path => 'provision.sh'
     end
@@ -114,7 +114,7 @@ cat >>"${NAME}"/Vagrantfile <<EOF
 end
 EOF
 
-cat >"${NAME}"/provision.sh <<EOFF
+cat >provision.sh <<EOFF
 #!/bin/bash
 sed -ri 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 cat >>/etc/ssh/sshd_config <<EOF

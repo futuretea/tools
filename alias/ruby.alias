@@ -1,0 +1,2 @@
+alias gem_zh='gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/; gem sources -u'
+alias gem_org='proxychains gem sources --remove https://gems.ruby-china.com/ --add https://rubygems.org/; proxychains gem sources -u'

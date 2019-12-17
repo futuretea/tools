@@ -2,16 +2,16 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<"EOF"
+useage() {
+    cat <<"EOF"
 USAGE:
     install_nsenter.sh [NSENTER_VERSION]
 EOF
 }
 
 exit_err() {
-   echo >&2 "$1"
-   exit 1
+    echo >&2 "$1"
+    exit 1
 }
 
 NSENTER_VERSION=${1:-"2.34"}

@@ -2,25 +2,25 @@
 [[ -n $DEBUG ]] && set -x
 set -ou pipefail
 
-useage(){
-  cat <<"EOF"
+useage() {
+    cat <<"EOF"
 USAGE:
     gop.sh SRCPATH
 EOF
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -ne 1 ];then
+if [ $# -ne 1 ]; then
     useage
     exit
 fi
 
 SRCPATH=$1
-if [ ! -d  "${SRCPATH}" ];then
+if [ ! -d "${SRCPATH}" ]; then
     echo "${SRCPATH} is not a dir"
     exit
 fi
@@ -30,19 +30,19 @@ cd "${SRCPATH}" || return
 red='\033[0;31m'
 plain='\033[0m'
 
-info(){
+info() {
     echo -ne "\n${red}$1：${plain}\n"
 }
 
-filenovendor(){
+filenovendor() {
     find . -type f -name "$1" -not -path "./vendor/*"
 }
 
-grepnovendor(){
+grepnovendor() {
     grep --exclude-dir=vendor --include="$1" -Por "$2"
 }
 
-grepnovendorz(){
+grepnovendorz() {
     grep --exclude-dir=vendor --include="$1" -Porz "$2"
 }
 
@@ -95,11 +95,11 @@ info "容器构建"
 filenovendor "Dockerfile*"
 
 info "基础容器"
-grepnovendor "Dockerfile*"  "(?<=FROM\s).*$"
+grepnovendor "Dockerfile*" "(?<=FROM\s).*$"
 
 info "容器镜像"
-grepnovendor "*.yaml"  "(?<=image:\s).*$"
-grepnovendor "*.yml"  "(?<=image:\s).*$"
+grepnovendor "*.yaml" "(?<=image:\s).*$"
+grepnovendor "*.yml" "(?<=image:\s).*$"
 
 info "yml"
 filenovendor "*.yml"

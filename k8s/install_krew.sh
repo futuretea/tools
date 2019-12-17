@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<"EOF"
+useage() {
+    cat <<"EOF"
 USAGE:
     install_krew.sh
 EOF
 }
 
 exit_err() {
-   echo >&2 "$1"
-   exit 1
+    echo >&2 "$1"
+    exit 1
 }
 
-if [ $# -lt 0 ];then
+if [ $# -lt 0 ]; then
     useage
     exit 1
 fi

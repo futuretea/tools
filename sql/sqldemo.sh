@@ -2,26 +2,26 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     sqldemo.sh 
 HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 0 ];then
+if [ $# -lt 0 ]; then
     useage
     exit 1
 fi
 DEMODIR=$(mktemp -d)
 echo "${DEMODIR}"
 cd "${DEMODIR}"
-cat > "${DEMODIR}"/demo.sql <<EOF
+cat >"${DEMODIR}"/demo.sql <<EOF
 CREATE DATABASE IF NOT EXISTS demo;
 use demo;
 

@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     new TYPE WORKLOAD CONTAINER IMAGE
 HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 4 ];then
+if [ $# -lt 4 ]; then
     useage
     exit 1
 fi
@@ -27,4 +27,3 @@ IMAGE=$4
 SPEC='{"spec": {"template": {"spec": {"containers": [{"name": "'"${CONTAINER}"'","image": "'"${IMAGE}"'"}]}}}}'
 
 kubectl patch "${TYPE}" "${WORKLOAD}" --patch "${SPEC}"
-  

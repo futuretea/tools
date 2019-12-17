@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     godemo.sh
 HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 0 ];then
+if [ $# -lt 0 ]; then
     useage
     exit 1
 fi
@@ -23,7 +23,7 @@ DEMODIR=$(mktemp -d)
 echo "${DEMODIR}"
 cd "${DEMODIR}"
 go mod init demo
-cat > Makefile <<EOF
+cat >Makefile <<EOF
 all: lint test run
 .PHONY: lint test run
 run:
@@ -37,7 +37,7 @@ test:
 bench:
 	go test -benchmem -bench Benchmark_demo
 EOF
-cat > main.go <<EOF
+cat >main.go <<EOF
 package main
 import (
 	"fmt"
@@ -51,7 +51,7 @@ func main(){
   fmt.Println(demo())
 }
 EOF
-cat > main_test.go <<EOF
+cat >main_test.go <<EOF
 package main
 
 import (

@@ -2,8 +2,8 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<"EOF"
+useage() {
+    cat <<"EOF"
 USAGE:
     vminit BOX NAME START END MEM CPU IPBASE [DISKS...]
     eg:
@@ -12,11 +12,11 @@ EOF
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 7 ];then
+if [ $# -lt 7 ]; then
     useage
     exit 1
 fi
@@ -35,25 +35,25 @@ mkdir -p "${NAME}"
 cd "${NAME}"
 
 net_exists=0
-for net in $(virsh net-list --all --name | xargs -r ); do
-  if [[ x"$NAME" == x"$net" ]];then
-    net_exists=1
-  fi
+for net in $(virsh net-list --all --name | xargs -r); do
+    if [[ x"$NAME" == x"$net" ]]; then
+        net_exists=1
+    fi
 done
 
-ip2mac(){
-  local MAC=$1
-  local IP=$2
-  for index in {1..4}; do
-      ipi=$(echo "${IP}" | cut -d "." -f "${index}")
-      maci=$(echo "obase=16;${ipi}" | bc)
-      MAC="${MAC}"':'"${maci}"
-  done
-  echo "${MAC}"
+ip2mac() {
+    local MAC=$1
+    local IP=$2
+    for index in {1..4}; do
+        ipi=$(echo "${IP}" | cut -d "." -f "${index}")
+        maci=$(echo "obase=16;${ipi}" | bc)
+        MAC="${MAC}"':'"${maci}"
+    done
+    echo "${MAC}"
 }
 
-if [[ $net_exists -eq 0 ]];then
-cat >network.xml <<EOF
+if [[ $net_exists -eq 0 ]]; then
+    cat >network.xml <<EOF
 <network ipv6="yes">
   <name>${NAME}</name>
   <forward mode="nat">
@@ -67,21 +67,21 @@ cat >network.xml <<EOF
       <range start="${IPBASE}.2" end="${IPBASE}.254"/>
 EOF
 
-for ((i=2;i<=254;i++)); do
-IP="${IPBASE}.$i"
-MAC=$(ip2mac "50:50" "${IP}")
-cat >>network.xml <<EOF
+    for ((i = 2; i <= 254; i++)); do
+        IP="${IPBASE}.$i"
+        MAC=$(ip2mac "50:50" "${IP}")
+        cat >>network.xml <<EOF
       <host mac="${MAC}" ip="${IP}"/>
 EOF
-done
+    done
 
-cat >>network.xml <<EOF
+    cat >>network.xml <<EOF
     </dhcp>
   </ip>
 </network>
 EOF
 
-virsh net-define --file ./network.xml
+    virsh net-define --file ./network.xml
 fi
 
 cat >Vagrantfile <<EOF
@@ -115,8 +115,8 @@ Vagrant.configure("2") do |config|
         domain.management_network_mac = ip2mac("50:50","${IPBASE}.#{i}")
 EOF
 
-for DISK in ${DISKS};do
-cat >>Vagrantfile <<EOF
+for DISK in ${DISKS}; do
+    cat >>Vagrantfile <<EOF
         domain.storage :file, :size => '${DISK}', :bus => 'virtio'
 EOF
 done

@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-useage(){
+useage() {
     echo "useage:"
     echo "  opnew REPO PROJECT GROUP VERSION KIND"
 }
 
-if [ $# -ne 5 ];then
+if [ $# -ne 5 ]; then
     useage
     exit
 fi

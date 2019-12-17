@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     new HOSTS ROLE
 HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 2 ];then
+if [ $# -lt 2 ]; then
     useage
     exit 1
 fi
@@ -24,7 +24,7 @@ ROLE=$2
 shift 2
 export ANSIBLE_ROLES_PATH="${pwd}/roles"
 export ANSIBLE_RETRY_FILES_ENABLED="false"
-ansible-playbook "$@" /dev/stdin<<END
+ansible-playbook "$@" /dev/stdin <<END
 - hosts: ${HOSTS}
   roles:
     - ${ROLE}

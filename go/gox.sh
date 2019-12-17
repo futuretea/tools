@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-useage(){
+useage() {
     echo "useage:"
     echo "  gox.sh CODEPATH"
 }
 
-if [ $# -lt 1 ];then
+if [ $# -lt 1 ]; then
     useage
     exit
 fi

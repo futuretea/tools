@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
+useage() {
     cat <<"EOF"
 USAGE:
     netconf.sh IFACE
@@ -14,13 +14,12 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 1 ];then
+if [ $# -lt 1 ]; then
     useage
     exit
 fi
 
 IFACE=$1
-for conf in "/proc/sys/net/ipv4/conf/${IFACE}"/*
-do
+for conf in "/proc/sys/net/ipv4/conf/${IFACE}"/*; do
     echo "$(basename "${conf}") $(cat "${conf}")"
 done

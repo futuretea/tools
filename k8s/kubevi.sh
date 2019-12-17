@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-useage(){
+useage() {
     echo "useage:"
     echo "  kubevi.sh NAMESPACE POD CONTAINER REMOTE"
 }
 
-if [ $# -ne 4 ];then
+if [ $# -ne 4 ]; then
     useage
     exit
 fi
@@ -23,7 +23,7 @@ kubectl -n "${NAMESPACE}" cp "${POD}":"${REMOTE}" "${LOCAL}" -c "${CONTAINER}"
 LOCALMD51=$(md5sum "${LOCAL}" | awk '{print $1}')
 vi "${LOCAL}"
 LOCALMD52=$(md5sum "${LOCAL}" | awk '{print $1}')
-if [ x"${LOCALMD51}" != x"${LOCALMD52}" ];then
-kubectl -n "${NAMESPACE}" cp "${LOCAL}" "${POD}":"${REMOTE}" -c "${CONTAINER}"
+if [ x"${LOCALMD51}" != x"${LOCALMD52}" ]; then
+    kubectl -n "${NAMESPACE}" cp "${LOCAL}" "${POD}":"${REMOTE}" -c "${CONTAINER}"
 fi
 rm "${LOCAL}"

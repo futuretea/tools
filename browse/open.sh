@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
+useage() {
     cat <<"EOF"
 USAGE:
     open.sh OPENPATH
@@ -14,17 +14,17 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 1 ];then
+if [ $# -lt 1 ]; then
     useage
     exit
 fi
 
 OPENPATH=$1
 
-if [ -f "${OPENPATH}" ];then
-    while read -r LINE;do
-        xdg-open "$LINE">/dev/null 2>&1
-    done < "${OPENPATH}"
+if [ -f "${OPENPATH}" ]; then
+    while read -r LINE; do
+        xdg-open "$LINE" >/dev/null 2>&1
+    done <"${OPENPATH}"
 else
     xdg-open "${OPENPATH}" >/dev/null 2>&1
 fi

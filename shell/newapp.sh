@@ -2,8 +2,8 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     newapp.sh NAME URL [OPTION]
     eg:
@@ -12,11 +12,11 @@ HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 2 ];then
+if [ $# -lt 2 ]; then
     useage
     exit 1
 fi
@@ -29,7 +29,7 @@ OPTION=$@
 mkdir -p /usr/local/bin/app
 cd /usr/local/bin/app
 nativefier --name "${NAME}" "${URL}" "${OPTION}"
-cat > /usr/share/applications/"${NAME}".desktop << EOF
+cat >/usr/share/applications/"${NAME}".desktop <<EOF
 [Desktop Entry]
 Type=Application
 Version=1.0
@@ -38,4 +38,3 @@ Exec=/usr/local/bin/app/${NAME}-linux-x64/${NAME}
 TryExec=/usr/local/bin/app/${NAME}-linux-x64/${NAME}
 Terminal=false
 EOF
-

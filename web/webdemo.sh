@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<HELP
+useage() {
+    cat <<HELP
 USAGE:
     webdemo.sh
 HELP
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -lt 0 ];then
+if [ $# -lt 0 ]; then
     useage
     exit 1
 fi
@@ -22,7 +22,7 @@ fi
 DEMODIR=$(mktemp -d)
 echo "${DEMODIR}"
 cd "${DEMODIR}"
-cat > index.html <<EOF
+cat >index.html <<EOF
 <html>
 
 <body>

@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
+useage() {
     cat <<"EOF"
 USAGE:
     wtf.sh SOMETHING
@@ -14,16 +14,16 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 1 ];then
+if [ $# -lt 1 ]; then
     useage
     exit
 fi
 
 urlEncode() {
-    echo |tr -d '\n'|od -An -tx1|tr ' ' %
+    echo | tr -d '\n' | od -An -tx1 | tr ' ' %
 }
 
-SOMETHING=$(echo "$@"|tr -d '\n'|od -An -tx1|tr ' ' %)
+SOMETHING=$(echo "$@" | tr -d '\n' | od -An -tx1 | tr ' ' %)
 open "https://www.google.com/search?q=${SOMETHING}"
 open "https://www.baidu.com/s?wd=${SOMETHING}"
 open "https://github.com/search?q=${SOMETHING}"

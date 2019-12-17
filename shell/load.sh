@@ -2,19 +2,19 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage(){
-  cat <<"EOF"
+useage() {
+    cat <<"EOF"
 USAGE:
     load.sh SCRIPTPATH
 EOF
 }
 
 exit_err() {
-   echo >&2 "${1}"
-   exit 1
+    echo >&2 "${1}"
+    exit 1
 }
 
-if [ $# -ne 1 ];then
+if [ $# -ne 1 ]; then
     useage
     exit
 fi
@@ -22,7 +22,7 @@ fi
 SCRIPTPATH=$1
 INSTALLPATH="/usr/local/bin/tools"
 
-install(){
+install() {
     local SCRIPTFILE=$1
     local BINNAME
     local INSTALLBIN
@@ -34,12 +34,12 @@ install(){
 }
 
 mkdir -p "${INSTALLPATH}"
-if [ -d "${SCRIPTPATH}" ];then
-    find "${SCRIPTPATH}" -regex ".*\.\(py\|sh\)" | while read -r SCRIPTFILE;do
+if [ -d "${SCRIPTPATH}" ]; then
+    find "${SCRIPTPATH}" -regex ".*\.\(py\|sh\)" | while read -r SCRIPTFILE; do
         install "${SCRIPTFILE}"
     done
 else
-    if [ -f "${SCRIPTPATH}" ];then
+    if [ -f "${SCRIPTPATH}" ]; then
         install "${SCRIPTPATH}"
     fi
 fi

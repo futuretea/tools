@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-useage(){
+useage() {
     echo "useage:"
     echo "  dockernet.sh CONTAINER COMMAND [ARG]..."
 }
 
-if [ $# -lt 2 ];then
+if [ $# -lt 2 ]; then
     useage
     exit
 fi

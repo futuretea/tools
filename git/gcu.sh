@@ -1,16 +1,16 @@
 #!/bin/bash
 #set -e
 
-useage(){
+useage() {
     echo "useage:"
     echo "  gcu.sh user_name user_email --local"
 }
 
-show_user(){
+show_user() {
     git config --list --show-origin | grep user
 }
 
-if [ $# -lt 2 ];then
+if [ $# -lt 2 ]; then
     show_user
     useage
     exit

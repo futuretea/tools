@@ -76,3 +76,5 @@ alias kcrh='kubectl rollout history'
 alias kcrp='kubectl rollout pause'
 # run
 alias kuberun='kuberun(){kubectl run $1 --image=$1;kubectl expose deploy $1 --port=$2 --target-port=$2;};kuberun $@'
+# explain
+alias kcexp='kubectl explain --recursive'

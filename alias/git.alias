@@ -40,3 +40,7 @@ cmt(){
     git commit ${commit_option} ${msg}
     git log --oneline
 }
+
+#gcb,gcm,gco
+#gau,gcam
+alias gcof='git checkout $(git branch -l| fzf)'

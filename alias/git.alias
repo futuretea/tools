@@ -20,6 +20,14 @@ alias usecmt='git cherry-pick'
 alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
 alias autosquash='git rebase -i --autosquash'
 
+usebranch(){
+    local line
+    git status -s | grep UU | awk '{print $2}' | while read -r line;do
+        git checkout $1 -- ${line};
+    done
+    git rebase --continue
+}
+
 git_proxy(){
     echo "set git proxy"
     git config --global http.proxy "${HTTPRPOXYURL}"

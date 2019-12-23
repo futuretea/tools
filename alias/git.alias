@@ -21,11 +21,14 @@ alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
 alias autosquash='git rebase -i --autosquash'
 
 usebranch(){
-    local line
-    git status -s | grep UU | awk '{print $2}' | while read -r line;do
-        git checkout $1 -- ${line};
-    done
-    git rebase --continue
+    local LINE
+    local BRANCH=$(git branch -l -vv | fzf | awk '{print $1}')
+    if [ x"${BRANCH}" != "x*" ];then
+        git status -s | grep UU | awk '{print $2}' | while read -r LINE;do
+            git checkout ${BRANCH} -- ${LINE};
+        done
+        git rebase --continue
+    fi
 }
 
 git_proxy(){

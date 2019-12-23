@@ -22,6 +22,6 @@ FILE=${1:-$(fzf)}
 BRANCH=$(git branch -l -vv | fzf | awk '{print $1}')
 if [ x"${BRANCH}" != "x*" ];then
     if [ -n "${FILE}" ];then
-    echo "git checkout ${BRANCH} -- ${FILE}"
+        git checkout "${BRANCH}" -- "${FILE}"
     fi
 fi

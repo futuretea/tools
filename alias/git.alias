@@ -52,10 +52,8 @@ cmt(){
 #gcb,gcm,gco
 #gau,gcam
 gcof(){
-    local branch=$(git branch -l -vv | fzf | awk '{print $2}')
-    local cur=$(git rev-parse --abbrev-ref HEAD)
-    if [ x"${branch}" != x"${cur}" ];then
-        echo "${cur} ==> ${branch}"
+    local branch=$(git branch -l -vv | fzf | awk '{print $1}')
+    if [ x"${branch}" != "x*" ];then
         git checkout "${branch}"
     fi
 }

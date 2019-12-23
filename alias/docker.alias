@@ -28,4 +28,4 @@ docker_noproxy(){
     systemctl show --property=Environment docker
 }
 
-alias cpull='cpull(){docker pull $1:$(reg tags $1| fzf);};cpull $@'
+alias cpull='cpull(){docker pull $1:$(reg tags $1 | sort -rV | fzf +s);};cpull $@'

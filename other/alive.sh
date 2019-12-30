@@ -23,11 +23,19 @@ IP=$1
 PORT=$2
 
 if ping -c 1 -i 0.3 -W 1 "${IP}" &>/dev/null; then
-    if nc -w 10 -vzn "${IP}" "${PORT}" &>/dev/null; then
-        echo "Service is alived."
-    else
-        echo "Port is closed."
-    fi
+    echo "[*] ping "
 else
-    echo "IP is unaccessible."
+    echo "[ ] ping"
+fi
+
+if sudo hping3 -c 1 -S "${IP}" -p "${PORT}" &>/dev/null; then
+    echo "[*] hping3"
+else
+    echo "[ ] hping3"
+fi
+
+if nc -w 10 -vz "${IP}" "${PORT}" &>/dev/null; then
+    echo "[*] nc"
+else
+    echo "[ ] nc"
 fi

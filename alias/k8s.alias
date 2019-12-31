@@ -56,7 +56,6 @@ alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLI
 alias kcgcs="kc config view --minify --output 'jsonpath={..server}'"
 alias kcgcn="kc config view --minify --output 'jsonpath={..namespace}'"
 alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
-alias kubecurl='kc run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent'
 
 # context
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'
@@ -78,3 +77,7 @@ alias kcrp='kubectl rollout pause'
 alias kuberun='kuberun(){kubectl run $1 --image=$1;kubectl expose deploy $1 --port=$2 --target-port=$2;};kuberun $@'
 # explain
 alias kcexp='kubectl explain --recursive'
+# shell
+alias ksc='kc delete pod dummy --ignore-not-found'
+alias ks='ksc && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
+alias kse='kc exec -it dummy bash'

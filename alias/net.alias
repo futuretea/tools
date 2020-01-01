@@ -1,1 +1,2 @@
 alias cch="sudo cf /etc/hosts base"
+alias nonet="sudo -g nonet"

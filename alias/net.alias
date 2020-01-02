@@ -1,2 +1,2 @@
 alias cch="sudo cf /etc/hosts base"
-alias nonet="sudo -g nonet"
+alias nonet="sudo iptables -A OUTPUT -m owner --gid-owner nonet -j DROP && sudo -g nonet"

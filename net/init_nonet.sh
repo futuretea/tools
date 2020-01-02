@@ -19,5 +19,5 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 sudo groupadd nonet
-sudo iptables -A OUTPUT -m owner --gid-owner nonet -j DROP
 sudo gpasswd -a $USER nonet
+sudo iptables -A OUTPUT -m owner --gid-owner nonet -j DROP

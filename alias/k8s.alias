@@ -78,6 +78,6 @@ alias kuberun='kuberun(){kubectl run $1 --image=$1;kubectl expose deploy $1 --po
 # explain
 alias kcexp='kubectl explain --recursive'
 # shell
-alias ksc='kc delete pod dummy --ignore-not-found'
-alias ks='ksc && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
-alias kse='kc exec -it dummy bash'
+alias kshc='kc delete pod dummy --ignore-not-found'
+alias ksh='ksc && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
+alias kshe='kc exec -it dummy bash'

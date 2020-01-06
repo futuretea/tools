@@ -1,4 +1,4 @@
 alias bak='bak(){cp $1 $1.bak;};bak $@'
 alias swap='swap(){tmp=$(mktemp -u);mv $1 $tmp;mv $2 $1;mv $tmp $2};swap $@'
 alias unbak='unbak(){swap $1.bak $1;};unbak $@'
-alias bakdiff='bakdiff(){vimdiff $1.bak $1;};bakdiff $@'
+alias bakdiff='bakdiff(){meld $1.bak $1 >/dev/null 2>&1;};bakdiff $@'

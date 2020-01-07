@@ -1,5 +1,5 @@
 alias gorun="reflex -r '(\.go$|go\.mod$|\.yaml$)' -s go run"
-
+alias god='god(){go doc -all $1 | vi;};god $@'
 alias gos='gos(){echo $@:;grep --exclude-dir=vendor --include="*.go" -nPr "(\s|&)($@)\.[A-Z].*" || echo "nothing" ;echo "";};gos $@'
 
 alias gomm='grep  -Por "(?<=#\s)(.*)" vendor/modules.txt'

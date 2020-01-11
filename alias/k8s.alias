@@ -10,16 +10,16 @@ alias kckl="kck list"
 alias kcks="kck search"
 alias kcku="kck update"
 
-# kubectl plugins
+# kc plugins
 alias kce="kc iexec"
 alias kct="kc tail"
 alias kcs="kc sniff"
 
-# kubectl log
+# kc logs
 alias kcl="kc logs"
 alias kclf="kc logs -f"
 
-# kubectl get
+# kc get
 alias kcg="kc get"
 alias kcga="kcg all"
 alias kcgn="kcg node -o wide"
@@ -29,12 +29,12 @@ alias kcgd="kcg deploy"
 alias kcgds="kcg ds"
 alias kcge="kcg ev --sort-by=.metadata.creationTimestamp -w"
 
-# kubectl get deploy
+# kc get deploy
 alias kcgdc="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,CONTAINER:spec.template.spec.containers[*].name'"
 alias kcgdci="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,INITCONTAINER:spec.template.spec.initContainers[*].name'"
 alias kcgdn="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,DNSPOLICY:spec.template.spec.dnsPolicy,HOSTNETWORK:spec.template.spec.hostNetwork'"
 
-# kubectl get pod
+# kc get pod
 alias kcgp='kcgp(){if [ -z $RUN ];then;kcg pod $@;else;if [ $RUN -eq 0 ];then;kcg pod --field-selector=status.phase!=Running $@;else;kcg pod --field-selector=status.phase==Running $@;fi;fi;};kcgp $@'
 alias kcgpn="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,HOSTPORT:spec.containers[*].ports[*].hostPort'"
 alias kcgpc="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,CONTAINER:spec.containers[*].name'"
@@ -61,23 +61,25 @@ alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'
 
 # set
-alias kcs='kubectl set'
-alias kcse='kubectl set env'
-alias kcsi='kubectl set image'
-alias kcsr='kubectl set resources'
-alias kcss='kubectl set selector'
+alias kcs='kc set'
+alias kcse='kc set env'
+alias kcsi='kc set image'
+alias kcsr='kc set resources'
+alias kcss='kc set selector'
 # rollout
-alias kcr='kubectl rollout'
-alias kcru='kubectl rollout undo'
-alias kcrs='kubectl rollout status'
-alias kcrr='kubectl rollout restart'
-alias kcrh='kubectl rollout history'
-alias kcrp='kubectl rollout pause'
+alias kcr='kc rollout'
+alias kcru='kc rollout undo'
+alias kcrs='kc rollout status'
+alias kcrr='kc rollout restart'
+alias kcrh='kc rollout history'
+alias kcrp='kc rollout pause'
 # run
-alias kuberun='kuberun(){kubectl run $1 --image=$1;kubectl expose deploy $1 --port=$2 --target-port=$2;};kuberun $@'
+alias kcrun='kuberun(){kc run $1 --image=$1;kc expose deploy $1 --port=$2 --target-port=$2;};kuberun $@'
 # explain
-alias kcexp='kubectl explain --recursive'
+alias kcexp='kc explain --recursive'
 # shell
-alias kshc='kc delete pod dummy --ignore-not-found'
-alias ksh='ksc && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
-alias kshe='kc exec -it dummy bash'
+alias kcshell='kc delete pod dummy --ignore-not-found && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
+# node
+kcnode(){
+    kc describe node $(kcgn -o wide --no-headers | fzf | awk '{print $1}')
+}

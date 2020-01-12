@@ -1,6 +1,6 @@
 export ZSH=/usr/share/oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
-plugins=(git z zsh-autosuggestions)
+plugins=(git fzf z extract autojump zsh-autosuggestions)
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -19,6 +19,7 @@ export HTTPRPOXYURL="http://127.0.0.1:12333"
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools
+export PATH=$PATH:/home/mate/.gem/ruby/2.6.0/bin
 
 export EDITOR='vim'
 setopt no_nomatch

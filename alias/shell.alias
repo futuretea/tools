@@ -7,5 +7,5 @@ awk_group(){
 awk_after(){
     awk -v n=${1:-1} '{for(i=1;i<=$n;i++){$i=""};print $0}'
 }
-alias /='$(history | fzf | awk_after 1)'
+alias hf='$(history | fzf | awk_after 1)'
 alias alag='alias | ag'

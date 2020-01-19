@@ -9,23 +9,9 @@ fi
 
 ZSH_THEME="ys"
 
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export GOROOT=/usr/local/bin/go
-export GOPRIVATE=gitlab.com,gitee.com,bosun.org
-export GOPROXYURL="https://goproxy.cn"
-export HTTPRPOXYURL="http://127.0.0.1:12333"
-
-export PATH=$PATH:$GOROOT/bin:$GOBIN
-export PATH=$PATH:$HOME/.krew/bin
-export PATH=$PATH:/usr/local/bin/tools
-export PATH=$PATH:/home/mate/.gem/ruby/2.6.0/bin
-
-export EDITOR='vim'
 setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
-source /usr/local/bin/alias/all
-source /usr/share/nvm/nvm.sh
-source $HOME/private.alias
+
+source $HOME/.myshrc
 eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"

@@ -83,3 +83,5 @@ alias kcshell='kc delete pod dummy --ignore-not-found && kc run -i --rm --restar
 kcnode(){
     kc describe node $(kcgn -o wide --no-headers | fzf | awk '{print $1}')
 }
+# apply
+alias kcaf='kc apply -f'

@@ -26,7 +26,7 @@ TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
 proxychains curl -fsSLO "${HELMURL}"
 tar -zxvf "${HELMTARBAR}"
-mv linux-amd64/helm /usr/local/bin/h3
+sudo mv linux-amd64/helm /usr/local/bin/h3
 cd -
 rm -r "${TEMPDIR}"
 

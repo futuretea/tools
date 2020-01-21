@@ -58,7 +58,7 @@ alias kcgcn="kc config view --minify --output 'jsonpath={..namespace}'"
 alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 
 # context
-alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube/config.* | cut -d "." -f 2 | fzf)'
+alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)'
 
 # set
 alias kcs='kc set'

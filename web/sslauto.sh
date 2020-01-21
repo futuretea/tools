@@ -24,9 +24,9 @@ EMAIL=$2
 DOMAIN=$3
 shift 3
 SUBS=$@
-sudo openresty -s reload
 ARGS="--webroot -w ${WEBROOT} --email ${EMAIL} -d ${DOMAIN}"
 for SUB in $SUBS;do
 	ARGS="$ARGS -d ${SUB}.${DOMAIN}"
 done
 sudo certbot certonly ${ARGS}
+sudo openresty -s reload

@@ -22,6 +22,8 @@ fi
 IP=$1
 PORT=$2
 
+echo "Checking ${IP}:${PORT}"
+
 if ping -c 1 -i 0.3 -W 1 "${IP}" &>/dev/null; then
     echo "[*] ping "
 else

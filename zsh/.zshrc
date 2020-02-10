@@ -1,6 +1,7 @@
-export ZSH=/usr/share/oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
-plugins=(git fzf z extract autojump zsh-autosuggestions)
+# plugins=(git fzf z extract autojump zsh-autosuggestions)
+plugins=(git z extract autojump)
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -14,4 +15,4 @@ source $ZSH/oh-my-zsh.sh
 
 source $HOME/.myshrc
 eval "$(kubectl completion zsh)"
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"

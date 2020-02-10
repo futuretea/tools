@@ -12,6 +12,6 @@ export PATH=$PATH:/home/$HOME/.gem/ruby/2.6.0/bin
 
 export EDITOR='vim'
 source /usr/local/bin/alias/all
-source /usr/share/nvm/nvm.sh
+# source /usr/share/nvm/nvm.sh
 source $HOME/private.alias
 

@@ -11,7 +11,7 @@ if [ $# -lt 0 ]; then
     exit
 fi
 
-INSTALLPATH="/usr/share/oh-my-zsh/custom/plugins/zsh-autosuggestions"
+INSTALLPATH="$ZSH/custom/plugins/zsh-autosuggestions"
 if [ -d "${INSTALLPATH}" ]; then
     exit
 fi

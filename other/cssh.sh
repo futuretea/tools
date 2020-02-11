@@ -19,4 +19,6 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-docker exec -it ssr cat /etc/shadowsocksr.json | jq -r '.server, .server_port' | xargs alive
+# docker exec -it ssr cat /etc/shadowsocksr.json | jq -r '.server, .server_port' | xargs alive
+source $HOME/ssr.alias
+alive $SSR_IP $SSR_PORT

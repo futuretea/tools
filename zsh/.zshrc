@@ -23,5 +23,5 @@ save_eval(){
 save_source $ZSH/oh-my-zsh.sh
 save_source $HOME/.myshrc
 
-save_eval kubectl "$(kubectl completion zsh)"
-save_eval starship "$(starship init zsh)"
+eval "$(kubectl completion zsh)"
+eval "$(starship init zsh)"

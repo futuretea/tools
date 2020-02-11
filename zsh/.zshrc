@@ -1,7 +1,6 @@
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 plugins=(git fzf z extract autojump zsh-autosuggestions)
-plugins=(git z extract autojump)
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then

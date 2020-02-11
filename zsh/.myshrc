@@ -11,9 +11,6 @@ export PATH=$PATH:/usr/local/bin/tools
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 
 export EDITOR='vim'
-save_source(){
-    [ -f $1 ] && source $1
-}
 save_source /usr/local/bin/alias/all
 save_source /usr/share/nvm/nvm.sh
 save_source $HOME/.fzf.zsh

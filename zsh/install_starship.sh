@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    install_starship.sh 
+    install_starship.sh
 HELP
 }
 

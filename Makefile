@@ -5,6 +5,5 @@ all:
 	cp zsh/.zshrc ~
 	cp zsh/.myshrc ~
 	cp zsh/starship.toml ~/.config/
-	touch ${HOME}/private.alias
-	# ./zsh/install_zsh_plugin.sh
+	./zsh/install_zsh_plugin.sh
 

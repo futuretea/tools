@@ -19,7 +19,7 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-source $HOME/v2ray.alias
+source /usr/local/bin/alias/v2ray.alias
 cat >$V2RAY_CONFIG <<EOF
 {
   "log": {
@@ -64,7 +64,7 @@ cat >$V2RAY_CONFIG <<EOF
 					"port": $V2RAY_PORT,
 					"users": [
 						{
-							"id": "$V2RAY_UID",  
+							"id": "$V2RAY_UID",
 							"alterId": $V2RAY_ALERTID,
 							"security": "$V2RAY_METHOD"
 						}

@@ -19,7 +19,7 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-source /usr/local/bin/alias/ssr.alias
+source /usr/local/bin/private/ssr.alias
 cat >$SSR_CONFIG <<EOF
 {
     "server": "$SSR_IP",

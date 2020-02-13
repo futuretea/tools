@@ -19,7 +19,7 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-source /usr/local/bin/alias/v2ray.alias
+source /usr/local/bin/private/v2ray.alias
 cat >$V2RAY_CONFIG <<EOF
 {
   "log": {

@@ -12,7 +12,9 @@ export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 
 export EDITOR='vim'
 save_source /usr/local/bin/alias/all
+save_source /usr/local/bin/alias/private.alias
+save_source /usr/local/bin/alias/ssr.alias
+save_source /usr/local/bin/alias/v2ray.alias
 save_source /usr/share/nvm/nvm.sh
 save_source $HOME/.fzf.zsh
-save_source $HOME/private.alias
 

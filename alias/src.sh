@@ -3,7 +3,7 @@ set -e
 
 useage() {
     echo "useage:"
-    echo "  src.sh ALIASPATH"
+    echo "  src.sh ALIASPATH INSTALLPATH"
 }
 
 if [ $# -ne 1 ]; then
@@ -12,7 +12,7 @@ if [ $# -ne 1 ]; then
 fi
 
 ALIASPATH=$1
-INSTALLPATH=/usr/local/bin/alias
+INSTALLPATH=${2:-"/usr/local/bin/alias"}
 
 install() {
     local ALIASFILE=$1
@@ -24,7 +24,7 @@ install() {
     echo "${INSTALLALIAS}"
 }
 
-mkdir -p /usr/local/bin/alias
+mkdir -p "${INSTALLPATH}"
 
 if [ -d "${ALIASPATH}" ]; then
     find "${ALIASPATH}" -name "*.alias" | sort -u | while read -r ALIASFILE; do

@@ -6,7 +6,7 @@ useage() {
     echo "  src.sh ALIASPATH INSTALLPATH"
 }
 
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
     useage
     exit
 fi

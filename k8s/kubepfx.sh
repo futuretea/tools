@@ -26,7 +26,7 @@ kubekey(){
 }
 
 mkdir -p ./crt
-kubekey certificate-authority-data crt/ca.crt
-kubekey client-authority-data crt/client.crt
-kubekey client-key-data crt/client.key
+kubekey certificate-authority-data ./crt/ca.crt
+kubekey client-certificate-data ./crt/client.crt
+kubekey client-key-data ./crt/client.key
 openssl pkcs12 -export -out ./crt/cert.pfx -inkey ./crt/client.key -in ./crt/client.crt -certfile ./crt/ca.crt

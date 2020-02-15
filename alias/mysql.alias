@@ -1,0 +1,19 @@
+newdb(){
+    local DATABASE=${1:-"test"}
+    echo "CREATE DATABASE IF NOT EXISTS $DATABASE default CHARACTER SET utf8 COLLATE utf8_general_ci;"
+}
+newdbuser(){
+    local USER=${1:-"paas"}
+    local PASSWORD=${2:-"paas"}
+    local HOST=${3:-"%"}
+    local DATABASE=${4:-"*.*"}
+    echo "USER=$USER"
+    echo "PASSWORD=$PASSWORD"
+    echo "HOST=$HOST"
+    echo "DATABASE=$DATABASE"
+    echo "======================"
+    echo "create user $USER@'$HOST' identified by '$PASSWORD';"
+    echo "grant all privileges on $DATABASE to $USER@'$HOST' with grant option;"
+    echo "flush privileges;"
+    echo "show grants for $USER@'$HOST';"
+}

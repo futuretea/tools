@@ -3,7 +3,7 @@ all:
 	sudo ./shell/load.sh .
 	sudo ./alias/src.sh .
 	cp zsh/.zshrc ~
-	cp zsh/.myshrc ~
+	cp zsh/.bash_aliases ~
 	cp zsh/starship.toml ~/.config/
 	./zsh/install_zsh_plugin.sh
 

@@ -1,3 +1,9 @@
+save_source(){
+        [ -f $1 ] && source $1
+}
+save_eval(){
+        [ type $1 2>/dev/null ] && eval $2
+}
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOROOT=/usr/local/bin/go
@@ -14,5 +20,4 @@ export EDITOR='vim'
 save_source /usr/local/bin/alias/all
 save_source /usr/local/bin/private/all
 save_source /usr/share/nvm/nvm.sh
-save_source $HOME/.fzf.zsh
 

@@ -17,6 +17,7 @@ export PATH=$PATH:/usr/local/bin/tools
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 
 export EDITOR='vim'
+alias sudo='sudo env PATH=$PATH'
 save_source /usr/local/bin/alias/all
 save_source /usr/local/bin/private/all
 save_source /usr/share/nvm/nvm.sh

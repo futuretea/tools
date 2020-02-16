@@ -23,9 +23,13 @@ NAME=$1
 if grep -E "^${NAME}\s.*$" /etc/sudoers; then
     sed -i "s/^${NAME}.*$/${NAME} ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
 else
-    cat >>/etc/sudoers <<EOF
+cat >/etc/sudoers <<EOF
+root    ALL=(ALL:ALL) ALL
 ${NAME} ALL=(ALL) NOPASSWD: ALL
 EOF
 fi
+echo "##################"
+cat /etc/sudoers
+echo "##################"
 
 gpasswd -a "${NAME}" docker

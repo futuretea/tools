@@ -14,8 +14,7 @@ fi
 ZSH_THEME="ys"
 
 setopt no_nomatch
+source $ZSH/oh-my-zsh.sh
 source $HOME/.bash_aliases
-save_source $ZSH/oh-my-zsh.sh
-
 eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"

@@ -20,6 +20,7 @@ if [ $# -lt 0 ]; then
 fi
 
 source /usr/local/bin/private/v2ray.alias
+if [ -f $V2RAY_GUI_CONFIG ];then
 cat >$V2RAY_CONFIG <<EOF
 {
   "dns": {
@@ -150,7 +151,9 @@ cat >$V2RAY_CONFIG <<EOF
     }
 }
 EOF
+fi
 
+if [ -f $V2RAY_GUI_CONFIG ];then
 cat >$V2RAY_GUI_CONFIG <<EOF
 {
   "appStatus": {
@@ -298,3 +301,4 @@ cat >$V2RAY_GUI_CONFIG <<EOF
   ]
 }
 EOF
+fi

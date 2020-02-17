@@ -20,7 +20,7 @@ if [ $# -lt 0 ]; then
 fi
 
 source /usr/local/bin/private/v2ray.alias
-if [ -f $V2RAY_GUI_CONFIG ];then
+if [ -f $V2RAY_CONFIG ];then
 cat >$V2RAY_CONFIG <<EOF
 {
   "dns": {

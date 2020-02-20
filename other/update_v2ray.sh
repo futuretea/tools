@@ -117,7 +117,7 @@ cat >$V2RAY_CONFIG <<EOF
           }
         },
         "security": "none",
-        "network": "kcp",
+        "network": "tcp",
         "sockopt": {}
       }
     }
@@ -242,7 +242,7 @@ cat >$V2RAY_GUI_CONFIG <<EOF
           }
         },
         "security": "none",
-        "network": "kcp",
+        "network": "tcp",
         "sockopt": {}
       }
     }

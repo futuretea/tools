@@ -27,7 +27,7 @@ digraph router {
     node [shape="record"];
     edge [style="dashed"];
 EOF
-grep beego.Router "$IN" | grep -o "(.*)" | sed "s/[\(\)\",]/ /g" |  awk '{gsub(/:/," ",$3);print $0}' | awk '{printf "\t\"%s[%s]\" -> \"%s::%s\" -> \"%s\";\n",$1,$3,$2,$4,$2}' >> "$OUT"
+grep -E "beego\..*Router" "$IN" | grep -o "(.*)" | sed "s/[\(\)\",]/ /g" |  awk '{gsub(/:/," ",$3);print $0}' | awk '{printf "\t\"%s[%s]\" -> \"%s::%s\" -> \"%s\";\n",$1,$3,$2,$4,$2}' >> "$OUT"
 cat >> "$OUT" <<EOF
 }
 EOF

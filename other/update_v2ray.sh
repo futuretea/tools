@@ -33,7 +33,7 @@ cat >$V2RAY_CONFIG <<EOF
       "port": 1080,
       "listen": "0.0.0.0",
       "settings": {
-        "udp": true
+        "udp": false
       },
       "protocol": "socks"
     },
@@ -46,7 +46,7 @@ cat >$V2RAY_CONFIG <<EOF
   "log": {
     "error": "/opt/v2ray/error.log",
     "access": "/opt/v2ray/access.log",
-    "loglevel": "warning"
+    "loglevel": "error"
   },
   "outbounds": [
     {
@@ -59,7 +59,7 @@ cat >$V2RAY_CONFIG <<EOF
       "settings": {
         "vnext": [
           {
-            "address": "do",
+            "address": "$V2RAY_IP",
             "users": [
               {
                 "id": "$V2RAY_UID",
@@ -75,7 +75,7 @@ cat >$V2RAY_CONFIG <<EOF
       "tag": "do",
       "streamSettings": {
         "wsSettings": {
-          "path": "",
+          "path": "/ray",
           "headers": {}
         },
         "quicSettings": {
@@ -90,7 +90,7 @@ cat >$V2RAY_CONFIG <<EOF
           "alpn": [
             "http/1.1"
           ],
-          "serverName": "server.cc",
+          "serverName": "$V2RAY_IP",
           "allowInsecureCiphers": false
         },
         "httpSettings": {
@@ -116,8 +116,8 @@ cat >$V2RAY_CONFIG <<EOF
             "type": "none"
           }
         },
-        "security": "none",
-        "network": "tcp",
+        "security": "tls",
+        "network": "ws",
         "sockopt": {}
       }
     }
@@ -166,7 +166,7 @@ cat >$V2RAY_GUI_CONFIG <<EOF
     "useCusProfile": false
   },
   "selectedPacFileName": "pac.js",
-  "logLevel": "warning",
+  "logLevel": "error",
   "localPort": 1080,
   "httpPort": 12333,
   "udpSupport": true,
@@ -200,7 +200,7 @@ cat >$V2RAY_GUI_CONFIG <<EOF
       "tag": "do",
       "streamSettings": {
         "wsSettings": {
-          "path": "",
+          "path": "/ray",
           "headers": {}
         },
         "quicSettings": {
@@ -215,7 +215,7 @@ cat >$V2RAY_GUI_CONFIG <<EOF
           "alpn": [
             "http/1.1"
           ],
-          "serverName": "server.cc",
+          "serverName": "$V2RAY_IP",
           "allowInsecureCiphers": false
         },
         "httpSettings": {
@@ -241,8 +241,8 @@ cat >$V2RAY_GUI_CONFIG <<EOF
             "type": "none"
           }
         },
-        "security": "none",
-        "network": "tcp",
+        "security": "tls",
+        "network": "ws",
         "sockopt": {}
       }
     }

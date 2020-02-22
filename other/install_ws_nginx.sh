@@ -35,25 +35,30 @@ EOF
 yum -y install nginx
 cat >/etc/nginx/conf.d/v2ray.conf <<EOF
 server {
-    listen       443 ssl;
+    listen 80;
+    server_name $DOMAIN;
+    rewrite ^(.*) https://\$server_name\$1 permanent;
+}
+server {
+    listen       443 http2 ssl;
     server_name  $DOMAIN;
+    charset utf-8;
 
     ssl_certificate    /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
     ssl_certificate_key    /etc/letsencrypt/live/$DOMAIN/privkey.pem;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
     ssl_prefer_server_ciphers on;
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
-    error_page 497  https://\$host\$request_uri;
 
-location /ray {
-    proxy_pass       http://127.0.0.1:10000;
-    proxy_redirect             off;
-    proxy_http_version         1.1;
-    proxy_set_header Upgrade   \$http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Host      \$http_host;
+    location /www {
+        proxy_pass       http://127.0.0.1:10000;
+        proxy_redirect             off;
+        proxy_http_version         1.1;
+        proxy_set_header Upgrade   \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host      \$host;
     }
 }
 EOF
@@ -78,7 +83,7 @@ cat > /etc/v2ray/config.json <<EOF
         },
         "streamSettings": {
             "wsSettings": {
-                "path": "",
+                "path": "/www",
                 "headers": {}
             },
             "quicSettings": {
@@ -119,7 +124,7 @@ cat > /etc/v2ray/config.json <<EOF
                     "type": "none"
                 }
             },
-            "security": "tls",
+            "security": "none",
             "network": "ws",
             "sockopt": {}
         }

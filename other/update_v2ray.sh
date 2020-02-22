@@ -75,7 +75,7 @@ cat >$V2RAY_CONFIG <<EOF
       "tag": "do",
       "streamSettings": {
         "wsSettings": {
-          "path": "/ray",
+          "path": "/www",
           "headers": {}
         },
         "quicSettings": {
@@ -200,7 +200,7 @@ cat >$V2RAY_GUI_CONFIG <<EOF
       "tag": "do",
       "streamSettings": {
         "wsSettings": {
-          "path": "/ray",
+          "path": "/www",
           "headers": {}
         },
         "quicSettings": {

@@ -36,7 +36,7 @@ alias kcgdn="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,A
 
 # kc get pod
 alias kcgp='kcgp(){if [ -z $RUN ];then;kcg pod $@;else;if [ $RUN -eq 0 ];then;kcg pod --field-selector=status.phase!=Running $@;else;kcg pod --field-selector=status.phase==Running $@;fi;fi;};kcgp $@'
-alias kcgpn="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,HOSTPORT:spec.containers[*].ports[*].hostPort'"
+alias kcgpn="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,PORTS:spec.containers[*].ports'"
 alias kcgpc="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,CONTAINER:spec.containers[*].name'"
 alias kcgpci="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,INITCONTAINER:spec.initContainers[*].name'"
 alias kcgps="kcgp -o custom-columns='NAME:metadata.name,SERVICEACCOUNT:spec.serviceAccountName'"
@@ -46,6 +46,10 @@ alias kcgpip="kcgp -o custom-columns='NAME:metadata.name,PULLPOLICY:spec.contain
 alias kcgpil="kcgp -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
 alias kcgpila="kcgp --all-namespaces -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
 alias kcgpp="kcgp -o custom-columns='NAME:metadata.name,LIVENESS:spec.containers[*].livenessProbe,READINESS:spec.containers[*].readinessProbe'"
+
+# kc get other
+alias kcgnds="kcgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.nodeSelector'"
+alias kcgpvc="kcgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.volumes[*].persistentVolumeClaim'"
 
 # others
 alias kcdpe="kc delete pod --field-selector=status.phase!=Running"

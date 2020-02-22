@@ -5,8 +5,8 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    locapv.sh NAME HOSTNAME DIR SIZE [POLICY]
-    eg: locapv local-pv-sdc 172.172.100.101 /mnt/pv 10Gi Retain
+    locapv.sh NAME HOSTNAME DIR SIZE [MODE] [POLICY]
+    eg: locapv local-pv-sdc 172.172.100.101 /mnt/pv 10Gi ReadWriteOnce Retain
 HELP
 }
 
@@ -15,7 +15,7 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 4 ]; then
     useage
     exit 1
 fi
@@ -24,7 +24,8 @@ NAME=$1
 HOSTNAME=$2
 DIR=$3
 SIZE=$4
-POLICY=${5:-"Delete"}
+MODE=${5:-"ReadWriteMany"}
+POLICY=${6:-"Delete"}
 
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
@@ -45,7 +46,7 @@ spec:
   capacity:
     storage: $SIZE
   accessModes:
-  - ReadWriteOnce
+  - $MODE
   persistentVolumeReclaimPolicy: $POLICY
   storageClassName: local-storage
   volumeMode: Filesystem

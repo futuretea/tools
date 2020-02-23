@@ -4,6 +4,7 @@ all:
 	sudo ./alias/src.sh .
 	cp zsh/.zshrc ~
 	cp zsh/.bash_aliases ~
+	cp zsh/.tmux.conf ~
 	cp zsh/starship.toml ~/.config/
 	./zsh/install_zsh_plugin.sh
 

@@ -16,4 +16,4 @@ if [ -d "${INSTALLPATH}" ]; then
     exit
 fi
 
-sudo git clone https://github.com/zsh-users/zsh-autosuggestions.git ${INSTALLPATH}
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${INSTALLPATH}

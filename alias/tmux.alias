@@ -1,2 +1,2 @@
-alias tn='tmux new -s my_session'
-alias tn='tmux attach-session -t my_session'
+alias tn='tmux new -s'
+alias ta='tmux attach-session -t'

@@ -29,4 +29,5 @@ for SUB in $SUBS;do
 	ARGS="$ARGS -d ${SUB}.${DOMAIN}"
 done
 sudo certbot certonly ${ARGS}
+sudo certbot renew ${ARGS}
 sudo openresty -s reload

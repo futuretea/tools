@@ -1,3 +1,4 @@
+scan_timeout = 10
 [directory]
 truncate_to_repo = false
 [golang]
@@ -13,4 +14,12 @@ symbol = "jdk-"
 [kubernetes]
 symbol = "⛵ "
 style = "dim green"
+disabled = true
+[git_branch]
+disabled = false
+[git_commit]
+disabled = true
+[git_state]
+disabled = true
+[git_status]
 disabled = true

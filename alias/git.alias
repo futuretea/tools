@@ -5,20 +5,26 @@ alias nocmt='git reset --soft HEAD^'
 alias noadd='git reset HEAD'
 alias nochg='git checkout --'
 alias nomore='git clean -fd'
-alias nobranch='nobranch(){branch=$(git branch --show-current);git checkout master && git branch -d "${branch}";};nobranch $@'
+alias nobranch='nobranch(){branch=`git branch --show-current` && git checkout master && git branch -d "${branch}";};nobranch $@'
 
 alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
 
 alias ncmt='ncmt(){git log  --reverse --oneline | sed -n "${1}p";};ncmt $@'
 ncmtb(){
     local nb=$(ncmt $1 | awk '{print $1}')
-    git checkout -b commit-$1 "${nb}" 
+    git checkout -b commit-$1 "${nb}"
 }
 
-alias showcmt='showcmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};showcmt $@'
-alias usecmt='git cherry-pick'
+alias justgo='git push --force'
+
 alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
-alias autosquash='git rebase -i --autosquash'
+alias usecmt='git cherry-pick'
+alias showcmt='showcmt(){git log --oneline $@ | fzf --preview '"'"'showcommit {}'"'"' | cut -d " " -f 1;};showcmt $@'
+alias jrbcmt='git commit --allow-empty -m "just for build"'
+alias recmt='git commit --amend -m'
+alias fixcmt='git commit --fixup'
+alias squashafter='git rebase -i --autosquash'
+alias execafter='execafter(){git rebase $1 --exec $2;};execafter $@'
 
 usebranch(){
     local LINE

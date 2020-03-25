@@ -10,6 +10,7 @@ alias gomc='go clean -modcache'
 alias gomd='go mod download'
 alias gomv='go mod vendor'
 alias gomr='go mod edit -replace='
+alias gotype='gotype(){quicktype --src-lang json --lang go --top-level $1 --src $1.json --out $1.go;};gotype $@'
 
 gomod_proxy(){
     echo "set gomod proxy"

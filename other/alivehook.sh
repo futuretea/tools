@@ -24,11 +24,13 @@ PORT=$2
 shift 2
 CMD=$@
 
-echo "Checking ${IP}:${PORT}"
+add_time(){
+    echo "$@" | awk '{print strftime(" %Y-%m-%d %H:%M:%S", systime())  " " $0}'
+}
 
 if nc -w 10 -vz "${IP}" "${PORT}" &>/dev/null; then
-    echo "[*] nc"
+    add_time "$IP" "$PORT" "Y"
 else
-    echo "[ ] nc"
+    add_time "$IP" "$PORT" "N"
     $CMD
 fi

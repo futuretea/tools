@@ -4,3 +4,9 @@ alias unbak='unbak(){swap $1.bak $1;};unbak $@'
 alias bakdiff='bakdiff(){meld $1.bak $1 >/dev/null 2>&1;};bakdiff $@'
 alias backup='RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x" rsync -avur --progress --delete'
 alias addbin='addbin(){chmod +x $1 && sudo cp $1 /usr/local/bin/;};addbin $@'
+ccf(){
+local FULLNAME=$1
+local DIRNAME=$(dirname $1)
+local FILENAME=$(basename $1)
+cf $FULLNAME $(ls $DIRNAME | grep $FILENAME. | grep -v @ | sed "s/^$FILENAME.//" | fzf)
+}

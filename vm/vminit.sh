@@ -82,6 +82,7 @@ EOF
 EOF
 
     virsh net-define --file ./network.xml
+    virsh net-start "${NAME}"
 fi
 
 cat >Vagrantfile <<EOF

@@ -136,8 +136,8 @@ sed -ri 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/ssh
 cat >>/etc/ssh/sshd_config <<EOF
 PermitRootLogin yes
 UseDNS no
-systemctl restart sshd
 EOF
+systemctl restart sshd
 EOFF
 
 vagrant up

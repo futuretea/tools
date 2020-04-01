@@ -12,6 +12,10 @@ docker_proxy(){
 [Service]
 Environment="HTTP_PROXY=${HTTPRPOXYURL}"
 EOF
+    cat <<EOF >/etc/systemd/system/docker.service.d/no-proxy.conf
+[Service]
+Environment="NO_PROXY=${NORPOXYURL}"
+EOF
     cat <<EOF >/etc/systemd/system/docker.service.d/https-proxy.conf
 [Service]
 Environment="HTTPS_PROXY=${HTTPRPOXYURL}"

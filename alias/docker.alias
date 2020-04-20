@@ -34,3 +34,4 @@ docker_noproxy(){
 }
 
 alias cpull='cpull(){docker pull $1:$(reg tags $1 | sort -rV | fzf +s);};cpull $@'
+alias creload='kill -HUP `pgrep dockerd`'

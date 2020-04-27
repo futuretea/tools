@@ -9,3 +9,4 @@ awk_after(){
 }
 alias hf='$(history | fzf | awk_after 1)'
 alias alag='alias | ag'
+alias m='make'

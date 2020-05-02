@@ -1,6 +1,6 @@
 # alias ls='lsd --group-dirs=first'
 # alias lt='ls -lt'
-alias ls='ls -thF --color=auto'
+# alias ls='ls -thF --color=auto'
 alias jj='cd $(dirname `fzf`)'
 alias mkcd='mkcd(){mkdir -p "$1";cd "$1"};mkcd $@'
 alias rmpwd='rmpwd(){dir="${PWD}";cd ..; echo "${dir}"; rm -r "${dir}"};rmpwd $@'

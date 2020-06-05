@@ -15,19 +15,20 @@ if [ $# -lt 1 ]; then
 fi
 
 VERSION=$1
-if [ -z "${GOROOT}" ]; then
+OS=$(uname -a | awk '{print $1}')
+if [ x"${OS}" != x"Darwin" ]; then
     GOROOT="/usr/local/bin/go"
+    sudo rm -f "${GOROOT}"
+    GOPACK="${GOROOT}${VERSION}"
+    if [ ! -d "${GOPACK}" ]; then
+        TEMPDIR=$(mktemp -d)
+        sudo wget "https://dl.google.com/go/go${VERSION}.linux-amd64.tar.gz" -cP "${HOME}/Downloads/"
+        tar -zxf "${HOME}/Downloads/go${VERSION}.linux-amd64.tar.gz" -C "${TEMPDIR}"
+        mkdir -p "${TEMPDIR}"
+        sudo mv "${TEMPDIR}/go" "${GOPACK}"
+        sudo rm -r "${TEMPDIR}"
+    fi
+    sudo ln -s "${GOPACK}" "${GOROOT}"
 fi
-sudo rm -f "${GOROOT}"
-GOPACK="${GOROOT}${VERSION}"
-if [ ! -d "${GOPACK}" ]; then
-    sudo wget "https://dl.google.com/go/go${VERSION}.linux-amd64.tar.gz" -cP "${HOME}/Downloads/"
-    TEMPDIR=$(mktemp -d)
-    tar -zxf "${HOME}/Downloads/go${VERSION}.linux-amd64.tar.gz" -C "${TEMPDIR}"
-    mkdir -p "${TEMPDIR}"
-    sudo mv "${TEMPDIR}/go" "${GOPACK}"
-    sudo rm -r "${TEMPDIR}"
-fi
-sudo ln -s "${GOPACK}" "${GOROOT}"
 GOVERSIONNOW="$(go version | awk '{print $3}' | sed 's/go//g')"
 echo "go ${GOVERSIONNOW}"

@@ -58,12 +58,14 @@ goenv(){
         fi
     fi
     if [ -n "${USEPROXY}" ];then
-        echo "${USEPROXY}" | sed 's/,/\n/g' | while read -r APP;do
+        echo "${USEPROXY}" | sed 's/,/\
+        /g' | while read -r APP;do
             fq "${APP}"
         done
     fi
     if [ -n "${NOPROXY}" ];then
-        echo "${NOPROXY}" | sed 's/,/\n/g' | while read -r APP;do
+        echo "${NOPROXY}" | sed 's/,/\
+        /g' | while read -r APP;do
             hx "${APP}"
         done
     fi

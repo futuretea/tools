@@ -35,8 +35,11 @@ install() {
 
 mkdir -p "${INSTALLPATH}"
 if [ -d "${SCRIPTPATH}" ]; then
-    find "${SCRIPTPATH}" -regex ".*\.\(py\|sh\)" | while read -r SCRIPTFILE; do
+    find "${SCRIPTPATH}" -regex ".*\.sh" | while read -r SCRIPTFILE; do
         install "${SCRIPTFILE}"
+    done
+    find "${SCRIPTPATH}" -regex ".*\.py" | while read -r PYTHONILE; do
+        install "${PYTHONILE}"
     done
 else
     if [ -f "${SCRIPTPATH}" ]; then

@@ -73,9 +73,9 @@ brrename(){
     git push $upstream :$1
     git push $upstream $2
 }
-recmtpush() {
-    git reset --soft HEAD^
+recmtpusG() {
     local msg=$(git log -n 1 --pretty=format:"%s" | xargs echo)
+    git reset --soft HEAD^
     git commit -a -m "$msg"
     git push --force
 }

@@ -68,8 +68,14 @@ gcof(){
 }
 
 brrename(){
-local upstream=${3:-"origin"}
-git branch -m $1 $2
-git push $upstream :$1
-git push $upstream $2
+    local upstream=${3:-"origin"}
+    git branch -m $1 $2
+    git push $upstream :$1
+    git push $upstream $2
+}
+recomt() {
+    git reset --soft HEAD^
+    local msg=$(git log -n 1 --pretty=format:"%s" | xargs echo)
+    git commit -a -m "$msg"
+    git push --force
 }

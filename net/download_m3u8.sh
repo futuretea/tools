@@ -25,6 +25,6 @@ while read -r line;do
 arr=($line)
 sub="${DIR}/${arr[0]}"
 if [ ! -f "${sub}/main.ts" ];then
-m3u8 -u="${arr[1]}" -o="${sub}"
+m3u8 -u="${arr[1]}" -o="${sub}" -k "${arr[2]}"
 fi
 done < "${CONFIGFILE}"

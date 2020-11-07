@@ -1,4 +1,3 @@
-alias browse=open
 alias github='github(){browse "https://github.com/search?q=$1";};github $@'
 alias baidu='baidu(){browse "https://www.baidu.com/s?wd=$1";};baidu $@'
 alias bilibili='bilibili(){browse "https://search.bilibili.com/all?keyword=$1";};bilibili $@'

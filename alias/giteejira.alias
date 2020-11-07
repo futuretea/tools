@@ -1,5 +1,3 @@
-
-alias browse=open
 # 查看版本
 alias ckbb='browse "${JIRA_URL}/projects/${JIRA_PROJ}?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page"'
 # 新建issue

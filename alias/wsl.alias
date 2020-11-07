@@ -3,9 +3,21 @@ if [ $? -eq 0 ]; then
 alias docker='docker.exe'
 alias dapper='dapper.exe'
 alias k3d='k3d.exe'
-alias start='start(){cmd.exe /c "start" $@;};start $@'
-alias browse='start chrome'
+start(){
+  cmd.exe /c "start $@"
+}
+browse(){
+ cmd.exe /c "start chrome $@"
+}
+alias exp='start explorer'
+alias taskmgr='start taskmgr'
+alias calc='start calc'
+alias notepad='start notepad'
+alias pt='start mspaint'
+alias osk='start osk'
 alias '~~'='cd /mnt/c/Users/$USER'
 else
-alias browse='open'
+browse(){
+  open $@
+}
 fi

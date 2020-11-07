@@ -59,7 +59,7 @@ alias kcapi="kc api-resources"
 alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLICY ClusterFirstWithHostNet | xsv select NAME,NAMESPACE,HOSTNETWORK,DNSPOLICY | xsv table"
 alias kcgcs="kc config view --minify --output 'jsonpath={..server}'"
 alias kcgcn="kc config view --minify --output 'jsonpath={..namespace}'"
-alias ?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
+alias kc?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 
 # context
 alias ccc='cf ${HOME}/.kube/config $(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)'

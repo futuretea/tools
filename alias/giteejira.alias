@@ -1,12 +1,12 @@
 # 查看版本
-alias ckbb='browse "${JIRA_URL}/projects/${JIRA_PROJ}?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page"'
+alias ckbb='open "${JIRA_URL}/projects/${JIRA_PROJ}?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page"'
 # 新建issue
-alias xjis='browse "${JIRA_URL}/secure/CreateIssue!default.jspa"'
+alias xjis='open "${JIRA_URL}/secure/CreateIssue!default.jspa"'
 # 查看issue列表
-alias ckiss='ckiss(){browse "${JIRA_URL}/issues/?filter=$1";};ckiss $@'
+alias ckiss='ckiss(){open "${JIRA_URL}/issues/?filter=$1";};ckiss $@'
 # 查看issue
-alias ckis='ckis(){browse "${JIRA_URL}/browse/${JIRA_PROJ}-$1";};ckis $@'
+alias ckis='ckis(){open "${JIRA_URL}/open/${JIRA_PROJ}-$1";};ckis $@'
 # 新建PR
-alias xjpr='xjpr(){browse "https://gitee.com/${GITEE_ORG}/$1/pull/new/${GITEE_ORG}:${JIRA_PROJ}-$2...${GITEE_ORG}:${3:-master}"};xjpr $@'
+alias xjpr='xjpr(){open "https://gitee.com/${GITEE_ORG}/$1/pull/new/${GITEE_ORG}:${JIRA_PROJ}-$2...${GITEE_ORG}:${3:-master}"};xjpr $@'
 # 查看PR
-alias ckpr='ckpr(){browse "https://gitee.com/${GITEE_ORG}/$1/pulls?status=all&search=${JIRA_PROJ}-$2";};ckpr $@'
+alias ckpr='ckpr(){open "https://gitee.com/${GITEE_ORG}/$1/pulls?status=all&search=${JIRA_PROJ}-$2";};ckpr $@'

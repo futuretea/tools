@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 [[ -n $DEBUG ]] && set -x
-set -eou pipefail
+# set -e
+set -ou pipefail
 
 useage() {
     cat <<"EOF"
@@ -20,11 +21,22 @@ if [ $# -lt 1 ]; then
 fi
 
 OPENPATH=$1
-
 if [ -f "${OPENPATH}" ]; then
-    while read -r LINE; do
-        xdg-open "$LINE" >/dev/null 2>&1
-    done <"${OPENPATH}"
+    type wsl.exe >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        while read -r LINE; do
+            cmd.exe /c "start chrome ${LINE}"
+        done <"${OPENPATH}"
+    else
+        while read -r LINE; do
+            xdg-open "$LINE" >/dev/null 2>&1
+        done <"${OPENPATH}"
+    fi
 else
-    xdg-open "${OPENPATH}" >/dev/null 2>&1
+    type wsl.exe >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        cmd.exe /c "start chrome ${OPENPATH}"
+    else
+        xdg-open "${OPENPATH}" >/dev/null 2>&1
+    fi
 fi

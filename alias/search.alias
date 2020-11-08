@@ -1,4 +1,4 @@
-alias github='github(){open "https://github.com/search?q=$1";};github $@'
+alias ghs='github(){open "https://github.com/search?q=$1";};github $@'
 alias baidu='baidu(){open "https://www.baidu.com/s?wd=$1";};baidu $@'
 alias bilibili='bilibili(){open "https://search.bilibili.com/all?keyword=$1";};bilibili $@'
 alias apache='apache(){open "https://$1.apache.org";};apache $@'

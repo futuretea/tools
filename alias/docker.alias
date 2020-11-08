@@ -35,3 +35,22 @@ docker_noproxy(){
 
 alias cpull='cpull(){docker pull $1:$(reg tags $1 | sort -rV | fzf +s);};cpull $@'
 alias creload='kill -HUP `pgrep dockerd`'
+ccp(){
+if [ $# -lt 2 ]; then
+cat <<HELP
+USAGE:
+    ccp.sh MIRROR NAME
+HELP
+else
+local MIRROR=$1
+local NAME=$2
+if [ ${NAME} =~ '/' ]; then
+local img=${MIRROR}/cache/${NAME}
+else
+local img=${MIRROR}/cache/library/${NAME}
+fi
+docker pull ${img}
+docker tag ${img} ${NAME}
+docker rmi ${img}
+fi
+}

@@ -2,6 +2,7 @@ type wsl.exe >/dev/null 2>&1
 if [ $? -eq 0 ]; then
 alias docker='docker.exe'
 alias dapper='dapper.exe'
+alias vagrant='vagrant.exe'
 alias k3d='k3d.exe'
 start(){
   cmd.exe /c "start $@"

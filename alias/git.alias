@@ -79,3 +79,6 @@ recmtpush() {
     git commit -a -m "$msg"
     git push --force
 }
+
+alias origin='open $(git remote get-url origin | sed "s/:/\//g" | sed "s/git@//g" | sed "s/\.git//g")'
+alias upstream='open $(git remote get-url upstream | sed "s/:/\//g" | sed "s/git@//g" | sed "s/\.git//g")'

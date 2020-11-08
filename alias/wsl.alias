@@ -8,7 +8,7 @@ start(){
   cmd.exe /c "start $@"
 }
 alias exp='start explorer'
-alias taskmgr='start taskmgr'
+alias wtop='start taskmgr'
 alias calc='start calc'
 alias notepad='start notepad'
 alias pt='start mspaint'

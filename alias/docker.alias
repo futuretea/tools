@@ -44,7 +44,7 @@ HELP
 else
 local MIRROR=$1
 local NAME=$2
-if [ ${NAME} =~ '/' ]; then
+if [[ ${NAME} =~ '/' ]]; then
 local img=${MIRROR}/cache/${NAME}
 else
 local img=${MIRROR}/cache/library/${NAME}

@@ -54,3 +54,17 @@ docker tag ${img} ${NAME}
 docker rmi ${img}
 fi
 }
+
+ccps(){
+if [ $# -lt 2 ]; then
+USAGE:
+    ccp.sh MIRROR FILE
+HELP
+else
+local MIRROR=$1
+local FILE=$2
+    while read -r LINE; do
+        ccp ${MIRROR} "$LINE"
+    done <"${FILE}"
+fi
+}

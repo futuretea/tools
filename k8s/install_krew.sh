@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<"EOF"
 USAGE:
-    install_krew.sh
+    install_krew.sh [VERSION]
 EOF
 }
 
@@ -20,7 +20,9 @@ if [ $# -lt 0 ]; then
 fi
 
 cd "$(mktemp -d)"
-proxychains curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v0.3.0/krew.{tar.gz,yaml}"
+REPO="kubernetes-sigs/krew"
+VERSION=${1:-$(releasef ${REPO})}
+curl -fsSLO "https://github.com/${REPO}/releases/download/${VERSION}/krew.{tar.gz,yaml}"
 tar zxvf krew.tar.gz
 ./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" install --manifest=krew.yaml --archive=krew.tar.gz
-proxychains kubectl krew update
+kubectl krew update

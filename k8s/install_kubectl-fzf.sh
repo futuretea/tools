@@ -19,13 +19,14 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-VERSION=${1:-"1.0.12"}
+REPO="bonnefoa/kubectl-fzf"
+VERSION=${1:-$(releasef ${REPO})}
 TARBAR="kubectl-fzf_linux_amd64.tar.gz"
-URL="https://github.com/bonnefoa/kubectl-fzf/releases/download/v${VERSION}/${TARBAR}"
+URL="https://github.com/${REPO}/releases/download/${VERSION}/${TARBAR}"
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
 echo ${PWD}
-proxychains curl -fsSLO "${URL}"
+curl -fsSLO "${URL}"
 tar -zxvf "${TARBAR}"
 sudo mv cache_builder /usr/local/bin/
 sudo mv kubectl_fzf.plugin.zsh ${HOME}/.kubectl_fzf.plugin.zsh

@@ -19,7 +19,7 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-VERSION=${1:-0.1.0}
+VERSION=${1:-$(releasef aca/go-kubectx)}
 TARBAR=go-kubectx_${VERSION}_Linux_x86_64.tar.gz
 URL="https://github.com/aca/go-kubectx/releases/download/v${VERSION}/${TARBAR}"
 TEMPDIR="$(mktemp -d)"

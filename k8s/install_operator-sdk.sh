@@ -19,10 +19,11 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-VERSION=${1:-"v0.15.2"}
+REPO="operator-framework/operator-sdk/"
+VERSION=${1:-$(releasef ${REPO})}
 NAME="operator-sdk"
 TARGET="operator-sdk-$VERSION-x86_64-linux-gnu"
-URL="https://github.com/operator-framework/operator-sdk/releases/download/$VERSION/${TARGET}"
+URL="https://github.com/${REPO}/releases/download/$VERSION/${TARGET}"
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
 echo $PWD

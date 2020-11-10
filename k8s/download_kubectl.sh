@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    new VERSION
+    download_kubectl [VERSION]
 HELP
 }
 
@@ -14,10 +14,10 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 1 ]; then
+if [ $# -lt 0 ]; then
     useage
     exit 1
 fi
 
-VERSION=$1
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/v${VERSION}/bin/linux/amd64/kubectl"
+VERSION=${1:-$(releasef kubernetes/kubernetes)}
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/linux/amd64/kubectl"

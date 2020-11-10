@@ -19,12 +19,13 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-HELMVERSION=${1:-helm-v3.0.0-beta.3-linux-amd64}
+VERSION=$(releasef helm/helm)
+HELMVERSION=${1:-helm-${LATESTVERSION}-linux-amd64}
 HELMTARBAR=${HELMVERSION}.tar.gz
 HELMURL="https://get.helm.sh/${HELMTARBAR}"
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
-proxychains curl -fsSLO "${HELMURL}"
+curl -fsSLO "${HELMURL}"
 tar -zxvf "${HELMTARBAR}"
 sudo mv linux-amd64/helm /usr/local/bin/h3
 cd -

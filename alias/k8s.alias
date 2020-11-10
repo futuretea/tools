@@ -89,3 +89,5 @@ kcnode(){
 }
 # apply
 alias kcaf='kc apply -f'
+# virtctl
+alias kcvt='kc virt'

@@ -1,2 +1,11 @@
-alias cch="sudo cf /etc/hosts base"
+cch(){
+ local WSLHOSTCONFIGDIR=/mnt/c/Windows/System32/drivers
+ local WSLHOSTCONFIG=${WSLHOSTCONFIGDIR}/etc/HOSTS
+ local HOSTCONFIG=/etc/hosts
+ sudo cf ${HOSTCONFIG} base $@
+ if [ -d ${WSLHOSTCONFIGDIR} ];then
+   sudo cp ${HOSTCONFIG} ${WSLHOSTCONFIG}
+   ipconfig.exe /flushdns
+ fi
+}
 alias nonet="sudo iptables -A OUTPUT -m owner --gid-owner nonet -j DROP && sudo -g nonet"

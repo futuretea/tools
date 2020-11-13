@@ -29,7 +29,7 @@ if ssh "${TARGET}" [[ ! -f "${REMOTE_TCPDUMP}" ]]; then
 fi
 type wsl.exe >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | wireshark.exe -k -i -
+ssh "${TARGET}" sudo "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | wireshark.exe -k -i -
 else
-ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"
+ssh "${TARGET}" sudo "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"
 fi

@@ -20,7 +20,7 @@ if [ $# -lt 2 ]; then
 fi
 
 LOCAL_TCPDUMP=/usr/local/bin/static-tcpdump
-REMOTE_TCPDUMP=/tmp/static-tcpdump
+REMOTE_TCPDUMP=/root/static-tcpdump
 TARGET=$1
 IFACE=$2
 shift 2

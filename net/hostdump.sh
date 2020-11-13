@@ -24,7 +24,12 @@ REMOTE_TCPDUMP=/tmp/static-tcpdump
 TARGET=$1
 IFACE=$2
 shift 2
-if sshpass -e "${TARGET}" [[ ! -f "${REMOTE_TCPDUMP}" ]]; then
-    sshpass -e scp "${LOCAL_TCPDUMP}" "${TARGET}":"${REMOTE_TCPDUMP}"
+if ssh "${TARGET}" [[ ! -f "${REMOTE_TCPDUMP}" ]]; then
+    scp "${LOCAL_TCPDUMP}" "${TARGET}":"${REMOTE_TCPDUMP}"
 fi
-sshpass -e ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"
+type wsl.exe >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | wireshark.exe -k -i -
+else
+ssh "${TARGET}" "${REMOTE_TCPDUMP}" -i "${IFACE}" -s 0 -U -w - $@ | /bin/sh -c "sudo wireshark -k -i -"
+fi

@@ -2,12 +2,16 @@ sh_proxy(){
     echo "set shell proxy"
     export http_proxy="${HTTPRPOXYURL}"
     export https_proxy="${HTTPRPOXYURL}"
+    export HTTP_PROXY="${HTTPRPOXYURL}"
+    export HTTPS_PROXY="${HTTPRPOXYURL}"
 }
 
 sh_noproxy(){
     echo "unset shell proxy"
     unset http_proxy
     unset https_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
 }
 
 kxsw(){

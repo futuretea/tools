@@ -68,3 +68,7 @@ local FILE=$2
     done <"${FILE}"
 fi
 }
+
+ccd(){
+export DOCKER_HOST="$(cat ${HOME}/dockerhost | fzf)"
+}

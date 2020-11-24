@@ -105,7 +105,8 @@ Vagrant.configure("2") do |config|
       # node.ssh.password = 'vagrant'
       node.ssh.insert_key = true
       node.vm.box = '${BOX}'
-      node.vm.synced_folder '.', '/vagrant', disabled: true
+      node.vm.hostname = "${NAME}#{i}"
+      node.vm.synced_folder '.', '/vagrant', create: true, type: "nfs", nfs_udp: false, nfs_version: 4
       node.vm.provider :libvirt do |domain|
         domain.driver = 'kvm'
         domain.memory = ${MEM}
@@ -140,4 +141,15 @@ EOF
 systemctl restart sshd
 EOFF
 
-vagrant up
+if [[ "${BOX}" =~ "centos" ]];then
+cat >>provision.sh <<EOF
+yum install nfs-utils -y
+systemctl enable --now nfs-server.service
+EOF
+fi
+if [[ "${BOX}" =~ "ubuntu" ]];then
+cat >>provision.sh <<EOF
+apt install nfs-kernel-server nfs-common -y
+systemctl enable --now nfs-server.service
+EOF
+fi

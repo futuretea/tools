@@ -63,21 +63,27 @@ alias kc?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
 
 # context
 ccc(){
- if [ -z $http_proxy ];then
-   local WSLKUBECONFIGDIR=/mnt/c/Users/${USER}
-   local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
-   local KUBECONFIG=${HOME}/.kube/config
-   local NAME=$(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)
-   cf ${KUBECONFIG} ${NAME}
-   sed  -i 's/server:.*/server: http:\/\/127.0.0.1:8001/g' ${KUBECONFIG}
-   if [ -d ${WSLKUBECONFIGDIR} ];then
-     cp ${KUBECONFIG} ${WSLKUBECONFIG}
-   fi
-   echo "proxy to ${NAME}"
-   KUBECONFIG=${KUBECONFIG}.${NAME} kubectl proxy
- else
-   echo "please unset http_proxy"
- fi
+  local WSLKUBECONFIGDIR=/mnt/c/Users/${USER}
+  local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
+  local KUBECONFIG=${HOME}/.kube/config
+  local NAME=$(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)
+  cf ${KUBECONFIG} ${NAME}
+    if [ -d ${WSLKUBECONFIGDIR} ];then
+    cp ${KUBECONFIG} ${WSLKUBECONFIG}
+  fi
+}
+cccc(){
+  local WSLKUBECONFIGDIR=/mnt/c/Users/${USER}
+  local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
+  local KUBECONFIG=${HOME}/.kube/config
+  local NAME=$(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)
+  cf ${KUBECONFIG} ${NAME}
+  sed  -i 's/server:.*/server: http:\/\/127.0.0.1:8001/g' ${KUBECONFIG}
+  if [ -d ${WSLKUBECONFIGDIR} ];then
+    cp ${KUBECONFIG} ${WSLKUBECONFIG}
+  fi
+  echo "proxy to ${NAME}"
+  KUBECONFIG=${KUBECONFIG}.${NAME} kubectl proxy
 }
 
 # set

@@ -22,5 +22,5 @@ fi
 MAJOR=$1
 MINOR=$2
 PATCH=$3
-proxychains wget "http://builds.scitools.com/all_builds/b${PATCH}/Understand/Understand-${MAJOR}.${MINOR}.${PATCH}-Linux-64bit.tgz"
+wget "http://builds.scitools.com/all_builds/b${PATCH}/Understand/Understand-${MAJOR}.${MINOR}.${PATCH}-Linux-64bit.tgz"
 

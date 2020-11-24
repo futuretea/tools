@@ -24,7 +24,7 @@ TARBAR=go-kubectx_${VERSION}_Linux_x86_64.tar.gz
 URL="https://github.com/aca/go-kubectx/releases/download/v${VERSION}/${TARBAR}"
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
-proxychains curl -fsSLO "${URL}"
+curl -fsSLO "${URL}"
 tar -zxvf "${TARBAR}"
 sudo mv kubectx /usr/local/bin/
 sudo mv kubens /usr/local/bin/

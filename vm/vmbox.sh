@@ -25,5 +25,5 @@ BOX=$2
 VERSION=$3
 PROVIDER=$4
 
-proxychains wget https://vagrantcloud.com/"${PROJECT}"/boxes/"${BOX}"/versions/${VERSION}/providers/${PROVIDER}.box \
+wget https://vagrantcloud.com/"${PROJECT}"/boxes/"${BOX}"/versions/${VERSION}/providers/${PROVIDER}.box \
     -O "${PROJECT}-${BOX}-${VERSION}-${PROVIDER}.box"

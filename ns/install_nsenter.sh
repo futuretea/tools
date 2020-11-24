@@ -16,7 +16,7 @@ exit_err() {
 
 NSENTER_VERSION=${1:-"2.34"}
 cd "$(mktemp -d)"
-proxychains curl -fsSLO "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v${NSENTER_VERSION}/util-linux-${NSENTER_VERSION}.tar.gz"
+curl -fsSLO "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v${NSENTER_VERSION}/util-linux-${NSENTER_VERSION}.tar.gz"
 tar -zxf util-linux-${NSENTER_VERSION}.tar.gz
 cd util-linux-${NSENTER_VERSION}
 ./configure --without-ncurses

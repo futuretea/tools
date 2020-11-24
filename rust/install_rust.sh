@@ -19,4 +19,4 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-proxychains curl https://sh.rustup.rs -sSf | sh
+curl https://sh.rustup.rs -sSf | sh

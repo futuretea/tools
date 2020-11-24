@@ -27,7 +27,7 @@ URL="https://github.com/${REPO}/releases/download/$VERSION/${TARGET}"
 TEMPDIR="$(mktemp -d)"
 cd "${TEMPDIR}"
 echo $PWD
-proxychains wget "${URL}"
+wget "${URL}"
 chmod +x "${TARGET}"
 sudo mv  "${TARGET}" /usr/local/bin/"${NAME}"
 cd -

@@ -113,3 +113,24 @@ kcnode(){
 alias kcaf='kc apply -f'
 # virtctl
 alias kcvt='kc virt'
+
+# tshark
+kubeshark(){
+local CTL=$1
+local BPF="port 8001"
+local METHODS="${2:-GET|PUT|POST|DELETE}"
+local DISPLAY="http.request"
+DISPLAY="${DISPLAY} && http.user_agent contains \"${CTL}\""
+DISPLAY="${DISPLAY} && http.request.uri != \"/api/v1/namespaces/kube-system/configmaps/${CTL}-controllers\""
+DISPLAY="${DISPLAY} && http.request.method matches \"($METHODS)\""
+DISPLAY=${3:-$DISPLAY}
+echo ${DISPLAY}
+local LO="lo"
+local TSHARK="tshark"
+type wsl.exe >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+LO="Adapter for loopback traffic capture"
+TSHARK="tshark.exe"
+fi
+${TSHARK} -i "${LO}" -f "${BPF}" -Y "${DISPLAY}"  -T fields -E separator=" | " -e http.request.method -e http.request.uri.path -e http.response.code
+}

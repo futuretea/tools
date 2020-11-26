@@ -132,5 +132,5 @@ if [ $? -eq 0 ]; then
 LO="Adapter for loopback traffic capture"
 TSHARK="tshark.exe"
 fi
-${TSHARK} -i "${LO}" -f "${BPF}" -Y "${DISPLAY}"  -T fields -E separator=" | " -e http.request.method -e http.request.uri.path -e http.response.code
+${TSHARK} -i "${LO}" -f "${BPF}" -Y "${DISPLAY}"  -T fields -E separator=" | " -e http.request.method -e http.request.uri
 }

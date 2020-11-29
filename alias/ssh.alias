@@ -1,2 +1,5 @@
 alias newkey="ssh-keygen -t rsa -N '' -f ${HOME}/.ssh/id_rsa -q"
 alias sshp='ssh -o "ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p"'
+alias scpp='scp -o "ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p"'
+alias rsyncp='rsync -e '"'"'ssh -o "ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p"'"'"''
+alias sci='ssh-copy-id'

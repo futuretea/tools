@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 [[ -n $DEBUG ]] && set -x
-set -xou pipefail
+set -ou pipefail
 
 useage() {
     cat <<HELP

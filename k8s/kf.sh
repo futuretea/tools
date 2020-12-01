@@ -30,14 +30,14 @@ KUBECONFIGS=(
 )
 KUBECONFIGFILE=""
 for ((i = 1; i <= ${#KUBECONFIGS[@]}; i++)); do
-    ssh "${SSH_CONFIG}" "[[ -f ${KUBECONFIGS[$i - 1]} ]]"
+    ssh ${SSH_CONFIG} "[[ -f ${KUBECONFIGS[$i - 1]} ]]"
     if [ $? -eq 0 ]; then
         KUBECONFIGFILE=${KUBECONFIGS[$i - 1]}
         break
     fi
 done
 LOCALKUBECONFIGFILE="${HOME}/.kube/config.${CLUSTER}"
-ssh "${SSH_CONFIG}" cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
+ssh ${SSH_CONFIG} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
 if [ $# -eq 3 ]; then
     sed -i "s/server: https:\/\/.*:/server: https:\/\/${HOST}:/g" "${LOCALKUBECONFIGFILE}"
 elif [ $# -eq 4 ]; then

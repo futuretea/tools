@@ -134,3 +134,8 @@ TSHARK="tshark.exe"
 fi
 ${TSHARK} -i "${LO}" -f "${BPF}" -Y "${DISPLAY}"  -T fields -E separator=" | " -e http.request.method -e http.request.uri
 }
+
+# 
+kcnp(){
+  kubectl get svc -A -ojson  | jq -r '.items[] | select(.spec.type == "NodePort") | {"name":.metadata.name,"port":.spec.ports[].nodePort}'
+}

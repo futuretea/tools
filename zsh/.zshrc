@@ -4,6 +4,7 @@ else
     export ZSH=/usr/share/oh-my-zsh
 fi
 DISABLE_AUTO_UPDATE="true"
+export HOMEBREW_NO_AUTO_UPDATE=true
 plugins=(fzf z extract zsh-autosuggestions)
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache

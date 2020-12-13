@@ -17,7 +17,7 @@ fi
 VERSION=$1
 OS=$(uname -a | awk '{print $1}')
 if [ x"${OS}" != x"Darwin" ]; then
-    GOROOT="/usr/local/bin/go"
+    GOROOT="/usr/local/go"
     sudo rm -f "${GOROOT}"
     GOPACK="${GOROOT}${VERSION}"
     if [ ! -d "${GOPACK}" ]; then

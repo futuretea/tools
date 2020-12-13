@@ -80,5 +80,7 @@ recmtpush() {
     git push --force
 }
 
-alias origin='open $(git remote get-url origin | sed "s/:/\//g" | sed "s/git@//g" | sed "s/\.git//g")'
-alias upstream='open $(git remote get-url upstream | sed "s/:/\//g" | sed "s/git@//g" | sed "s/\.git//g")'
+
+
+alias origin='open $(git remote get-url origin |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
+alias upstream='open $(git remote get-url upstream |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'

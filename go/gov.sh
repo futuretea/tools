@@ -19,7 +19,7 @@ OS=$(uname -a | awk '{print $1}')
 if [ x"${OS}" != x"Darwin" ]; then
     GOROOT="/usr/local/go"
     sudo rm -f "${GOROOT}"
-    GOPACK="${GOROOT}${VERSION}"
+    GOPACK="/usr/local/bin/go${VERSION}"
     if [ ! -d "${GOPACK}" ]; then
         TEMPDIR=$(mktemp -d)
         sudo wget "https://dl.google.com/go/go${VERSION}.linux-amd64.tar.gz" -cP "${HOME}/Downloads/"

@@ -4,4 +4,7 @@
 alias jj='cd $(dirname `fzf`)'
 alias mkcd='mkcd(){mkdir -p "$1";cd "$1"};mkcd $@'
 alias rmpwd='rmpwd(){dir="${PWD}";cd ..; echo "${dir}"; rm -r "${dir}"};rmpwd $@'
-alias same='same(){pwd | sed "s/$USER/$1/g";};same $@'
+same(){
+local remote_home=$(ssh $1 "echo \$HOME")
+pwd | sed 's:'$HOME:$remote_home':g'
+}

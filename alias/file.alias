@@ -10,3 +10,4 @@ local DIRNAME=$(dirname $1)
 local FILENAME=$(basename $1)
 cf $FULLNAME $(ls $DIRNAME | grep $FILENAME. | grep -v @ | sed "s/^$FILENAME.//" | fzf)
 }
+alias fix='fd -t x -E scripts -E bin -E vendor | xargs -r chmod 644'

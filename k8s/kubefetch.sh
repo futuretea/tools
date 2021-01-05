@@ -38,22 +38,23 @@ while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
         KUBECONFIGFILE="/root/.kube/config"
     fi
     LOCALKUBECONFIGFILE="${HOME}/.kube/config.${CLUSTER}"
-    
+
     if [ -n ${ROOTPASS} ];then
         if [ x${SSH_PROXY} != x"-" ];then
             echo $ROOTPASS | ssh -o "ProxyCommand=nc -X 5 -x ${SSH_PROXY} %h %p" -tt ${SSH_CONFIG} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         else
             echo $ROOTPASS | ssh -tt ${SSH_CONFIG} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         fi
+        sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
+        sed -i "1,2d" "${LOCALKUBECONFIGFILE}"
     else
         if [ x${SSH_PROXY} != x"-" ];then
             ssh -o "ProxyCommand=nc -X 5 -x ${SSH_PROXY} %h %p" ${SSH_CONFIG} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         else
             ssh ${SSH_CONFIG} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         fi
+         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
-
-    sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
 
     echo "[ ${CLUSTER} ] finish "
 

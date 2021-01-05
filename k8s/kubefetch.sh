@@ -22,7 +22,7 @@ fi
 KUBEHOSTFILE=$HOME/kubehost
 FOCUS=${1:-""}
 while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
-    if [ -n "${FOCUS}" ] && [ x"${FOCUS}" != x"${CLUSTER}" ];then
+    if [ -n "${FOCUS}" ] && [[ "${FOCUS}" =~ "${CLUSTER}" ]];then
         continue
     fi
     if [ -z "${CLUSTER}" ];then

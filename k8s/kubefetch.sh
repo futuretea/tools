@@ -39,7 +39,7 @@ while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
     fi
     LOCALKUBECONFIGFILE="${HOME}/.kube/config.${CLUSTER}"
 
-    if [ -n ${ROOTPASS} ];then
+    if [ ${ROOTPASS} ];then
         if [ x${SSH_PROXY} != x"-" ];then
             echo $ROOTPASS | ssh -o "ProxyCommand=nc -X 5 -x ${SSH_PROXY} %h %p" -tt ${SSH_CONFIG} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         else

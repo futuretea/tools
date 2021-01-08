@@ -48,7 +48,7 @@ goenv(){
     if ${USEGOMOD};then
         gomodon
     else
-        gomodoff        
+        gomodoff
         WORKDIR=${GOPATH}/src/${GOMODULE}
         if [ x"${WORKDIR}" != x"${PWD}" ];then
             if [ ! -d ${WORKDIR} ];then
@@ -76,4 +76,14 @@ chpwd(){
         source .env
     fi
     goenv
+}
+
+alias gofile='gofile(){fd --regex "$1" $2 -e go -E vendor -E "*generate*";};gofile $@'
+
+gofix(){
+    local modname=$(head -n 1 go.mod | awk '{print $2}')
+    gofile | xargs -r chmod 644
+    gofile | xargs -r gofmt -w
+    gofile | xargs -r goimports -local $modname -w
+    CGO_ENABLED=0 golangci-lint run --fix
 }

@@ -13,6 +13,5 @@ alias rfc='rfc(){open https://tools.ietf.org/html/rfc$1;};rfc $@'
 alias leetcode='open https://leetcode-cn.com/problems/array-nesting/'
 
 alias bigfile='bigfile(){fd . $1 -E /proc -S +$2;};bigfile $@'
-alias gofile='gofile(){fd --regex "$1" $2 -e go -E vendor;};gofile $@'
 alias gosearch='ag --ignore=vendor -G .*\.go'
 alias ?='cht(){curl cht.sh/$1;};cht $@'

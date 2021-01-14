@@ -19,7 +19,7 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-sudo vagrant destory -f
+sudo vagrant destroy -f
 vms=$(sudo vagrant status --machine-readable | grep metadata | awk -F ',' '{print $2}')
 local_dir=$(basename $(pwd))
 cd /var/lib/libvirt/images/

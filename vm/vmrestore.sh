@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    vmrestore.sh
+    vmrestore.sh src dst
 HELP
 }
 
@@ -19,19 +19,19 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
+src=${1:-"/var/lib/libvirt/images/"}
+dst=${2:-"/var/lib/libvirt/images/"}
 echo "==> halt"
 sudo vagrant halt
 echo "==> list"
 vms=$(sudo vagrant status --machine-readable | grep metadata | awk -F ',' '{print $2}')
 echo "$vms"
 local_dir=$(basename $(pwd))
-cd /var/lib/libvirt/images/
 blank=$(mktemp)
 echo "${vms}" | while read -r vm;do
 echo "==> restore $vm"
 img=${local_dir}_${vm}.img
-sudo rsync -a --delete-before --progress --stats ${img}{.bak,}
+sudo  rsync -avPr --progress --delete ${src}${img}.bak ${dst}${img}
 done
-cd -
 echo "==> up"
 sudo vagrant up

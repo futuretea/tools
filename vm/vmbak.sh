@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    vmbak.sh
+    vmbak.sh src dst
 HELP
 }
 
@@ -19,13 +19,19 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
+src=${1:-"/var/lib/libvirt/images/"}
+dst=${2:-"/var/lib/libvirt/images/"}
+echo "==> halt"
 sudo vagrant halt
+echo "==> list"
 vms=$(sudo vagrant status --machine-readable | grep metadata | awk -F ',' '{print $2}')
+echo "$vms"
 local_dir=$(basename $(pwd))
-cd /var/lib/libvirt/images/
+blank=$(mktemp)
 echo "${vms}" | while read -r vm;do
-sudo rm -rf ${local_dir}_${vm}.img.bak
-sudo cp ${local_dir}_${vm}.img{,.bak}
+echo "==> backup $vm"
+img=${local_dir}_${vm}.img
+sudo  rsync -avPr --progress --delete ${src}${img} ${dst}${img}.bak
 done
-cd -
+echo "==> up"
 sudo vagrant up

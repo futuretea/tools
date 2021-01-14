@@ -19,13 +19,19 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-sudo vagrant destroy -f
+echo "==> halt"
+sudo vagrant halt
+echo "==> list"
 vms=$(sudo vagrant status --machine-readable | grep metadata | awk -F ',' '{print $2}')
+echo "$vms"
 local_dir=$(basename $(pwd))
 cd /var/lib/libvirt/images/
+blank=$(mktemp)
 echo "${vms}" | while read -r vm;do
-sudo rm -rf ${local_dir}_${vm}.img
-sudo cp ${local_dir}_${vm}.img{.bak,}
+echo "==> restore $vm"
+img=${local_dir}_${vm}.img
+sudo rsync -a --delete-before --progress --stats ${img}{.bak,}
 done
 cd -
+echo "==> up"
 sudo vagrant up

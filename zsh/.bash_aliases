@@ -23,3 +23,5 @@ save_source /usr/local/bin/alias/all
 save_source /usr/local/bin/private/all
 save_source /usr/share/nvm/nvm.sh
 
+export RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x"
+

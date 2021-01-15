@@ -25,3 +25,4 @@ save_source /usr/share/nvm/nvm.sh
 
 export RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x"
 
+set -o vi

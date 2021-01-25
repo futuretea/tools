@@ -4,6 +4,11 @@ alias unbak='unbak(){swap $1.bak $1;};unbak $@'
 alias bakdiff='bakdiff(){meld $1.bak $1 >/dev/null 2>&1;};bakdiff $@'
 alias backup='RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x" rsync -avur --progress --delete'
 alias addbin='addbin(){chmod +x $1 && sudo cp $1 /usr/local/bin/;};addbin $@'
+waddbin(){
+    wget -O /tmp/$2 $1
+    chmod +x /tmp/$2
+    sudo cp /tmp/$2 /usr/local/bin/
+}
 ccf(){
 local FULLNAME=$1
 local DIRNAME=$(dirname $1)

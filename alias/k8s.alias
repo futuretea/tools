@@ -100,7 +100,7 @@ alias kcrr='kc rollout restart'
 alias kcrh='kc rollout history'
 alias kcrp='kc rollout pause'
 # run
-alias kcrun='kuberun(){kc run $1 --image=$2;kc expose deploy $1 --port=$3 --target-port=$3;};kuberun $@'
+alias kcrun='kuberun(){kc create deploy $1 --image=$2;kc expose deploy $1 --port=$3 --target-port=$3;};kuberun $@'
 # explain
 alias kcexp='kc explain --recursive'
 # shell

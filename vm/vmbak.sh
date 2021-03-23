@@ -35,5 +35,3 @@ if [ -f ${src}${img} ]; then
 sudo  rsync -avPr --progress --delete ${src}${img} ${dst}${img}.bak
 fi
 done
-echo "==> up"
-sudo vagrant up

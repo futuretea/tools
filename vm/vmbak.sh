@@ -31,7 +31,7 @@ blank=$(mktemp)
 echo "${vms}" | while read -r vm;do
 echo "==> backup $vm"
 img=${local_dir}_${vm}.img
+if [ -f ${src}${img} ]; then
 sudo  rsync -avPr --progress --delete ${src}${img} ${dst}${img}.bak
+fi
 done
-echo "==> up"
-sudo vagrant up

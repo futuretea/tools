@@ -11,7 +11,7 @@ export GOBIN=$GOPATH/bin
 export GOROOT=/usr/local/go
 export GOPRIVATE=gitlab.com,gitee.com,bosun.org
 export GOPROXYURL="https://goproxy.cn"
-export HTTPRPOXYURL="http://proxyhost:12333"
+export HTTPRPOXYURL="http://host.docker.internal:12333"
 
 export RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x"
 

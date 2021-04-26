@@ -18,6 +18,7 @@ export RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x"
 export PATH=$PATH:$GOROOT/bin:$GOBIN
 export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools
+export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.7.0/bin
 
 # export GEM_HOME=$HOME/.vagrant.d/gems

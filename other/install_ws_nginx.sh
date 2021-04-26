@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    install_ws_nginx.sh DOMAIN UUID
+    install_ws_nginx.sh DOMAIN UUID INSTALL
 HELP
 }
 
@@ -21,7 +21,8 @@ fi
 
 DOMAIN=$1
 UUID=$2
-
+INSTALL=$3
+if [ $INSTALL == "true" ];then
 yum -y install epel-release
 yum -y install certbot
 certbot certonly --standalone -d $DOMAIN
@@ -33,6 +34,7 @@ gpgcheck=0
 enabled=1
 EOF
 yum -y install nginx
+fi
 cat >/etc/nginx/conf.d/v2ray.conf <<EOF
 server {
     listen 80;
@@ -60,6 +62,14 @@ server {
         proxy_set_header Connection "upgrade";
         proxy_set_header Host      \$host;
     }
+    location /html {
+        proxy_pass       http://127.0.0.1:20000;
+        proxy_redirect             off;
+        proxy_http_version         1.1;
+        proxy_set_header Upgrade   \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host      \$host;
+    }
 }
 EOF
 systemctl enable nginx
@@ -68,75 +78,81 @@ systemctl restart nginx
 cp /etc/v2ray/config.json /etc/v2ray/config.jsonbak
 cat > /etc/v2ray/config.json <<EOF
 {
-    "inbounds": [{
-        "port": 10000,
-        "listen": "127.0.0.1",
-        "protocol": "vmess",
-        "settings": {
-            "clients": [
-                {
-                    "id": "$UUID",
-                    "level": 1,
-                    "alterId": 64
-                }
-            ]
-        },
-        "streamSettings": {
-            "wsSettings": {
-                "path": "/www",
-                "headers": {}
+    "inbounds": [
+        {
+            "port": 10000,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$UUID",
+                        "level": 1,
+                        "alterId": 64
+                    }
+                ]
             },
-            "quicSettings": {
-                "key": "key",
-                "security": "none",
-                "header": {
-                    "type": "none"
-                }
-            },
-            "tlsSettings": {
-                "allowInsecure": false,
-                "alpn": [
-                    "http/1.1"
-                ],
-                "serverName": "$DOMAIN",
-                "allowInsecureCiphers": false
-            },
-            "httpSettings": {
-                "host": [
-                    ""
-                ],
-                "path": ""
-            },
-            "kcpSettings": {
-                "header": {
-                    "type": "wechat-video"
+            "streamSettings": {
+                "wsSettings": {
+                    "path": "/www",
+                    "headers": {}
                 },
-                "mtu": 1350,
-                "congestion": false,
-                "tti": 50,
-                "uplinkCapacity": 5,
-                "writeBufferSize": 2,
-                "readBufferSize": 2,
-                "downlinkCapacity": 20
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "serverName": "$DOMAIN",
+                    "allowInsecureCiphers": false
+                },
+                "security": "none",
+                "network": "ws",
+                "sockopt": {}
+            }
+        },
+        {
+            "port": 20000,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$UUID",
+                        "level": 1,
+                        "alterId": 64
+                    }
+                ]
             },
-            "tcpSettings": {
-                "header": {
-                    "type": "none"
-                }
-            },
-            "security": "none",
-            "network": "ws",
-            "sockopt": {}
+            "streamSettings": {
+                "wsSettings": {
+                    "path": "/html",
+                    "headers": {}
+                },
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "serverName": "$DOMAIN",
+                    "allowInsecureCiphers": false
+                },
+                "security": "none",
+                "network": "ws",
+                "sockopt": {}
+            }
         }
-    }],
-    "outbounds": [{
-        "protocol": "freedom",
-        "settings": {}
-    },{
-    "protocol": "blackhole",
-    "settings": {},
-    "tag": "blocked"
-    }],
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {},
+            "tag": "blocked"
+        }
+    ],
     "routing": {
         "rules": [
             {

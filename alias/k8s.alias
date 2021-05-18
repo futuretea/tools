@@ -2,6 +2,12 @@ alias k="kubectl"
 alias kc="kubectl ctx"
 alias kn="kubectl ns"
 
+# kubecm
+alias kcm="kubecm"
+kcmaa(){
+  find ~/.kube -name *.config -exec kubecm add -f {} \;
+}
+
 # krew
 alias kk="k krew"
 alias kki="kk install"
@@ -142,7 +148,4 @@ knp(){
 kpnp(){
     k patch svc $1 -p '{"spec":{"type":"NodePort"}}'
     k get svc $1 -owide
-}
-kubecmall(){
-  find ~/.kube -name *.config -exec kubecm add -f {} \;
 }

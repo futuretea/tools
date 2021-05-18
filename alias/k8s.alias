@@ -1,65 +1,65 @@
-alias kcn="kubens"
-
-alias kc="kubectl"
+alias k="kubectl"
+alias kc="kubectl ctx"
+alias kn="kubectl ns"
 
 # krew
-alias kck="kc krew"
-alias kcki="kck install"
-alias kckr="kck remove"
-alias kckl="kck list"
-alias kcks="kck search"
-alias kcku="kck update"
+alias kk="k krew"
+alias kki="kk install"
+alias kkr="kk remove"
+alias kkl="kk list"
+alias kks="kk search"
+alias kku="kk update"
 
-# kc plugins
-alias kce="kc iexec"
-alias kct="kc tail"
-alias kcs="kc sniff"
+# k plugins
+alias ke="k iexec"
+alias kt="k tail"
+alias ks="k sniff"
 
-# kc logs
-alias kcl="kc logs"
-alias kclf="kc logs -f"
+# k logs
+alias kl="k logs"
+alias klf="k logs -f"
 
-# kc get
-alias kcg="kc get"
-alias kcga="kcg all"
-alias kcgn="kcg node -o wide"
-alias kcgns="kcg namespaces"
-alias kcgs="kcg svc -o wide"
-alias kcgd="kcg deploy"
-alias kcgds="kcg ds"
-alias kcge="kcg ev --sort-by=.metadata.creationTimestamp -w"
+# k get
+alias kg="k get"
+alias kga="kg all"
+alias kgn="kg node -o wide"
+alias kgns="kg namespaces"
+alias kgs="kg svc -o wide"
+alias kgd="kg deploy"
+alias kgds="kg ds"
+alias kge="kg ev --sort-by=.metadata.creationTimestamp -w"
 
-# kc get deploy
-alias kcgdc="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,CONTAINER:spec.template.spec.containers[*].name'"
-alias kcgdci="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,INITCONTAINER:spec.template.spec.initContainers[*].name'"
-alias kcgdn="kcgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,DNSPOLICY:spec.template.spec.dnsPolicy,HOSTNETWORK:spec.template.spec.hostNetwork'"
+# k get deploy
+alias kgdc="kgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,CONTAINER:spec.template.spec.containers[*].name'"
+alias kgdci="kgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,INITCONTAINER:spec.template.spec.initContainers[*].name'"
+alias kgdn="kgd -o custom-columns='NAME:metadata.name,REPLICAS:spec.replicas,AVAILABLE:status.availableReplicas,DNSPOLICY:spec.template.spec.dnsPolicy,HOSTNETWORK:spec.template.spec.hostNetwork'"
 
-# kc get pod
-alias kcgp='kcgp(){if [ -z $RUN ];then;kcg pod $@;else;if [ $RUN -eq 0 ];then;kcg pod --field-selector=status.phase!=Running $@;else;kcg pod --field-selector=status.phase==Running $@;fi;fi;};kcgp $@'
-alias kcgpn="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,PORTS:spec.containers[*].ports'"
-alias kcgpc="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,CONTAINER:spec.containers[*].name'"
-alias kcgpci="kcgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,INITCONTAINER:spec.initContainers[*].name'"
-alias kcgps="kcgp -o custom-columns='NAME:metadata.name,SERVICEACCOUNT:spec.serviceAccountName'"
-alias kcgpv="kcgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,VOLUMES:spec.volumes[*].name'"
-alias kcgpi="kcgp -o custom-columns='NAME:metadata.name,IMAGES:spec.containers[*].image'"
-alias kcgpip="kcgp -o custom-columns='NAME:metadata.name,PULLPOLICY:spec.containers[*].imagePullPolicy'"
-alias kcgpil="kcgp -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
-alias kcgpila="kcgp --all-namespaces -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
-alias kcgpp="kcgp -o custom-columns='NAME:metadata.name,LIVENESS:spec.containers[*].livenessProbe,READINESS:spec.containers[*].readinessProbe'"
+# k get pod
+alias kgp='kgp(){if [ -z $RUN ];then;kg pod $@;else;if [ $RUN -eq 0 ];then;kg pod --field-selector=status.phase!=Running $@;else;kg pod --field-selector=status.phase==Running $@;fi;fi;};kgp $@'
+alias kgpn="kgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,DNSPOLICY:spec.dnsPolicy,HOSTNETWORK:spec.hostNetwork,PORTS:spec.containers[*].ports'"
+alias kgpc="kgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,CONTAINER:spec.containers[*].name'"
+alias kgpci="kgp -o custom-columns='NAME:metadata.name,UID:metadata.uid,INITCONTAINER:spec.initContainers[*].name'"
+alias kgps="kgp -o custom-columns='NAME:metadata.name,SERVICEACCOUNT:spec.serviceAccountName'"
+alias kgpv="kgp -o custom-columns='NAME:metadata.name,NODE:spec.nodeName,VOLUMES:spec.volumes[*].name'"
+alias kgpi="kgp -o custom-columns='NAME:metadata.name,IMAGES:spec.containers[*].image'"
+alias kgpip="kgp -o custom-columns='NAME:metadata.name,PULLPOLICY:spec.containers[*].imagePullPolicy'"
+alias kgpil="kgp -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
+alias kgpila="kgp --all-namespaces -o custom-columns='IMAGES:spec.containers[*].image' --no-headers | tr ',' '\n' | sort -u"
+alias kgpp="kgp -o custom-columns='NAME:metadata.name,LIVENESS:spec.containers[*].livenessProbe,READINESS:spec.containers[*].readinessProbe'"
 
-# kc get other
-alias kcgnds="kcgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.nodeSelector'"
-alias kcgpvc="kcgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.volumes[*].persistentVolumeClaim'"
+# k get other
+alias kgnds="kgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.nodeSelector'"
+alias kgpvc="kgp -o custom-columns='NAME:metadata.name,NODESELECTOR:spec.volumes[*].persistentVolumeClaim'"
 
 # others
-alias kcdpe="kc delete pod --field-selector=status.phase!=Running"
-alias kctpc="kc top pod --containers"
-alias kcwpr="kc wait --for condition=ready pod --all"
-alias kcapi="kc api-resources"
-alias kcdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLICY ClusterFirstWithHostNet | xsv select NAME,NAMESPACE,HOSTNETWORK,DNSPOLICY | xsv table"
-alias kcgcs="kc config view --minify --output 'jsonpath={..server}'"
-alias kcgcn="kc config view --minify --output 'jsonpath={..namespace}'"
-alias kc?='echo "[cluster] $(kcgcs)"; echo "[namespace] $(kcgcn)";'
+alias kdpe="k delete pod --field-selector=status.phase!=Running"
+alias ktpc="k top pod --containers"
+alias kwpr="k wait --for condition=ready pod --all"
+alias kapi="k api-resources"
+alias kdns="pod2xsv | xsv search -s HOSTNETWORK true | xsv search -v -s DNSPOLICY ClusterFirstWithHostNet | xsv select NAME,NAMESPACE,HOSTNETWORK,DNSPOLICY | xsv table"
+alias kgcs="k config view --minify --output 'jsonpath={..server}'"
+alias kgcn="k config view --minify --output 'jsonpath={..namespace}'"
+alias k?='echo "[cluster] $(kgcs)"; echo "[namespace] $(kgcn)";'
 
 # context
 ccc(){
@@ -87,32 +87,32 @@ cccc(){
 }
 
 # set
-alias kcs='kc set'
-alias kcse='kc set env'
-alias kcsi='kc set image'
-alias kcsr='kc set resources'
-alias kcss='kc set selector'
+alias ks='k set'
+alias kse='k set env'
+alias ksi='k set image'
+alias ksr='k set resources'
+alias kss='k set selector'
 # rollout
-alias kcr='kc rollout'
-alias kcru='kc rollout undo'
-alias kcrs='kc rollout status'
-alias kcrr='kc rollout restart'
-alias kcrh='kc rollout history'
-alias kcrp='kc rollout pause'
+alias kr='k rollout'
+alias kru='k rollout undo'
+alias krs='k rollout status'
+alias krr='k rollout restart'
+alias krh='k rollout history'
+alias krp='k rollout pause'
 # run
-alias kcrun='kuberun(){kc create deploy $1 --image=$2;kc expose deploy $1 --port=$3 --target-port=$3;};kuberun $@'
+alias krun='kuberun(){k create deploy $1 --image=$2;k expose deploy $1 --port=$3 --target-port=$3;};kuberun $@'
 # explain
-alias kcexp='kc explain --recursive'
+alias kexp='k explain --recursive'
 # shell
-alias kcshell='kc delete pod dummy --ignore-not-found && kc run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
+alias kshell='k delete pod dummy --ignore-not-found && k run -i --rm --restart=Never dummy --image=nicolaka/netshoot --command -- bash -il'
 # node
-kcnode(){
-    kc describe node $(kcgn -o wide --no-headers | fzf | awk '{print $1}')
+knode(){
+    k describe node $(kgn -o wide --no-headers | fzf | awk '{print $1}')
 }
 # apply
-alias kcaf='kc apply -f'
+alias kaf='k apply -f'
 # virtctl
-alias kcvt='kc virt'
+alias kvt='k virt'
 
 # tshark
 kubeshark(){
@@ -136,10 +136,13 @@ ${TSHARK} -i "${LO}" -f "${BPF}" -Y "${DISPLAY}"  -T fields -E separator=" | " -
 }
 
 #
-kcnp(){
-    kcg svc -A -ojson  | jq -r '.items[] | select(.spec.type == "NodePort") | {"name":.metadata.name,"port":.spec.ports[].nodePort}'
+knp(){
+    kg svc -A -ojson  | jq -r '.items[] | select(.spec.type == "NodePort") | {"name":.metadata.name,"port":.spec.ports[].nodePort}'
 }
-kcpnp(){
-    kc patch svc $1 -p '{"spec":{"type":"NodePort"}}'
-    kc get svc $1 -owide
+kpnp(){
+    k patch svc $1 -p '{"spec":{"type":"NodePort"}}'
+    k get svc $1 -owide
+}
+kubecmall(){
+  find ~/.kube -name *.config -exec kubecm add -f {} \;
 }

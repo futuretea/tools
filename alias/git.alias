@@ -76,13 +76,13 @@ brrename(){
 recmt() {
     local msg=$(git log -n 1 --pretty=format:"%s" | xargs echo)
     git reset --soft HEAD^
-    git commit -a -m "$msg"
+    git commit -a -s -m "$msg"
 }
 
 recmtpush() {
     local msg=$(git log -n 1 --pretty=format:"%s" | xargs echo)
     git reset --soft HEAD^
-    git commit -a -m "$msg"
+    git commit -a -s -m "$msg"
     git push --force
 }
 
@@ -97,3 +97,4 @@ gnco(){
 alias origin='open $(git remote get-url origin |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
 alias upstream='open $(git remote get-url upstream |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
 alias upt='git pull upstream $(git_current_branch) && git push'
+alias gcasm='git commit -a -s -m'

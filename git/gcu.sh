@@ -1,8 +1,8 @@
 #!/bin/bash
 #set -e
 
-useage() {
-    echo "useage:"
+usage() {
+    echo "usage:"
     echo "  gcu.sh user_name user_email --local"
 }
 
@@ -12,7 +12,7 @@ show_user() {
 
 if [ $# -lt 2 ]; then
     show_user
-    useage
+    usage
     exit
 fi
 

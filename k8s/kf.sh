@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -ou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     kf.sh SSH_CONFIG CLUSTER
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 

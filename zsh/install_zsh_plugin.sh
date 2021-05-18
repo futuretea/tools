@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-useage() {
-    echo "useage:"
+usage() {
+    echo "usage:"
     echo "  install_zsh_plugin.sh "
 }
 
 if [ $# -lt 0 ]; then
-    useage
+    usage
     exit
 fi
 

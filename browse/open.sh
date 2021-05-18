@@ -3,7 +3,7 @@
 # set -e
 set -ou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     open.sh OPENPATH
@@ -16,7 +16,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit
 fi
 

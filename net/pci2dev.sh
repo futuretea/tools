@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     pci2dev.sh PCIADDRESS
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit
 fi
 

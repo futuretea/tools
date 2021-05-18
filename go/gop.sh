@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -ou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     gop.sh SRCPATH
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -ne 1 ]; then
-    useage
+    usage
     exit
 fi
 

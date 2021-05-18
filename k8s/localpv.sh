@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     locapv.sh NAME HOSTNAME DIR SIZE [MODE] [POLICY]
@@ -16,7 +16,7 @@ exit_err() {
 }
 
 if [ $# -lt 4 ]; then
-    useage
+    usage
     exit 1
 fi
 

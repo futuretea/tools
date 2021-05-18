@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 # set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     suu.sh NAME
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit
 fi
 

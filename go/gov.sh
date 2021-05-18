@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     gov.sh VERSION
@@ -10,7 +10,7 @@ EOF
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit
 fi
 

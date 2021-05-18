@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-useage() {
-    echo "useage:"
+usage() {
+    echo "usage:"
     echo "  dumpk8s.sh DUMPDIR [NAMESPACE]"
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit
 fi
 

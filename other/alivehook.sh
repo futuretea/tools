@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     alivehook.sh IP PORT CMD
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 

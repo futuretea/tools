@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     sslauto.sh WEBROOT EMAIL DOMAIN [SUBS...]
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 3 ]; then
-    useage
+    usage
     exit 1
 fi
 

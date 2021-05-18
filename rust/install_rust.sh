@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     install_rust.sh 
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 0 ]; then
-    useage
+    usage
     exit 1
 fi
 

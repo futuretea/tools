@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     kubenv.sh TYPE NAME [OPTS]
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 

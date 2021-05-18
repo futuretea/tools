@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
     nssh.sh
@@ -30,7 +30,7 @@ show_resources() {
 }
 
 if [ $# -lt 0 ]; then
-    useage
+    usage
     exit 1
 fi
 

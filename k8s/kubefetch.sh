@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     kubefetch.sh FOCUS
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 0 ]; then
-    useage
+    usage
     exit 1
 fi
 
@@ -39,7 +39,7 @@ while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
     else
         KUBECONFIGFILE="/root/.kube/config"
     fi
-    LOCALKUBECONFIGFILE="${HOME}/.kube/config.${CLUSTER}"
+    LOCALKUBECONFIGFILE="${HOME}/.kube/${CLUSTER}.config"
 
     if [ ${ROOTPASS} ];then
         if [ x${SSH_PROXY} != x"-" ];then

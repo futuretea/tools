@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     limit_port_rate.sh CLEAN PORT [RATE] [NIC] [MARK]
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 

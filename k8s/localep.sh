@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     localep.sh NAME [ETH:-wifi0] [PORT:-8081]
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit 1
 fi
 

@@ -66,7 +66,7 @@ ccc(){
   local WSLKUBECONFIGDIR=/mnt/c/Users/${USER}
   local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
   local KUBECONFIG=${HOME}/.kube/config
-  local NAME=$(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)
+  local NAME=$(ls ${HOME}/.kube | grep .config | cut -d "." -f 1 | fzf)
   cf ${KUBECONFIG} ${NAME}
     if [ -d ${WSLKUBECONFIGDIR} ];then
     cp ${KUBECONFIG} ${WSLKUBECONFIG}
@@ -76,7 +76,7 @@ cccc(){
   local WSLKUBECONFIGDIR=/mnt/c/Users/${USER}
   local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
   local KUBECONFIG=${HOME}/.kube/config
-  local NAME=$(ls ${HOME}/.kube | grep config. | cut -d "." -f 2 | fzf)
+  local NAME=$(ls ${HOME}/.kube | grep .config | cut -d "." -f 1 | fzf)
   cf ${KUBECONFIG} ${NAME}
   sed  -i 's/server:.*/server: http:\/\/127.0.0.1:8001/g' ${KUBECONFIG}
   if [ -d ${WSLKUBECONFIGDIR} ];then

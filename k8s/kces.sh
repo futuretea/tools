@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -ou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     kces.sh CMDLINE
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit 1
 fi
 CMDLINE=$@

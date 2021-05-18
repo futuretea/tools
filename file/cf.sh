@@ -2,10 +2,10 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<"EOF"
 USAGE:
-    cf.sh FILE BASE [EXTS..]
+    cf.sh FILE BASE [OTHERS..]
 EOF
 }
 
@@ -15,14 +15,14 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 
 FILE=$1
 BASE=$2
 shift 2
-cat "${FILE}.${BASE}" >"${FILE}"
-for EXT in $@; do
-    cat "${FILE}.${EXT}" >>"${FILE}"
+cat "${BASE}.${FILE}" >"${FILE}"
+for OTHER in $@; do
+    cat "${OTHER}.${FILE}" >>"${FILE}"
 done

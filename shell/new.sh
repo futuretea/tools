@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     $(basename $0) scriptpath scriptargs...
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 1 ]; then
-    useage
+    usage
     exit 1
 fi
 
@@ -29,7 +29,7 @@ cat >"${SCRIPTPATH}" <<EOFFF
 [[ -n \$DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     ${SCRIPTNAME} ${SCRIPTARGS}
@@ -42,7 +42,7 @@ exit_err() {
 }
 
 if [ \$# -lt ${SCRIPTARGNUM} ]; then
-    useage
+    usage
     exit 1
 fi
 

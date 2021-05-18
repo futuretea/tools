@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     kubeprobe.sh TYPE WORKLOAD CONTAINER [READINESSPROBE LIVENESSPROBE ]
@@ -21,7 +21,7 @@ exit_err() {
 }
 
 if [ $# -lt 3 ]; then
-    useage
+    usage
     exit 1
 fi
 

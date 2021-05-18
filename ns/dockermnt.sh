@@ -1,13 +1,13 @@
 #!/bin/bash
 set -ex
 
-useage() {
-    echo "useage:"
+usage() {
+    echo "usage:"
     echo "  dockermnt.sh CONTAINER HOSTPATH CONTPATH"
 }
 
 if [ $# -ne 3 ]; then
-    useage
+    usage
     exit
 fi
 

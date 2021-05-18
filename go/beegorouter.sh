@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     beegorouter.sh IN OUT
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -gt 2 ]; then
-    useage
+    usage
     exit 1
 fi
 

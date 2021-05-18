@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-useage() {
-    echo "useage:"
+usage() {
+    echo "usage:"
     echo "  kubevi.sh NAMESPACE POD CONTAINER REMOTE"
 }
 
 if [ $# -ne 4 ]; then
-    useage
+    usage
     exit
 fi
 

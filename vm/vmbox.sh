@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     vmbox.sh PROJECT BOX VERSION PROVIDER
@@ -16,7 +16,7 @@ exit_err() {
 }
 
 if [ $# -lt 4 ]; then
-    useage
+    usage
     exit 1
 fi
 

@@ -2,7 +2,7 @@
 [[ -n $DEBUG ]] && set -x
 set -ou pipefail
 
-useage() {
+usage() {
     cat <<HELP
 USAGE:
     gitfetchall.sh 
@@ -15,7 +15,7 @@ exit_err() {
 }
 
 if [ $# -lt 0 ]; then
-    useage
+    usage
     exit 1
 fi
 git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done

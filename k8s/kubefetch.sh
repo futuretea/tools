@@ -19,9 +19,10 @@ if [ $# -lt 0 ]; then
     exit 1
 fi
 
-KUBEHOSTFILE=$HOME/kubehost
+KUBEHOSTFILE=$HOME/kubes.csv
 FOCUS=${1:-""}
-while read -r CLUSTER TYPE USER HOST ROOTPASS;do
+PORT="6443"
+tail --lines=+2 ${KUBEHOSTFILE} | tr ',' ' ' | while read -r CLUSTER TYPE USER HOST ROOTPASS; do
     if [ -z "${CLUSTER}" ]; then
         continue
     fi
@@ -34,12 +35,12 @@ while read -r CLUSTER TYPE USER HOST ROOTPASS;do
         fi
     fi
 
-    echo "[ ${CLUSTER} ]  "
-
     KUBECONFIGFILE=""
     if [ x"${TYPE}" == x"k3s" ];then
+        echo "🚀 ${CLUSTER}"
         KUBECONFIGFILE="/etc/rancher/k3s/k3s.yaml"
     else
+        echo "🚤 ${CLUSTER}"
         if [ x"${USER}" == x"root" ];then
             KUBECONFIGFILE="/root/.kube/config"
         else
@@ -49,14 +50,14 @@ while read -r CLUSTER TYPE USER HOST ROOTPASS;do
     LOCALKUBECONFIGFILE="${HOME}/.kube/${CLUSTER}.config"
 
     if [ ${ROOTPASS} ];then
-        echo $ROOTPASS | ssh -tt ${USER}@${HOST} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
+        echo $ROOTPASS | ssh -n -tt ${USER}@${HOST} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
         sed -i "1,2d" "${LOCALKUBECONFIGFILE}"
     else
-        ssh ${USER}@${HOST} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
+        ssh -n ${USER}@${HOST} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
 
-    echo "[ ${CLUSTER} ] finish"
+    # echo "✅ ${CLUSTER}"
 
-done < ${KUBEHOSTFILE}
+done

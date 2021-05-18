@@ -2,7 +2,7 @@ cch(){
  local WSLHOSTCONFIGDIR=/mnt/c/Windows/System32/drivers
  local WSLHOSTCONFIG=${WSLHOSTCONFIGDIR}/etc/HOSTS
  local HOSTCONFIG=/etc/hosts
- sudo cf ${HOSTCONFIG} base $@
+ sudo cf /etc hosts base $@
  if [ -d ${WSLHOSTCONFIGDIR} ];then
    sudo cp ${HOSTCONFIG} ${WSLHOSTCONFIG}
    ipconfig.exe /flushdns

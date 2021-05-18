@@ -67,7 +67,7 @@ ccc(){
   local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
   local KUBECONFIG=${HOME}/.kube/config
   local NAME=$(ls ${HOME}/.kube | grep .config | cut -d "." -f 1 | fzf)
-  cf ${KUBECONFIG} ${NAME}
+  cf $HOME/.kube config ${NAME}
     if [ -d ${WSLKUBECONFIGDIR} ];then
     cp ${KUBECONFIG} ${WSLKUBECONFIG}
   fi
@@ -77,13 +77,13 @@ cccc(){
   local WSLKUBECONFIG=${WSLKUBECONFIGDIR}/.kube/config
   local KUBECONFIG=${HOME}/.kube/config
   local NAME=$(ls ${HOME}/.kube | grep .config | cut -d "." -f 1 | fzf)
-  cf ${KUBECONFIG} ${NAME}
+  cf $HOME/.kube config ${NAME}
   sed  -i 's/server:.*/server: http:\/\/127.0.0.1:8001/g' ${KUBECONFIG}
   if [ -d ${WSLKUBECONFIGDIR} ];then
     cp ${KUBECONFIG} ${WSLKUBECONFIG}
   fi
   echo "proxy to ${NAME}"
-  KUBECONFIG=${KUBECONFIG}.${NAME} kubectl proxy
+  KUBECONFIG=${NAME}.${KUBECONFIG} kubectl proxy
 }
 
 # set

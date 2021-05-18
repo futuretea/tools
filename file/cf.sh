@@ -5,7 +5,7 @@ set -eou pipefail
 usage() {
     cat <<"EOF"
 USAGE:
-    cf.sh FILE BASE [OTHERS..]
+    cf.sh DIR FILE BASE [OTHERS..]
 EOF
 }
 
@@ -14,15 +14,16 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
     usage
     exit 1
 fi
 
-FILE=$1
-BASE=$2
-shift 2
-cat "${BASE}.${FILE}" >"${FILE}"
+DIR=$1
+FILE=$2
+BASE=$3
+shift 3
+cat "${DIR}/${BASE}.${FILE}" >"${DIR}/${FILE}"
 for OTHER in $@; do
-    cat "${OTHER}.${FILE}" >>"${FILE}"
+    cat "${DIR}/${OTHER}.${FILE}" >>"${DIR}/${FILE}"
 done

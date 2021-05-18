@@ -5,7 +5,7 @@ set -eou pipefail
 usage() {
     cat <<HELP
 USAGE:
-    kubefetch.sh FOCUS
+    kubefetch [FOCUS]
 HELP
 }
 
@@ -21,14 +21,17 @@ fi
 
 KUBEHOSTFILE=$HOME/kubehost
 FOCUS=${1:-""}
-while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
+while read -r CLUSTER TYPE USER HOST ROOTPASS;do
+    if [ -z "${CLUSTER}" ]; then
+        continue
+    fi
+
+    case "${CLUSTER}" in \#*) continue ;; esac
+
     if [ -n "${FOCUS}" ];then
         if [[ ! "${CLUSTER}" =~ "${FOCUS}" ]];then
             continue
         fi
-    fi
-    if [ -z "${CLUSTER}" ];then
-        continue
     fi
 
     echo "[ ${CLUSTER} ]  "
@@ -37,29 +40,23 @@ while read -r CLUSTER TYPE SSH_PROXY SSH_CONFIG HOST PORT ROOTPASS;do
     if [ x"${TYPE}" == x"k3s" ];then
         KUBECONFIGFILE="/etc/rancher/k3s/k3s.yaml"
     else
-        KUBECONFIGFILE="/root/.kube/config"
+        if [ x"${USER}" == x"root" ];then
+            KUBECONFIGFILE="/root/.kube/config"
+        else
+            KUBECONFIGFILE="/home/${USER}/.kube/config"
+        fi
     fi
     LOCALKUBECONFIGFILE="${HOME}/.kube/${CLUSTER}.config"
 
     if [ ${ROOTPASS} ];then
-        if [ x${SSH_PROXY} != x"-" ];then
-            echo $ROOTPASS | ssh -o "ProxyCommand=nc -X 5 -x ${SSH_PROXY} %h %p" -tt ${SSH_CONFIG} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
-        else
-            echo $ROOTPASS | ssh -tt ${SSH_CONFIG} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
-        fi
+        echo $ROOTPASS | ssh -tt ${USER}@${HOST} sudo cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
         sed -i "1,2d" "${LOCALKUBECONFIGFILE}"
     else
-        if [ x${SSH_PROXY} != x"-" ];then
-            ssh -o "ProxyCommand=nc -X 5 -x ${SSH_PROXY} %h %p" ${SSH_CONFIG} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
-        else
-            ssh ${SSH_CONFIG} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
-        fi
-         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
+        ssh ${USER}@${HOST} cat ${KUBECONFIGFILE} >"${LOCALKUBECONFIGFILE}"
+        sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
 
-    echo "[ ${CLUSTER} ] finish "
+    echo "[ ${CLUSTER} ] finish"
 
 done < ${KUBEHOSTFILE}
-
-

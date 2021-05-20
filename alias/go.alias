@@ -85,7 +85,7 @@ gofix(){
     gofile | xargs -r chmod 644
     gofile | xargs -r gofmt -w
     gofile | xargs -r goimports -local $modname -w
-    CGO_ENABLED=0 golangci-lint run --fix
+    CGO_ENABLED=0 golangci-lint run --fix --fast
 }
 
 alias chgfile='git diff --name-only'

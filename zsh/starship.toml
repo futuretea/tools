@@ -14,7 +14,7 @@ symbol = "jdk-"
 [kubernetes]
 symbol = "⛵ "
 style = "dim green"
-disabled = true
+disabled = false
 [git_branch]
 disabled = false
 [git_commit]

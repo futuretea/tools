@@ -5,6 +5,7 @@ alias kn="kubectl ns"
 # kubecm
 alias kcm="kubecm"
 kcmaa(){
+  echo "" > ~/.kube/config
   find ~/.kube -name *.config -exec kubecm add -f {} \;
 }
 

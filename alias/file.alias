@@ -5,7 +5,7 @@ alias bakdiff='bakdiff(){meld $1.bak $1 >/dev/null 2>&1;};bakdiff $@'
 alias backup='RSYNC_RSH="ssh -T -c aes128-ctr -o Compression=no -x" rsync -avur --progress --delete'
 addbin(){
     chmod +x $1
-    sudo mv $1 /usr/local/bin/$(echo "$1" | cut -d "-" -f 1)
+    sudo mv $1 /usr/local/bin/
 }
 waddbin(){
     wget -O /tmp/$2 $1

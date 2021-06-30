@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 [[ -n $DEBUG ]] && set -x
-set -eou pipefail
+set -ou pipefail
 
 usage() {
     cat <<HELP
 USAGE:
-    limit_port_rate.sh CLEAN PORT [RATE] [NIC] [MARK]
+    limit_port_rate.sh INIT MARK NIC PORT RATE
 HELP
 }
 
@@ -14,33 +14,47 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 5 ]; then
     usage
     exit 1
 fi
 
-CLEAN=$1
-PORT=$2
-RATE=${3:-1}
-NIC=${4:-eth0}
-MARK=${5:-5}
+INIT=$1
+MARK=$2
+NIC=$3
+PORT=$4
+RATE=$5
+shift 5
 
-if [ $CLEAN == "true" ];then
-# clean tc rules
-tc qdisc del dev $NIC root
-tc -s qdisc ls dev $NIC
+if [ $INIT == "true" ];then
+    # clean tc rules
+    tc qdisc del dev $NIC root
 
-# clean iptables mangle rules
-iptables -t mangle -F
+    set -e
+    tc -s qdisc ls dev $NIC
+
+    # clean iptables mangle rules
+    iptables -t mangle -F
+
+    # root qdisc 0
+    tc qdisc add dev $NIC root handle 1:0 htb default 1
+
+    # root class 1
+    tc class add dev $NIC parent 1:0 classid 1:1 htb rate 1000Mbps
 fi
 
-# add iptables mangle rules
-iptables -A OUTPUT -t mangle -p tcp --sport $PORT -j MARK --set-mark $MARK
+set -e
+# limit class
+tc class add dev $NIC parent 1:1 classid 1:${MARK} htb rate ${RATE} ceil ${RATE} prio 1
+#tc qdisc add dev $NIC parent 1:${MARK} handle ${MARK}: sfq perturb 10
+tc qdisc add dev $NIC parent 1:${MARK} handle ${MARK}: netem $@
 
-# add tc rules
-tc qdisc add dev $NIC root handle 1: htb
-tc class add dev $NIC parent 1: classid 1:$MARK htb rate ${RATE}Mbps ceil ${RATE}Mbps prio 1
-tc filter add dev $NIC parent 1:0 protocol ip handle $MARK fw flowid 1:$MARK
+# match filter
+tc filter add dev $NIC parent 1:0 prio 1 protocol ip u32 match ip dport $PORT 0xffff flowid 1:${MARK}
+
+# iptables filter
+#tc filter add dev $NIC parent 1:0 protocol ip handle $MARK fw flowid 1:$MARK
+#iptables -t mangle -A OUTPUT -p tcp --sport $PORT -j MARK --set-mark $MARK
 
 # show tc rules
 tc qdisc ls dev $NIC

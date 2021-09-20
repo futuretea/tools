@@ -31,4 +31,4 @@ umask 022
 
 save_source /usr/local/bin/alias/all
 save_source /usr/local/bin/private/all
-save_source /usr/share/nvm/nvm.sh
+save_source $HOME/.nvm/nvm.sh

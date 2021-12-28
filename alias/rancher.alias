@@ -1,0 +1,3 @@
+rancherpassword(){
+docker logs $1  2>&1 | grep "Bootstrap Password:"
+}

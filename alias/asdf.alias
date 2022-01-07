@@ -1,0 +1,10 @@
+asdf_install(){
+	asdf install $1 latest && asdf global $1 latest
+}
+
+asdf_update(){
+	asdf plugin list | while read -r name;do
+		asdf_install $name
+	done
+}
+

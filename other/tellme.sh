@@ -23,4 +23,4 @@ sendkey=$1
 title=$2
 content=$3
 
-curl -fk https://sctapi.ftqq.com/${sendkey}.send?title=${title}&desp=${content}
+curl --silent --output /dev/null -fk https://sctapi.ftqq.com/${sendkey}.send?title=${title}&desp=${content}

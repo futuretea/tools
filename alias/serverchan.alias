@@ -3,6 +3,6 @@ tellme(){
 }
 
 waitme(){
- $1
- tellme "command finished: $1"
+ eval ${1}
+ tellme "finished: $1, exit: $?"
 }

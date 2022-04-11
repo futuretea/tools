@@ -1,0 +1,8 @@
+tellme(){
+  curl --silent --output /dev/null -fk https://sctapi.ftqq.com/${SERVER_CHAN_SEND_KEY}.send?title="${1}"
+}
+
+waitme(){
+ $1
+ tellme "command finished: $1"
+}

@@ -1,5 +1,5 @@
 tellme(){
-  curl --silent --output /dev/null -fk https://sctapi.ftqq.com/${SERVER_CHAN_SEND_KEY}.send?title="${1}"
+  curl --silent --output /dev/null -fk https://sctapi.ftqq.com/${SERVER_CHAN_SEND_KEY}.send?title="${1}"&desp="aa"
 }
 
 waitme(){

@@ -15,32 +15,42 @@ exit_err() {
 }
 
 if [ $# -lt 2 ]; then
-    usage
+    useage
     exit 1
 fi
 
 DOMAIN=$1
 UUID=$2
 INSTALL=$3
+
 if [ $INSTALL == "true" ];then
-yum -y install epel-release
-yum -y install certbot
-certbot certonly --standalone -d $DOMAIN
-cat >/etc/yum.repos.d/nginx.repo <<EOF
+  yum -y install epel-release
+  yum -y install certbot
+  cat >/etc/yum.repos.d/nginx.repo <<EOF
 [nginx]
 name=nginx repo
 baseurl=http://nginx.org/packages/centos/7/\$basearch/
 gpgcheck=0
 enabled=1
 EOF
-yum -y install nginx
+  yum -y install nginx
 fi
-cat >/etc/nginx/conf.d/v2ray.conf <<EOF
+
+# cert nginx
+cat >/etc/nginx/conf.d/acme-challenge.conf <<EOF
 server {
-    listen 80;
-    server_name $DOMAIN;
-    rewrite ^(.*) https://\$server_name\$1 permanent;
+    listen       80;
+    server_name  ${DOMAIN} *.${DOMAIN};
+    location /.well-known/acme-challenge {
+       root /root;
+    }
 }
+EOF
+systemctl enable --now nginx
+certbot certonly --manual
+
+# v2ray nginx
+cat >/etc/nginx/conf.d/v2ray.conf <<EOF
 server {
     listen       443 http2 ssl;
     server_name  $DOMAIN;
@@ -72,9 +82,8 @@ server {
     }
 }
 EOF
-systemctl enable nginx
-systemctl restart nginx
 
+# v2ray server
 cp /etc/v2ray/config.json /etc/v2ray/config.jsonbak
 cat > /etc/v2ray/config.json <<EOF
 {
@@ -164,7 +173,8 @@ cat > /etc/v2ray/config.json <<EOF
     }
 }
 EOF
-systemctl enable v2ray
-systemctl restart v2ray
+systemctl enable --now v2ray
+
+# status
 systemctl status nginx
 systemctl status v2ray

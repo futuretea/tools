@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    install_ws_nginx.sh DOMAIN UUID INSTALL CERTBOT
+    install_ws_nginx.sh DOMAIN IP UUID INSTALL CERTBOT
 HELP
 }
 
@@ -14,15 +14,16 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
     useage
     exit 1
 fi
 
 DOMAIN=$1
-UUID=$2
-INSTALL=$3
-CERTBOT=$4
+IP=$2
+UUID=$3
+INSTALL=$4
+CERTBOT=$5
 
 if [ $INSTALL == "true" ];then
   yum -y install epel-release

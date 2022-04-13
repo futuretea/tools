@@ -6,6 +6,7 @@ usage() {
     cat <<HELP
 USAGE:
     limit_port_rate.sh INIT MARK NIC PORT RATE
+    ./limit_port_rate.sh true 10 eth0 10000 10Kbps
 HELP
 }
 

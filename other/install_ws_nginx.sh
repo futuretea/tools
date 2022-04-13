@@ -79,7 +79,7 @@ server {
         return 200 "ok";
     }
     location /www {
-        proxy_pass       http://127.0.0.1:10000;
+        proxy_pass       http://${IP}:10000;
         proxy_redirect             off;
         proxy_http_version         1.1;
         proxy_set_header Upgrade   \$http_upgrade;
@@ -87,7 +87,7 @@ server {
         proxy_set_header Host      \$host;
     }
     location /html {
-        proxy_pass       http://127.0.0.1:20000;
+        proxy_pass       http://${IP}:20000;
         proxy_redirect             off;
         proxy_http_version         1.1;
         proxy_set_header Upgrade   \$http_upgrade;
@@ -107,7 +107,7 @@ cat > /etc/v2ray/config.json <<EOF
     "inbounds": [
         {
             "port": 10000,
-            "listen": "127.0.0.1",
+            "listen": "${IP}",
             "protocol": "vmess",
             "settings": {
                 "clients": [
@@ -138,7 +138,7 @@ cat > /etc/v2ray/config.json <<EOF
         },
         {
             "port": 20000,
-            "listen": "127.0.0.1",
+            "listen": "${IP}",
             "protocol": "vmess",
             "settings": {
                 "clients": [

@@ -5,8 +5,8 @@ set -ou pipefail
 usage() {
     cat <<HELP
 USAGE:
-    limit_port_rate.sh INIT MARK NIC PORT RATE
-    ./limit_port_rate.sh true 10 eth0 10000 10Kbps
+    limit_port_rate.sh INIT MARK NIC IP PORT RATE
+    ./limit_port_rate.sh true 10 eth0 127.0.0.1 10000 10Kbps
 HELP
 }
 
@@ -15,7 +15,7 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 5 ]; then
+if [ $# -lt 6 ]; then
     usage
     exit 1
 fi
@@ -23,9 +23,10 @@ fi
 INIT=$1
 MARK=$2
 NIC=$3
-PORT=$4
-RATE=$5
-shift 5
+IP=$4
+PORT=$5
+RATE=$6
+shift 6
 
 if [ $INIT == "true" ];then
     # clean tc rules

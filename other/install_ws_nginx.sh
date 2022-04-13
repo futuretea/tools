@@ -2,10 +2,10 @@
 [[ -n $DEBUG ]] && set -x
 set -eou pipefail
 
-usage() {
+useage() {
     cat <<HELP
 USAGE:
-    install_ws_nginx.sh DOMAIN UUID INSTALL
+    install_ws_nginx.sh DOMAIN UUID INSTALL CERTBOT
 HELP
 }
 
@@ -22,6 +22,7 @@ fi
 DOMAIN=$1
 UUID=$2
 INSTALL=$3
+CERTBOT=$4
 
 if [ $INSTALL == "true" ];then
   yum -y install epel-release
@@ -40,20 +41,29 @@ fi
 cat >/etc/nginx/conf.d/acme-challenge.conf <<EOF
 server {
     listen       80;
-    server_name  ${DOMAIN} *.${DOMAIN};
+    server_name  ${DOMAIN};
+    location / {
+        add_header Strict-Transport-Security max-age=15768000;
+        return 301 https://\$http_host\$request_uri;
+    }
     location /.well-known/acme-challenge {
        root /root;
     }
 }
 EOF
-systemctl enable --now nginx
-certbot certonly --manual
+
+if [ $CERTBOT == "true" ];then
+    rm -f /etc/nginx/conf.d/v2ray.conf
+    systemctl enable --now nginx
+    systemctl restart nginx
+    certbot certonly --manual
+fi
 
 # v2ray nginx
 cat >/etc/nginx/conf.d/v2ray.conf <<EOF
 server {
     listen       443 http2 ssl;
-    server_name  $DOMAIN;
+    server_name  ${DOMAIN};
     charset utf-8;
 
     ssl_certificate    /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
@@ -64,6 +74,10 @@ server {
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
 
+    location / {
+        add_header Content-Type 'text/html; charset=utf-8';
+        return 200 "ok";
+    }
     location /www {
         proxy_pass       http://127.0.0.1:10000;
         proxy_redirect             off;
@@ -82,6 +96,9 @@ server {
     }
 }
 EOF
+
+systemctl enable --now nginx
+systemctl restart nginx
 
 # v2ray server
 cp /etc/v2ray/config.json /etc/v2ray/config.jsonbak
@@ -174,6 +191,7 @@ cat > /etc/v2ray/config.json <<EOF
 }
 EOF
 systemctl enable --now v2ray
+systemctl restart v2ray
 
 # status
 systemctl status nginx

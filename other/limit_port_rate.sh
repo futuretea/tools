@@ -23,9 +23,9 @@ fi
 INIT=$1
 MARK=$2
 NIC=$3
-PORT=$5
-RATE=$6
-shift 6
+PORT=$4
+RATE=$5
+shift 5
 
 if [ $INIT == "true" ];then
     # clean tc rules

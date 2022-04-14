@@ -6,6 +6,7 @@ alias kn="kubectl ns"
 alias kcm="kubecm"
 kcmaa(){
   echo "" > ~/.kube/config
+  chmod 600 ~/.kube/config
   find ~/.kube -name *.config -exec kubecm add -f {} \;
 }
 

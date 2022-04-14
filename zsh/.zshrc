@@ -19,4 +19,5 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.bash_aliases
 source $HOME/.asdf/asdf.sh
 eval "$(kubectl completion zsh)"
+eval "$(helm completion zsh)"
 eval "$(starship init zsh)"

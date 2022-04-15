@@ -81,7 +81,7 @@ server {
 
     location / {
         add_header Content-Type 'text/html; charset=utf-8';
-        return 200 "ok";
+        return 200 "";
     }
     location /${ENDPOINT} {
         proxy_pass       http://${IP}:${PORT};

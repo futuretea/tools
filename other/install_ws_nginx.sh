@@ -5,7 +5,7 @@ set -eou pipefail
 useage() {
     cat <<HELP
 USAGE:
-    install_ws_nginx.sh DOMAIN IP UUID INSTALL CERTBOT
+    install_ws_nginx.sh DOMAIN ENDPOINT IP PORT UUID INSTALL CERTBOT
 HELP
 }
 
@@ -14,17 +14,20 @@ exit_err() {
     exit 1
 }
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 5 ]; then
     useage
     exit 1
 fi
 
 DOMAIN=$1
-IP=$2
-UUID=$3
-INSTALL=$4
-CERTBOT=$5
+ENDPOINT=$2
+IP=$3
+PORT=$4
+UUID=$5
+INSTALL=$6
+CERTBOT=$7
 
+# install dependence
 if [ $INSTALL == "true" ];then
   yum -y install epel-release
   yum -y install certbot
@@ -38,7 +41,7 @@ EOF
   yum -y install nginx
 fi
 
-# cert nginx
+# create nginx cert conf
 cat >/etc/nginx/conf.d/acme-challenge.conf <<EOF
 server {
     listen       80;
@@ -53,6 +56,7 @@ server {
 }
 EOF
 
+# certbot
 if [ $CERTBOT == "true" ];then
     rm -f /etc/nginx/conf.d/v2ray.conf
     systemctl enable --now nginx
@@ -60,7 +64,7 @@ if [ $CERTBOT == "true" ];then
     certbot certonly --manual
 fi
 
-# v2ray nginx
+# create nginx v2ray conf
 cat >/etc/nginx/conf.d/v2ray.conf <<EOF
 server {
     listen       443 http2 ssl;
@@ -79,16 +83,8 @@ server {
         add_header Content-Type 'text/html; charset=utf-8';
         return 200 "ok";
     }
-    location /www {
-        proxy_pass       http://${IP}:10000;
-        proxy_redirect             off;
-        proxy_http_version         1.1;
-        proxy_set_header Upgrade   \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host      \$host;
-    }
-    location /html {
-        proxy_pass       http://${IP}:20000;
+    location /${ENDPOINT} {
+        proxy_pass       http://${IP}:${PORT};
         proxy_redirect             off;
         proxy_http_version         1.1;
         proxy_set_header Upgrade   \$http_upgrade;
@@ -98,16 +94,16 @@ server {
 }
 EOF
 
+# restart nginx server
 systemctl enable --now nginx
 systemctl restart nginx
 
-# v2ray server
-cp /etc/v2ray/config.json /etc/v2ray/config.jsonbak
+# create v2ray conf
 cat > /etc/v2ray/config.json <<EOF
 {
     "inbounds": [
         {
-            "port": 10000,
+            "port": ${PORT},
             "listen": "${IP}",
             "protocol": "vmess",
             "settings": {
@@ -121,38 +117,7 @@ cat > /etc/v2ray/config.json <<EOF
             },
             "streamSettings": {
                 "wsSettings": {
-                    "path": "/www",
-                    "headers": {}
-                },
-                "tlsSettings": {
-                    "allowInsecure": false,
-                    "alpn": [
-                        "http/1.1"
-                    ],
-                    "serverName": "$DOMAIN",
-                    "allowInsecureCiphers": false
-                },
-                "security": "none",
-                "network": "ws",
-                "sockopt": {}
-            }
-        },
-        {
-            "port": 20000,
-            "listen": "${IP}",
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "$UUID",
-                        "level": 1,
-                        "alterId": 64
-                    }
-                ]
-            },
-            "streamSettings": {
-                "wsSettings": {
-                    "path": "/html",
+                    "path": "/${ENDPOINT}",
                     "headers": {}
                 },
                 "tlsSettings": {
@@ -191,9 +156,11 @@ cat > /etc/v2ray/config.json <<EOF
     }
 }
 EOF
+
+# restart v2ray server
 systemctl enable --now v2ray
 systemctl restart v2ray
 
-# status
+# check status
 systemctl status nginx
 systemctl status v2ray

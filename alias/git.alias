@@ -98,3 +98,5 @@ alias origin='open $(git remote get-url origin |  sed -e "s/:/\//g" -e "s/git@//
 alias upstream='open $(git remote get-url upstream |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
 alias upt='git pull upstream $(git_current_branch) && git push'
 alias gcasm='git commit -a -s -m'
+
+alias showfiles='git diff-tree --no-commit-id --name-only -r'

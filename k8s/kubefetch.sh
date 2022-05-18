@@ -38,7 +38,7 @@ tail --lines=+2 ${KUBEHOSTFILE} | tr ',' ' ' | while read -r CLUSTER TYPE USER H
     KUBECONFIGFILE=""
     case "${TYPE}" in
       k8s)
-        echo "🚤 ${CLUSTER} <= ${HOST}"
+        echo "🚤 ${CLUSTER} <= ${USER}@${HOST}"
         if [ x"${USER}" == x"root" ];then
             KUBECONFIGFILE="/root/.kube/config"
         else
@@ -46,11 +46,11 @@ tail --lines=+2 ${KUBEHOSTFILE} | tr ',' ' ' | while read -r CLUSTER TYPE USER H
         fi
         ;;
       k3s)
-        echo "🚀 ${CLUSTER} <= ${HOST}"
+        echo "🚀 ${CLUSTER} <= ${USER}@${HOST}"
         KUBECONFIGFILE="/etc/rancher/k3s/k3s.yaml"
         ;;
       rke2)
-        echo "🚄 ${CLUSTER} <= ${HOST}"
+        echo "🚄 ${CLUSTER} <= ${USER}@${HOST}"
         KUBECONFIGFILE="/etc/rancher/rke2/rke2.yaml"
         ;;
       *)
@@ -67,6 +67,17 @@ tail --lines=+2 ${KUBEHOSTFILE} | tr ',' ' ' | while read -r CLUSTER TYPE USER H
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
 
-    # echo "✅ ${CLUSTER}"
+    if [ ! -f "${HOME}/.kube/config" ];then
+        touch "${HOME}/.kube/config"
+    fi
 
+    if grep -qE ^${CLUSTER}$ < <(kubectl config get-contexts -o 'name');then
+        kubectl config delete-context ${CLUSTER}
+    fi
+
+    kubecm add -c -f "${LOCALKUBECONFIGFILE}" >/dev/null 2>&1
+
+    kubectl config use-context ${CLUSTER}
+
+    echo "✅ ${CLUSTER}"
 done

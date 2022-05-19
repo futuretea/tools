@@ -77,7 +77,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
     KUBECONFIGFILE=""
     case "${TYPE}" in
       k8s)
-        echo "🚤 ${CONTEXT} <= ${USER}@${HOST}"
+        echo "🚤 ${CONTEXT}"
         if [ "${USER}" == "root" ];then
             KUBECONFIGFILE="/root/.kube/config"
         else
@@ -85,11 +85,11 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
         fi
         ;;
       k3s)
-        echo "🚀 ${CONTEXT} <= ${USER}@${HOST}"
+        echo "🚀 ${CONTEXT}"
         KUBECONFIGFILE="/etc/rancher/k3s/k3s.yaml"
         ;;
       rke2)
-        echo "🚄 ${CONTEXT} <= ${USER}@${HOST}"
+        echo "🚄 ${CONTEXT}"
         KUBECONFIGFILE="/etc/rancher/rke2/rke2.yaml"
         ;;
       *)
@@ -97,6 +97,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
     esac
     LOCALKUBECONFIGFILE="${HOME}/.kube/${CONTEXT}.config"
 
+    echo "${CONTEXT}: fetch kubeconfig from ${USER}@${HOST}"
     if [ "${ROOTPASS}" ];then
         echo "${ROOTPASS}" | ssh -n -tt "${USER}@${HOST}" sudo cat "${KUBECONFIGFILE}" >"${LOCALKUBECONFIGFILE}"
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
@@ -106,7 +107,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
 
-    echo "${CONTEXT}: export KUBECONFIG=${LOCALKUBECONFIGFILE}"
+    echo "${CONTEXT}: saved kubeconfig file ${LOCALKUBECONFIGFILE}"
     
 
     if [ "${HAS_KUBECM}" == "false" ];then
@@ -123,5 +124,8 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
 
     kubecm add -c -f "${LOCALKUBECONFIGFILE}" >/dev/null 2>&1
 
+    
     kubectl config use-context "${CONTEXT}" >/dev/null 2>&1
+
+    echo "${CONTEXT}: context updated"
 done

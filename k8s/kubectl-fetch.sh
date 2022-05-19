@@ -5,16 +5,20 @@ set -eou pipefail
 usage() {
     cat <<HELP
 USAGE:
-    kubefetch [CONTEXT]
+    kubectl-fetch [CONTEXT]
+or
+    kubectl fetch [CONTEXT]
+
+NOTE: https://github.com/sunny0826/kubecm is requied to merge contexts
 
 1. put kubectl-fetch to your PATH
-2. write config
+2. write the kubectl-fetch config file
 
 the location of kubectl-fetch config file is ~/.config/kubectl-fetch/config.csv
 It's a csv format file.
 col 1: the name of kubeconfig context
 col 2: cluster type, must in (k8s,k3s,rke2)
-col 3: the username use to fetch kubeconfig file
+col 3: the username to fetch kubeconfig file
 col 4: the host to fetch kubeconfig file
 
 e.g.:
@@ -25,7 +29,7 @@ cluster3,rke2,rancher,192.168.5.102
 
 3. run 'kubectl fetch' to fetch all contexts from remote hosts by ssh
 or
-  run 'kubectl fetch' to fetch a specify context
+   run 'kubectl fetch <context_name>' to fetch a specify context
 HELP
 }
 
@@ -46,9 +50,15 @@ PORT="6443"
 
 mkdir -p "${CONFIGDIR}"
 if [ ! -f "${CONFIGFILE}" ];then
-    echo "can not find kubectl-fetch config file: ${CONFIGFILE}"
+    echo "can not find the kubectl-fetch config file: ${CONFIGFILE}"
     usage
     exit 1
+fi
+
+HAS_KUBECM=false
+type kubecm >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    HAS_KUBECM=true
 fi
 
 tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER HOST ROOTPASS; do
@@ -96,17 +106,22 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
         sed -i "s/server: https:\/\/.*/server: https:\/\/${HOST}:${PORT}/g" "${LOCALKUBECONFIGFILE}"
     fi
 
+    echo "${CONTEXT}: export KUBECONFIG=${LOCALKUBECONFIGFILE}"
+    
+
+    if [ "${HAS_KUBECM}" == "false" ];then
+        continue
+    fi
+
     if [ ! -f "${HOME}/.kube/config" ];then
         touch "${HOME}/.kube/config"
     fi
 
     if grep -qE ^"${CONTEXT}"$ < <(kubectl config get-contexts -o 'name');then
-        kubectl config delete-context "${CONTEXT}"
+        kubectl config delete-context "${CONTEXT}" >/dev/null 2>&1
     fi
 
     kubecm add -c -f "${LOCALKUBECONFIGFILE}" >/dev/null 2>&1
 
-    kubectl config use-context "${CONTEXT}"
-
-    echo "✅ ${CONTEXT}"
+    kubectl config use-context "${CONTEXT}" >/dev/null 2>&1
 done

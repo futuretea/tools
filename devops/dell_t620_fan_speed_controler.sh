@@ -37,6 +37,8 @@ log_path="${log_dir}/t620_ipmi_fan_speed_controller.log"
 mkdir -p "${log_dir}"
 
 # 检查是否已安装bc,snmpwalk,ipmitool
+# sudo apt install snmp ipmitool snmp-mibs-downloader
+# sudo download-mibs
 for i in bc snmpwalk ipmitool; do
     if ! which "$i" >/dev/null; then
         echo "You need to install $i."

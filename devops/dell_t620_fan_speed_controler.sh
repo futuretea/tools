@@ -89,7 +89,7 @@ if [ -f $log_path ]; then
 
   # 若目标区间值大于最后一条日志中的区间值，则立即上调转速，然后写入日志并退出程序
   if [ "$speed_range" -gt "$fan_speed_now" ]; then
-  	ipmitool -I lanplus -H "${ipmi_host}" -U "${ipmi_user}" -P "${ipmi_passwd}" raw 0x30 0x30 0x01 0x00
+    ipmitool -I lanplus -H "${ipmi_host}" -U "${ipmi_user}" -P "${ipmi_passwd}" raw 0x30 0x30 0x01 0x00
     ipmitool -I lanplus -H "${ipmi_host}" -U "${ipmi_user}" -P "${ipmi_passwd}" raw 0x30 0x30 0x02 0xff "$speed_hex"
     echo "$(date '+%Y-%m-%d %H:%M:%S') cpu_temp=$calc_avg_temp inlet_temp=$inlet_temp \
 fan_speed_range=$speed_range fan_speed=$fan_speed msg=\"Cooling fan increases speed\"" >> "${log_path}"
@@ -100,6 +100,7 @@ fan_speed_range=$fan_speed_now fan_speed=$fan_speed msg=\"Cooling fan maintains 
     exit 0
   else
     # 获取最后10条日志中的CPU温度值并计算均值
+    last_few_min_cpu_temp_avg=""
     for i in $(tail -n 10 "${log_path}");
     do
       i_tmp=$(echo "$i" | sed -e 's/^cpu_temp=\(.*\)/\1/g;t;d')

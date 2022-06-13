@@ -151,3 +151,9 @@ kpnp(){
     k patch svc $1 -p '{"spec":{"type":"NodePort"}}'
     k get svc $1 -owide
 }
+
+# k9s
+k9sctx() {
+local CONTEXT=$1
+k9s --logoless --context ${CONTEXT}
+}

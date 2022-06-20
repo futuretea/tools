@@ -100,3 +100,7 @@ alias upt='git pull upstream $(git_current_branch) && git push'
 alias gcasm='git commit -a -s -m'
 
 alias showfiles='git diff-tree --no-commit-id --name-only -r'
+
+fetchpr(){
+git fetch upstream pull/$1/head:pr$1
+}

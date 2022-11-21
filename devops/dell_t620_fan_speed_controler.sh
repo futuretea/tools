@@ -27,9 +27,9 @@ snmp_host=$1
 snmp_ver="2c"
 snmp_com="public"
 
-# 三个温度值将转速划分区间,请结合自己的风扇情况调整
-temp_threshold="40,50,60,65"
-fan_speed="10,15,20,50"
+# 三个温度值将转速划分区间,请结合自己的风扇和负载情况进行调整
+temp_threshold="40,50,55,60,65"
+fan_speed="10,15,20,30,40,50"
 
 # 日志文件路径
 log_dir="${HOME}/.cache"

@@ -28,8 +28,8 @@ snmp_ver="2c"
 snmp_com="public"
 
 # 三个温度值将转速划分为四个区间
-temp_threshold="58,60,65"
-fan_speed="30,40,70,100"
+temp_threshold="40,50,58,60,65"
+fan_speed="10,20,30,40,70,100"
 
 # 日志文件路径
 log_dir="${HOME}/.cache"

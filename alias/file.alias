@@ -22,5 +22,5 @@ alias fix='fd -t x -E scripts -E bin -E vendor | xargs -r chmod 644'
 
 nfsdir(){
 sudo chown -R nobody:nogroup $1
-sudo chmod 777 $1
+sudo chmod -R 777 $1
 }

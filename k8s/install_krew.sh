@@ -22,7 +22,10 @@ fi
 cd "$(mktemp -d)"
 REPO="kubernetes-sigs/krew"
 VERSION=${1:-$(releasef ${REPO})}
-curl -fsSLO "https://github.com/${REPO}/releases/download/${VERSION}/krew.{tar.gz,yaml}"
-tar zxvf krew.tar.gz
-./krew-"$(uname | tr '[:upper:]' '[:lower:]')_amd64" install --manifest=krew.yaml --archive=krew.tar.gz
+NAME="krew-$(uname | tr '[:upper:]' '[:lower:]')_amd64"
+curl -fsSLO "https://github.com/${REPO}/releases/download/${VERSION}/${NAME}.tar.gz"
+tar zxvf ${NAME}.tar.gz
+rm LICENSE
+chmod +x ${NAME}
+sudo mv ${NAME} /usr/local/bin/kubectl-krew
 kubectl krew update

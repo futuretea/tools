@@ -69,7 +69,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
     case "${CONTEXT}" in \#*) continue ;; esac
 
     if [ -n "${NAME}" ];then
-        if [[ ! "${CONTEXT}" =~ ${NAME} ]];then
+        if [[ ! "${CONTEXT}" == ${NAME} ]];then
             continue
         fi
     fi
@@ -116,6 +116,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
 
     if [ ! -f "${HOME}/.kube/config" ];then
         touch "${HOME}/.kube/config"
+	chmod 600 "${HOME}/.kube/config"
     fi
 
     if grep -qE ^"${CONTEXT}"$ < <(kubectl config get-contexts -o 'name');then

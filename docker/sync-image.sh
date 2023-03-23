@@ -8,4 +8,4 @@ normalize_image()
 
 image=$(normalize_image ${2})
 localhost=$1
-docker run --rm smqasims/imagesync:v1.1.0 -s "${image}" -d $(echo "${image}" | awk -F "/" '{OFS="/"}$1="'"$localhost"'"')
+docker run --rm smqasims/imagesync:v1.2.0 -s "${image}" -d $(echo "${image}" | awk -F "/" '{OFS="/"}$1="'"$localhost"'"')

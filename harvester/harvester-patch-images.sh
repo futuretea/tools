@@ -110,7 +110,7 @@ harvester)
   patch_harvester
   ;;
 harvester-network-controller)
-  patch_harvester_network_helper
+  patch_harvester_network_controller
   ;;
 load-balancer-harvester)
   patch_harvester_load_balancer

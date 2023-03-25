@@ -9,5 +9,5 @@ normalize_image()
 cat $2 | while read -r img; do
 image=$(normalize_image ${img})
 localhost=$1
-docker run --rm smqasims/imagesync:v1.1.0 -s "${image}" -d $(echo "${image}" | awk -F "/" '{OFS="/"}$1="'"$localhost"'"')
+docker run --rm smqasims/imagesync:v1.2.0 -s "${image}" -d $(echo "${image}" | awk -F "/" '{OFS="/"}$1="'"$localhost"'"')
 done

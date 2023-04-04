@@ -21,7 +21,8 @@ TARGET_REPO=$1
 TARGET_TAG=${2:-${SOURCE_TAG}}
 
 function patch_harvester() {
-  cat > /tmp/harvester-fix.yaml <<EOF
+  local tmp_file="$(mktemp)"
+  cat > "${tmp_file}" <<EOF
 spec:
   values:
     containers:
@@ -35,14 +36,20 @@ spec:
         tag: ${TARGET_TAG}
 EOF
   kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-fix.yaml --type merge
+#  kubectl -n harvester-system patch deploy harvester -p '{"metadata":{"annotations":{"management.cattle.io/scale-available":null}}}'
+#  kubectl -n harvester-system patch deploy harvester-webhook -p '{"metadata":{"annotations":{"management.cattle.io/scale-available":null}}}'
   kubectl -n harvester-system scale deploy harvester --replicas=0
   kubectl -n harvester-system scale deploy harvester-webhook --replicas=0
+  kubectl -n harvester-system delete rs -l app.kubernetes.io/name=harvester
   kubectl -n harvester-system scale deploy harvester --replicas=1
   kubectl -n harvester-system scale deploy harvester-webhook --replicas=1
+  kubectl -n harvester-system wait --for=condition=Available deploy harvester
+  kubectl -n harvester-system wait --for=condition=Available deploy harvester-webhook
 }
 
 function patch_harvester_network_controller() {
-  cat > /tmp/harvester-network-controller-fix.yaml <<EOF
+  local tmp_file="$(mktemp)"
+  cat > "${tmp_file}" <<EOF
 spec:
   values:
     harvester-network-controller:
@@ -58,7 +65,7 @@ spec:
           repository: ${TARGET_REPO}/harvester-network-helper
           tag: ${TARGET_TAG}
 EOF
-  kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-network-controller-fix.yaml --type merge
+  kubectl -n fleet-local patch managedchart harvester --patch-file="${tmp_file}" --type merge
   kubectl -n harvester-system scale deploy harvester-network-controller-manager --replicas=0
   kubectl -n harvester-system scale deploy harvester-network-webhook --replicas=0
   kubectl -n harvester-system scale deploy harvester-network-controller-manager --replicas=1
@@ -66,7 +73,8 @@ EOF
 }
 
 function patch_harvester_load_balancer() {
-  cat > /tmp/harvester-load-balancer-fix.yaml <<EOF
+  local tmp_file="$(mktemp)"
+  cat > "${tmp_file}" <<EOF
 spec:
   values:
     harvester-load-balancer:
@@ -74,13 +82,14 @@ spec:
         repository: ${TARGET_REPO}/harvester-load-balancer
         tag: ${TARGET_TAG}
 EOF
-  kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-load-balancer-fix.yaml --type merge
+  kubectl -n fleet-local patch managedchart harvester --patch-file="${tmp_file}" --type merge
   kubectl -n harvester-system scale deploy harvester-load-balancer --replicas=0
   kubectl -n harvester-system scale deploy harvester-load-balancer --replicas=1
 }
 
 function patch_harvester_node_disk_manager() {
-  cat > /tmp/harvester-node-disk-manager-fix.yaml <<EOF
+  local tmp_file="$(mktemp)"
+  cat > "${tmp_file}" <<EOF
 spec:
   values:
     harvester-node-disk-manager:
@@ -88,11 +97,12 @@ spec:
         repository: ${TARGET_REPO}/harvester-node-disk-manager
         tag: ${TARGET_TAG}
 EOF
-  kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-node-disk-manager-fix.yaml --type merge
+  kubectl -n fleet-local patch managedchart harvester --patch-file="${tmp_file}" --type merge
 }
 
 function patch_harvester_node_manager() {
-  cat > /tmp/harvester-node-manager-fix.yaml <<EOF
+  local tmp_file="$(mktemp)"
+  cat > "${tmp_file}" <<EOF
 spec:
   values:
     harvester-node-manager:
@@ -100,7 +110,7 @@ spec:
         repository: ${TARGET_REPO}/harvester-node-manager
         tag: ${TARGET_TAG}
 EOF
-  kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-node-manager-fix.yaml --type merge
+  kubectl -n fleet-local patch managedchart harvester --patch-file="${tmp_file}" --type merge
 }
 
 repo_name=$(basename ${PWD})
@@ -131,7 +141,3 @@ harvester-node-manager)
   patch_harvester_node_manager
   ;;
 esac
-
-watch "kubectl -n harvester-system get po -o custom-columns='NAME:metadata.name,IMAGES:spec.containers[*].image'"
-#kubectl -n fleet-local get managedchart harvester -oyaml
-#kubectl -n fleet-local edit managedchart harvester

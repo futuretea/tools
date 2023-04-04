@@ -27,7 +27,9 @@ localhost=$3
 
 
 docker stop ${aliasname}_mirror_1
+set +e
 regctl registry set --tls disabled ${localhost}
 fd ${pattern} /cache/${aliasname} | awk -F "/" '{print "regctl tag delete '"${localhost}"'/"$9"/"$10":"$13}' | bash
 docker exec ${aliasname}_local_1 /bin/registry garbage-collect /etc/docker/registry/config.yml -m
+set -e
 docker start ${aliasname}_mirror_1

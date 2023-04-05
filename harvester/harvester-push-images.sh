@@ -18,7 +18,7 @@ fi
 COMMIT=$(git rev-parse --short HEAD)
 SOURCE_TAG=${COMMIT}-amd64
 
-SOURCE_REPO="rancher"
+SOURCE_REPO=${SOURCE_REPO:-"rancher"}
 TARGET_REPO=$1
 TARGET_TAG=${2:-${SOURCE_TAG}}
 

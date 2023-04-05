@@ -35,7 +35,7 @@ spec:
         repository: ${TARGET_REPO}/harvester-webhook
         tag: ${TARGET_TAG}
 EOF
-  kubectl -n fleet-local patch managedchart harvester --patch-file=/tmp/harvester-fix.yaml --type merge
+  kubectl -n fleet-local patch managedchart harvester --patch-file=${tmp_file} --type merge
 #  kubectl -n harvester-system patch deploy harvester -p '{"metadata":{"annotations":{"management.cattle.io/scale-available":null}}}'
 #  kubectl -n harvester-system patch deploy harvester-webhook -p '{"metadata":{"annotations":{"management.cattle.io/scale-available":null}}}'
   kubectl -n harvester-system scale deploy harvester --replicas=0

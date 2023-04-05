@@ -120,7 +120,7 @@ tail --lines=+2 "${CONFIGFILE}" | tr ',' ' ' | while read -r CONTEXT TYPE USER H
     fi
 
     if grep -qE ^"${CONTEXT}"$ < <(kubectl config get-contexts -o 'name');then
-        kubectl config delete-context "${CONTEXT}" >/dev/null 2>&1
+        kubecm delete "${CONTEXT}" >/dev/null 2>&1
     fi
 
     kubecm add -c -f "${LOCALKUBECONFIGFILE}" >/dev/null 2>&1

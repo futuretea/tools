@@ -36,7 +36,7 @@ if [ -f "${OPENPATH}" ]; then
 else
     type wsl.exe >/dev/null 2>&1
     if [ $? -eq 0 ]; then
-        "${WINBROWSER}" "${LINE}"
+        "${WINBROWSER}" "${OPENPATH}"
     else
         xdg-open "${OPENPATH}" >/dev/null 2>&1
     fi

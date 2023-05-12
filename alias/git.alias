@@ -5,6 +5,7 @@ alias nocmt='git reset --soft HEAD^'
 alias noadd='git reset HEAD'
 alias nochg='git checkout --'
 alias nomore='git clean -fd'
+alias nolocal='git reset --hard FETCH_HEAD'
 alias nobranch='nobranch(){branch=`git branch --show-current` && git checkout master && git branch -d "${branch}";};nobranch $@'
 
 alias nopub='nopub(){git config --global url."$1".insteadOf "$2";};nopub $@'
@@ -14,8 +15,6 @@ ncmtb(){
     local nb=$(ncmt $1 | awk '{print $1}')
     git checkout -b commit-$1 "${nb}"
 }
-
-alias justgo='git push --force'
 
 alias usefile='usefile(){git checkout $1 -- $2;};usefile $@'
 alias usecmt='git cherry-pick'
@@ -48,15 +47,6 @@ git_noproxy(){
     git config --global --unset https.proxy
 }
 
-cmt(){
-    local commit_option=$1
-    local msg=$2
-    shift 2
-    git add $@
-    git commit ${commit_option} ${msg}
-    git log --oneline
-}
-
 #gcb,gcm,gco
 #gau,gcam
 gcof(){
@@ -86,14 +76,6 @@ recmtpush() {
     git push --force
 }
 
-gnco(){
-    git pull
-    git branch -D $1
-    git checkout $1
-}
-
-
-
 alias origin='open $(git remote get-url origin |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
 alias upstream='open $(git remote get-url upstream |  sed -e "s/:/\//g" -e "s/git@//g" -e "s/\.git//g" -e "s/^github.com/https:\/\/github.com/g")'
 alias upt='git pull upstream $(git_current_branch) && git push'
@@ -102,6 +84,11 @@ alias gcasm='git commit -a -s -m'
 alias showfiles='git diff-tree --no-commit-id --name-only -r'
 
 review(){
-git fetch upstream pull/$1/head:pr-$1
-git checkout pr-$1
+    git fetch upstream pull/$1/head:pr-$1
+    git checkout pr-$1
+}
+
+prsync(){
+    git fetch upstream pull/$1/head
+    git reset --hard FETCH_HEAD
 }

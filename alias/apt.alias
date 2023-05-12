@@ -1,5 +1,1 @@
-alias sa='sudo apt'
-alias sau='sa update'
-alias sai='sa install'
-alias saui='sa uninstall'
-alias sas='sa search'
+

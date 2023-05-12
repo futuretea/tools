@@ -1,6 +1,3 @@
-alias v='bat'
-alias vf='bat $(fzf)'
-alias ve='emacs -fs'
 alias vi='nvim'
 alias vif='nvim $(fzf)'
 alias vimf='vim $(fzf)'

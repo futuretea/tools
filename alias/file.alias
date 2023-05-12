@@ -7,20 +7,19 @@ addbin(){
     chmod +x $1
     sudo mv $1 /usr/local/bin/
 }
-waddbin(){
+wgetbin(){
     wget -O /tmp/$2 $1
     chmod +x /tmp/$2
     sudo mv /tmp/$2 /usr/local/bin/
 }
 ccf(){
-local FULLNAME=$1
-local DIRNAME=$(dirname $1)
-local FILENAME=$(basename $1)
-cf $FULLNAME $(ls $DIRNAME | grep $FILENAME. | grep -v @ | sed "s/^$FILENAME.//" | fzf)
+    local FULLNAME=$1
+    local DIRNAME=$(dirname $1)
+    local FILENAME=$(basename $1)
+    cf $FULLNAME $(ls $DIRNAME | grep $FILENAME. | grep -v @ | sed "s/^$FILENAME.//" | fzf)
 }
-alias fix='fd -t x -E scripts -E bin -E vendor | xargs -r chmod 644'
 
 nfsdir(){
-sudo chown -R nobody:nogroup $1
-sudo chmod -R 777 $1
+    sudo chown -R nobody:nogroup $1
+    sudo chmod -R 777 $1
 }

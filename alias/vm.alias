@@ -1,3 +1,2 @@
 alias vg='vagrant'
 alias tf='terraform'
-alias tf-ali='echo "provider alicloud{}">.terraformrc'

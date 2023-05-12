@@ -2,14 +2,21 @@ type wsl.exe >/dev/null 2>&1
 if [ $? -eq 0 ]; then
 alias vagrant='vagrant.exe'
 alias tshark='tshark.exe'
-start(){
-  cmd.exe /c "start $@"
-}
 alias exp='start explorer'
-alias wtop='start taskmgr'
-alias calc='start calc'
-alias notepad='start notepad'
-alias pt='start mspaint'
-alias osk='start osk'
+alias wtop='Taskmgr.exe'
+alias calc='calc.exe'
+alias notepad='notepad.exe'
+alias pt='mspaint.exe'
+alias osk='osk.exe'
 alias '~~'='cd /mnt/c/Users/$USER'
 fi
+
+uptwinhost(){
+  local WSLHOSTCONFIGDIR=/mnt/c/Windows/System32/drivers
+  local WSLHOSTCONFIG=${WSLHOSTCONFIGDIR}/etc/HOSTS
+  local HOSTCONFIG=/etc/hosts
+  if [ -d ${WSLHOSTCONFIGDIR} ];then
+    sudo cp ${HOSTCONFIG} ${WSLHOSTCONFIG}
+    ipconfig.exe /flushdns
+  fi
+}

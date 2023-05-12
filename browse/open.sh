@@ -21,12 +21,12 @@ if [ $# -lt 1 ]; then
 fi
 
 OPENPATH=$1
-WINBROWSER=msedge
+WINBROWSER=msedge.exe
 if [ -f "${OPENPATH}" ]; then
     type wsl.exe >/dev/null 2>&1
     if [ $? -eq 0 ]; then
         while read -r LINE; do
-            cmd.exe /c "start ${WINBROWSER} ${LINE}"
+            "${WINBROWSER}" "${LINE}"
         done <"${OPENPATH}"
     else
         while read -r LINE; do
@@ -36,7 +36,7 @@ if [ -f "${OPENPATH}" ]; then
 else
     type wsl.exe >/dev/null 2>&1
     if [ $? -eq 0 ]; then
-        cmd.exe /c "start ${WINBROWSER} ${OPENPATH}"
+        "${WINBROWSER}" "${LINE}"
     else
         xdg-open "${OPENPATH}" >/dev/null 2>&1
     fi

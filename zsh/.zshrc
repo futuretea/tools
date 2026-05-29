@@ -18,5 +18,3 @@ setopt no_nomatch
 source $ZSH/oh-my-zsh.sh
 source $HOME/.bash_aliases
 source $HOME/.asdf/asdf.sh
-eval "$(kubectl completion zsh)"
-eval "$(starship init zsh)"

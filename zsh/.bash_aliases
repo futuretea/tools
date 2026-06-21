@@ -6,9 +6,6 @@ save_eval(){
     [ type $1 2>/dev/null ] && eval $2
 }
 
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export GOROOT=/usr/local/go
 export GOPRIVATE=gitlab.com,gitee.com,bosun.org
 export GOPROXYURL="https://goproxy.cn"
 export HTTPRPOXYURL="http://127.0.0.1:12333"
@@ -20,10 +17,6 @@ export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/usr/local/bin/tools
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.7.0/bin
-
-# export GEM_HOME=$HOME/.vagrant.d/gems
-# export GEM_PATH=$GEM_HOME:/opt/vagrant/embedded/gems
-# export PATH=$PATH:/opt/vagrant/embedded/bin
 
 export EDITOR='vim'
 alias sudo='sudo env PATH=$PATH'

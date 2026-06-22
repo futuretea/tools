@@ -25,3 +25,12 @@ umask 022
 save_source /usr/local/bin/alias/all
 save_source /usr/local/bin/private/all
 save_source $HOME/.nvm/nvm.sh
+
+export NODE_OPTIONS=--use-system-ca
+
+alias cdx='all_proxy=socks5://127.0.0.1:10808 codex'
+alias opc='opencode'
+alias cc='claude --dangerously-skip-permissions'
+alias qd='qodercli --yolo'
+alias km='kimi --yolo'
+alias cpl='copilot --yolo'export NODE_OPTIONS=--use-system-ca
